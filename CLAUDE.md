@@ -24,6 +24,8 @@ Static files, no framework/bundler/dependencies (Google Fonts via CDN):
 - `packets.js` — **single source of truth for the launch data** (`PACKETS` + `LEDGER_ORDER`). Loaded by both pages. Add a launch here and it appears in the tool's matching AND the track record. Each packet has a `date` used by the ledger.
 - `styles.css` — **shared design system** (tokens + components). Contains a few classes not currently used on any page (e.g. `.trio`, `.steps`, `.grid`, landing hero variants); leave them.
 
+There is no build step, so the `?v=NN` cache-buster on each page's `<link rel="stylesheet" href="styles.css?v=NN">` is hand-maintained. **Any edit to `styles.css` must bump that number in all three HTML files** (`index.html`, `track-record.html`, `feedback.html`) — otherwise a browser that already loaded the old `styles.css?v=NN` keeps serving it from cache and the change won't be visible until the number changes.
+
 There is no `app.html` — an earlier two-page split (landing + tool) was reverted; the current split is instead tool vs. track-record.
 
 This directory **is a git repository** (initialized when the Claude Design handoff was ported, so the pre-port site stayed recoverable). There is **no remote** — nothing has been pushed anywhere; ask before adding one or pushing. Because there's no remote, skills/tools that diff against `origin/HEAD` (e.g. the `security-review` skill) still fail here — fall back to manual review methods, or diff against a local commit, rather than erroring out.

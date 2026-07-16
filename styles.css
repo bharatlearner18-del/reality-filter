@@ -551,7 +551,11 @@ html.dark .theme-toggle .ic-sun{display:none}
 .fb-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:8px 0 0}
 .fb-err{font-family:var(--font-sans);font-size:13.5px;color:var(--error);margin:2px 0 0}
 /* feedback invite line in the footer of the launch page */
-.fb-invite{font-family:var(--font-sans);font-size:14.5px;color:var(--body);margin:26px 0 0;
+/* Deliberately sets no font-size: footer p caps every paragraph at 46ch, and ch
+   scales with font-size, so this box only lines up with the brand blurb while it
+   inherits the same size. Setting one here (it shipped at 14.5px) pushes its
+   right edge past the blurb's. */
+.fb-invite{font-family:var(--font-sans);color:var(--body);margin:26px 0 0;
   padding:14px 18px;border:1px dashed var(--hairline-strong);border-radius:var(--radius-btn);display:inline-block}
 .fb-invite a{color:var(--primary-active);font-weight:600;text-decoration:none}
 .fb-invite a:hover{text-decoration:underline}

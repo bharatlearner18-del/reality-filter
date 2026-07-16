@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=6">
+<script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="stylesheet" href="styles.css?v=25">
 </head>
 <body>
 
@@ -21,6 +22,11 @@
       <a class="toplink" href="#top" id="navCheck">Check a launch</a>
       <a class="toplink" href="track-record.html">Track record</a>
       <a class="toplink" href="#premium">Premium</a>
+      <a class="toplink" href="feedback.html">Feedback</a>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
     </nav>
   </div>
 </div>
@@ -37,9 +43,12 @@
       <div class="hero-search">
         <div class="console" aria-label="Check a launch">
           <form class="field" id="checkForm" autocomplete="off">
-            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input id="query" type="text" placeholder="Paste an AI launch, tool, or model…" aria-label="AI launch or tool" />
-            <button class="btn" type="submit">Check&nbsp;→</button>
+            <div class="field-foot">
+              <span class="field-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Checks the public record · free</span>
+              <span class="field-kbd">Enter ↵</span>
+              <button class="btn btn-send" type="submit" aria-label="Check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
+            </div>
           </form>
           <div class="chips">
             <span class="chips-lbl">Try one:</span>
@@ -67,7 +76,7 @@
           <p class="wl-lbl">Leave your email — we'll tell you when it's live</p>
           <form class="wlform" id="wlForm" autocomplete="off">
             <input type="email" id="wlEmail" required placeholder="you@work.com" aria-label="Your email" />
-            <button class="btn" type="submit">Notify me</button>
+            <button class="btn" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>Notify me</button>
           </form>
           <p class="wl-done" id="wlDone">✓ You're on the list.</p>
         </div>
@@ -84,16 +93,32 @@
     </div>
     <a class="toplink" href="track-record.html">See the track record →</a>
   </div>
+  <div class="wrap"><p class="fb-invite">Spotted something off, or have an idea? <a href="feedback.html">We'd love your honest thoughts →</a></p></div>
   <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
 </footer>
 
 <script src="packets.js"></script>
 <script>
+// reveal the premium band when it scrolls into view
+(function initPremiumReveal(){
+  const run = ()=>{
+    const band = document.querySelector('.premium');
+    if(!band) return;
+    if(!('IntersectionObserver' in window)){band.classList.add('in-view');return}
+    const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){band.classList.add('in-view');io.disconnect()}}),{threshold:.25});
+    io.observe(band);
+    // safety net: never leave the band invisible
+    setTimeout(()=>band.classList.add('in-view'), 2500);
+  };
+  if(document.readyState==='loading') addEventListener('DOMContentLoaded', run); else run();
+})();
+</script>
+<script>
 const inner = document.getElementById('resultInner');
 
 function renderPacket(p){
   return `
-  <article class="packet">
+  <article class="packet ${p.verdictClass}">
     <div class="packet-head">
       <div>
         <p class="packet-file">${p.file}</p>
@@ -156,12 +181,59 @@ function findPacket(q){
   return null;
 }
 
-function showResult(q){
-  const p = findPacket(q);
-  inner.innerHTML = p ? renderPacket(p) : renderCapture(q);
+// send button lights up only when there's text
+const sendBtn = document.querySelector('#checkForm .btn-send');
+const qInput = document.getElementById('query');
+function syncSend(){ if(sendBtn&&qInput) sendBtn.classList.toggle('idle', !qInput.value.trim()); }
+if(qInput){ qInput.addEventListener('input', syncSend); syncSend(); }
+// clicking anywhere on the composer focuses the input, like real chat composers
+document.querySelector('.field')?.addEventListener('click', e=>{ if(!e.target.closest('button')) qInput?.focus(); });
+
+// typewriter placeholder — cycles real examples until the user types
+const twExamples = ['GPT-5.6','Claude Fable 5','Salesforce Agentforce','that new AI coding agent','Gemini Ultra 3'];
+if(qInput && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  let ti=0, ci=0, del=false;
+  (function twTick(){
+    if(document.activeElement===qInput || qInput.value){ setTimeout(twTick, 800); return; }
+    const word = twExamples[ti];
+    ci += del ? -1 : 1;
+    qInput.setAttribute('placeholder', word.slice(0,ci) + (ci<word.length?'▏':''));
+    let wait = del ? 35 : 70;
+    if(!del && ci===word.length){ del=true; wait=1600; }
+    else if(del && ci===0){ del=false; ti=(ti+1)%twExamples.length; wait=300; }
+    setTimeout(twTick, wait);
+  })();
+}
+
+function showResult(q, instant){
+  if(!q || !q.trim()) return;
+  const safe = q.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const r = document.getElementById('result');
+  const scrollToResult = (smooth)=>window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - 24, behavior: smooth?'smooth':'auto'});
+  if(instant){
+    // deep-link from the track record: show the verdict immediately, no fake loading
+    const p = findPacket(q);
+    inner.innerHTML = p ? renderPacket(p) : renderCapture(q);
+    inner.hidden = false;
+    bindResultActions();
+    scrollToResult(false);
+    // re-anchor after fonts/animations settle so the verdict stays in view
+    setTimeout(()=>scrollToResult(false), 350);
+    addEventListener('load', ()=>setTimeout(()=>scrollToResult(false), 120), {once:true});
+    return;
+  }
+  const btn = document.querySelector('#checkForm .btn-send');
+  if(btn) btn.classList.add('is-loading');
+  inner.innerHTML = `<div class="loading"><span class="spinner"></span><p class="load-txt">Checking the record for “<b>${safe}</b>”…</p></div>`;
   inner.hidden = false;
-  bindResultActions();
-  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+  scrollToResult(true);
+  clearTimeout(showResult._t);
+  showResult._t = setTimeout(()=>{
+    if(btn) btn.classList.remove('is-loading');
+    const p = findPacket(q);
+    inner.innerHTML = p ? renderPacket(p) : renderCapture(q);
+    bindResultActions();
+  }, 900);
 }
 
 function bindResultActions(){
@@ -218,8 +290,20 @@ document.getElementById('navCheck').addEventListener('click',e=>{
 /* deep-link: arriving from the track record (index.html?q=…) auto-runs a check */
 (function(){
   const q = new URLSearchParams(location.search).get('q');
-  if(q){ document.getElementById('query').value = q; showResult(q); }
+  if(q){ document.getElementById('query').value = q; showResult(q, true); }
 })();
+</script>
+<script>
+// topbar shadow once the page scrolls
+const tb = document.querySelector('.topbar');
+addEventListener('scroll', ()=>tb.classList.toggle('scrolled', scrollY>8), {passive:true});
+</script>
+<script>
+// theme toggle
+document.querySelector('[data-theme-toggle]').addEventListener('click', ()=>{
+  const dark = document.documentElement.classList.toggle('dark');
+  try{ localStorage.setItem('rf-theme', dark?'dark':'light'); }catch(e){}
+});
 </script>
 </body>
 </html>

@@ -31,14 +31,14 @@ const PACKETS = {
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
     claim:"A powerful new Claude with \"extraordinarily strong\" safeguards — a general tier (Fable) for everyone, plus a gated Mythos tier for approved users.",
-    found:"It shipped and ordinary users can use it today. Official posts and a published jailbreak/safeguard framework exist. The model is real and available — not vaporware.",
+    found:"It shipped and ordinary users can use it today — no waitlist, no partner gate. The model itself is genuinely strong: early users call it a clear step up for <b>coding, long documents and careful writing</b>. Anthropic also published its jailbreak/safeguard framework openly instead of hiding it. Real and available — not vaporware.",
     missing:"Full-strength behavior without silent degradation wasn't there at launch. When its classifiers flagged cybersecurity / biology / chemistry topics, it <b>silently fell back to an older model (Opus 4.8) with no notice</b>. The Verge found it rerouting basic biology questions — mitochondria, mRNA vaccines, asthma meds.",
-    signals:"Sharp backlash — cybersecurity users first, then AI-safety researchers who usually side with Anthropic. It was accused of \"secret sabotage.\" Anthropic apologized two days after launch (\"we made the wrong tradeoff\") and made the fallback visible after June 11.",
+    signals:"Two signals at once. Positive: everyday users report strong results and the model held up under heavy day-one load. Negative: sharp backlash from cybersecurity users and AI-safety researchers over the silent fallback (\"secret sabotage\"). To Anthropic's credit, it apologized within two days (\"we made the wrong tradeoff\") and made the fallback visible — a fast, public correction, which is rare.",
     pricing:"Available to ordinary users with stricter guardrails; Mythos tier gated to approved users. Expect refusals or reroutes on sensitive technical topics — now at least disclosed rather than silent.",
     fog:40,
     fogLabel:"Medium",
-    fogWhy:"Real, usable model — but the \"safety\" framing hid a genuine capability cut. The fix is real but reactive.",
-    next:"Try it for general work. If you do security / bio / chem research, test your exact prompts first — the guardrails may block or reroute you."
+    fogWhy:"Strong, usable model — the fog was the silent fallback, and that part is now fixed and disclosed.",
+    next:"Try it — for general work, coding and writing it's one of the best options available today. Only if you do security / bio / chem research: test your exact prompts first, since the guardrails may block or reroute you."
   },
   agentforce:{
     match:["agentforce","salesforce agentforce","salesforce agent","salesforce"],

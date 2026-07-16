@@ -1,0 +1,362 @@
+:root{
+  /* fonts — Claude's pairing: a book serif for headlines, Inter for body/UI, mono for data */
+  --font-serif:"Source Serif 4","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --font-sans:"Inter",system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-mono:"JetBrains Mono","Fira Code",ui-monospace,monospace;
+  /* surfaces — warm parchment, closer to paper than a studio-neutral cream */
+  --canvas:#f0eee6;
+  --canvas-soft:#f6f4ec;
+  --surface-card:#ffffff;
+  --surface-strong:#e4e0d3;
+  /* ink + text — warmed toward brown-black */
+  --ink:#3d3929;
+  --body:#635f4d;
+  --muted:#6d684f;        /* darkened to clear AA (>=4.5:1) at 14-17px on cream/white — 4.83:1 on --canvas, 5.61:1 on white */
+  --muted-soft:#a39d87;   /* decorative / large-display only — fails AA at body sizes */
+  --label:#6b6552;        /* dark-enough tone for small mono labels (>=4.5:1 on cream/white) */
+  --on-primary:#ffffff;
+  --on-ink:#f0eee6;
+  --on-ink-soft:#cac5b3;
+  /* hairlines — kept for internal dividers (packet rows, ledger rows); outer cards use --shadow-card instead */
+  --hairline:#e4e0d3;
+  --hairline-soft:#ece8dc;
+  --hairline-strong:#d3cdb8;
+  --field-border:#948e78; /* interactive input/chip borders — clears the 3:1 non-text-contrast minimum */
+  /* brand voltage — Claude's terracotta/clay, used scarcely */
+  --primary:#d97757;
+  --primary-active:#bf5f3f;
+  /* soft paper-card depth — replaces hairline-only borders on outer cards (packet, capture, ledger, premium) */
+  --shadow-card:0 1px 2px rgba(61,57,41,.05), 0 10px 28px rgba(61,57,41,.08);
+  /* AI-timeline pastels — signature palette, scoped to the evidence "investigation stages" */
+  --tl-thinking:#dfa88f;  /* peach  */
+  --tl-grep:#9fc9a2;      /* mint   */
+  --tl-read:#9fbbe0;      /* blue   */
+  --tl-edit:#c0a8dd;      /* lavender */
+  --tl-done:#c08532;      /* gold   */
+  /* semantic */
+  --success:#1f8a65;
+  --success-on-ink:#7fd8b5;  /* lighter success tone for the ink Premium band */
+  --error:#cf2d56;
+  /* verdict scale — darkened to read on white/cream cards (>=4.5:1) */
+  --v-go:#1a7a5a;
+  --v-watch:#9a6410;
+  --v-early:#2f62a6;
+  --v-fog:#c22449;
+  --radius:20px;
+  --radius-btn:12px;
+  --maxw:1000px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--canvas);
+  color:var(--body);
+  font-family:var(--font-sans);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--font-mono)}
+/* editorial display: book serif at weight 400 — never bold */
+.display{font-family:var(--font-serif);font-weight:400;letter-spacing:-.008em}
+
+/* ---------- top bar ---------- */
+.topbar{border-bottom:1px solid var(--hairline);position:sticky;top:0;z-index:20;
+  background:rgba(240,238,230,.88);backdrop-filter:blur(8px)}
+/* Nav: wordmark left · links dead-center · balancing space right.
+   A 3-column grid (1fr auto 1fr) optically centers the link cluster in the bar —
+   the empty right column mirrors the brand's column so the middle stays middle.
+   There's no CTA button: the search bar is the real "check" action. */
+.topbar .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px;gap:14px}
+.nav-left{display:flex;justify-content:flex-start;min-width:0}
+.nav-center{display:flex;gap:28px;align-items:center;justify-content:center;white-space:nowrap}
+.nav-center .toplink{font-size:14px}
+.nav-center .toplink.active{color:var(--ink)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-sans);font-weight:600;
+  letter-spacing:-.01em;font-size:18px;color:var(--ink);text-decoration:none}
+.brand .dot{width:10px;height:10px;border-radius:2px;background:var(--primary)}
+.brand small{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--muted);
+  letter-spacing:.04em;text-transform:uppercase}
+.topnav{display:flex;align-items:center;gap:18px}
+.toplink{font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--muted);text-decoration:none}
+.toplink:hover{color:var(--ink)}
+/* nav CTA = ink "download-style" button; keeps orange scarce for the true primary action */
+.btn-sm{font-family:var(--font-sans);font-weight:500;font-size:14px;text-decoration:none;
+  background:var(--ink);color:var(--on-ink);border-radius:var(--radius-btn);padding:9px 16px;white-space:nowrap;transition:.12s}
+.btn-sm:hover{background:#38362c}
+
+/* ---------- hero — centered + stacked: pitch above, the search tool directly below ----------
+   The search bar is the page's single action, so nothing sits beside it competing for the eye. */
+.hero{position:relative;overflow:hidden;padding:84px 0 56px}
+.hero.compact{padding:56px 0 32px}
+.hero .wrap{text-align:center}
+.hero-copy{max-width:760px;margin:0 auto}
+/* the console gets its own breathing room under the headline, capped narrower than the copy */
+.hero-search{width:100%;max-width:640px;margin:44px auto 0}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--label);margin:0 0 22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
+.eyebrow .sep{width:22px;height:1px;background:var(--hairline-strong)}
+h1.display{font-weight:400;letter-spacing:-.012em;line-height:1.08;margin:0;
+  font-size:clamp(40px,7.4vw,72px);color:var(--ink)}
+h1.display.mid{font-size:clamp(32px,4.6vw,50px);line-height:1.1}
+h1 .fog-word{color:var(--muted)}
+h1 .real-word{color:var(--primary-active)} /* the plain --primary only clears 2.69:1 on --canvas at large text; --primary-active clears 3.67:1 */
+.lede{font-family:var(--font-sans);font-size:clamp(16px,1.9vw,19px);color:var(--body);max-width:46ch;margin:22px auto 0;line-height:1.5}
+
+/* ---------- landing: hero CTA row (unused variants kept) ---------- */
+.cta-row{margin:30px 0 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+a.btn{text-decoration:none}
+.btn-line{font-family:var(--font-sans);font-weight:500;font-size:15px;text-decoration:none;
+  color:var(--ink);border:1px solid var(--field-border);border-radius:var(--radius-btn);padding:14px 20px;transition:.12s;
+  display:inline-flex;align-items:center;gap:8px;background:var(--surface-card)}
+.btn-line:hover{border-color:var(--primary)}
+.cta-note{margin:16px 2px 0;font-family:var(--font-mono);font-size:11.5px;color:var(--label)}
+
+/* ---------- landing: value trio (unused, kept) ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.prop{background:var(--surface-card);border:1px solid var(--hairline);border-radius:var(--radius);padding:24px}
+.prop .plabel{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--label);margin:0 0 12px}
+.prop h3{font-family:var(--font-sans);font-weight:600;font-size:18px;margin:0 0 8px;color:var(--ink);letter-spacing:0}
+.prop p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+
+/* ---------- console (the tool) — search sits on the parchment canvas ----------
+   width + placement are handled by the centered .hero-search column above. */
+.console{position:relative}
+.console-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--label);margin:0 0 12px}
+/* one unified search bar: a single white pill holding [icon · borderless input · inset button].
+   Reads as an intentional console, not a bare input with a detached button next to it. */
+.field{display:flex;align-items:center;gap:6px;background:var(--surface-card);
+  border:1px solid var(--field-border);border-radius:14px;padding:7px 7px 7px 18px;
+  transition:border-color .12s,box-shadow .12s}
+.field:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(217,119,87,.16)}
+.field-icon{flex:0 0 auto;width:19px;height:19px;color:var(--muted-soft)}
+.field input{flex:1 1 auto;min-width:0;background:transparent;border:none;
+  color:var(--ink);padding:13px 4px;font-family:var(--font-sans);font-size:16.5px}
+.field input::placeholder{color:var(--muted-soft)}
+.field input:focus{outline:none;box-shadow:none}
+.field .btn{flex:0 0 auto;height:46px;border-radius:10px;padding:0 22px}
+/* primary CTA = Claude terracotta, reserved for the true conversion actions */
+.btn{font-family:var(--font-sans);font-weight:600;font-size:15px;letter-spacing:0;cursor:pointer;
+  background:var(--primary);color:var(--on-primary);border:none;border-radius:var(--radius-btn);padding:0 22px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .12s,transform .12s}
+.btn-lg{padding:15px 26px}
+.btn:hover{background:var(--primary-active);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.chips{margin:16px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+.chips .chips-lbl{font-family:var(--font-mono);font-size:11px;color:var(--label);
+  letter-spacing:.04em;margin-right:2px}
+.chip{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--body);background:var(--surface-card);
+  border:1px solid var(--field-border);border-radius:9999px;padding:6px 14px;cursor:pointer;transition:.12s}
+.chip:hover{border-color:var(--primary);color:var(--ink)}
+.reassure{margin:14px 2px 0;font-family:var(--font-mono);font-size:11px;color:var(--label)}
+
+/* ---------- result region — left-aligned reading surface below the hero,
+   width-capped so evidence lines stay a comfortable measure ---------- */
+#result{scroll-margin-top:80px;max-width:860px;margin:0 auto;text-align:left}
+.result-inner{margin:48px 0 0}
+
+/* evidence packet = white paper-card on parchment: soft shadow depth, no hairline border */
+.packet{background:var(--surface-card);color:var(--ink);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow-card);
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.packet-head{padding:24px 26px 20px;border-bottom:1px solid var(--hairline);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.packet-file{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--label);margin:0 0 8px}
+.packet-name{font-family:var(--font-serif);font-weight:400;font-size:clamp(24px,4vw,34px);
+  letter-spacing:-.008em;line-height:1.15;margin:0;color:var(--ink)}
+.packet-by{font-family:var(--font-sans);color:var(--muted);font-size:15px;margin:8px 0 0}
+
+/* verdict stamp — clean colored badge (no rubber-stamp rotate; editorial system) */
+.stamp{align-self:flex-start;border:1.5px solid currentColor;border-radius:var(--radius-btn);
+  padding:9px 14px;text-align:left;max-width:230px}
+.stamp .st-lbl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;display:block;
+  color:var(--label);margin-bottom:3px}
+.stamp .st-verdict{font-family:var(--font-sans);font-weight:600;font-size:15px;letter-spacing:-.01em;
+  line-height:1.1;text-transform:uppercase;display:block}
+.v-go{color:var(--v-go)}.v-watch{color:var(--v-watch)}.v-early{color:var(--v-early)}.v-fog{color:var(--v-fog)}
+
+.packet-body{padding:8px 26px 24px}
+.row{padding:18px 0;border-bottom:1px solid var(--hairline)}
+.row:last-child{border-bottom:none}
+.row .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--body);margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.row .k::before{content:"";width:7px;height:7px;border-radius:9999px;background:var(--hairline-strong)}
+/* AI-timeline pastel "stages": all 5 signature pastels track the fixed row order from
+   renderPacket() (1 claim=peach · 4 signals=blue · 5 pricing=lavender · 6 meter=mint · 7 next=gold);
+   found/miss (rows 2/3) keep their semantic green/red.
+   If renderPacket() row order changes, update these nth-child targets. */
+.packet-body .row:nth-child(1) .k::before{background:var(--tl-thinking)}
+.packet-body .row:nth-child(4) .k::before{background:var(--tl-read)}
+.packet-body .row:nth-child(5) .k::before{background:var(--tl-edit)}
+.packet-body .row:nth-child(6) .k::before{background:var(--tl-grep)}
+.packet-body .row:nth-child(7) .k::before{background:var(--tl-done)}
+.row.miss .k::before{background:var(--error)}
+.row.found .k::before{background:var(--success)}
+.row .v{margin:0;font-size:16px;line-height:1.55;color:var(--ink);font-family:var(--font-sans)}
+.row .v b{color:var(--ink)}
+
+/* fog meter */
+.meter{margin:8px 0 0}
+.meter-track{height:10px;border-radius:9999px;background:var(--surface-strong);overflow:hidden;
+  border:1px solid var(--hairline-strong)}
+.meter-fill{height:100%;border-radius:9999px;background:
+  repeating-linear-gradient(45deg,currentColor,currentColor 7px,rgba(255,255,255,.34) 7px,rgba(255,255,255,.34) 12px)}
+.meter-cap{font-family:var(--font-mono);font-size:12px;margin:8px 0 0;color:var(--body);
+  display:flex;justify-content:space-between;gap:12px}
+.meter-cap b{color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
+
+.nextstep{background:var(--canvas-soft);border:1px solid var(--hairline);border-radius:var(--radius-btn);padding:16px 18px;margin:2px 0 0;
+  display:flex;gap:12px;align-items:flex-start}
+.nextstep .arrow{font-family:var(--font-sans);font-weight:600;color:var(--primary);font-size:18px;line-height:1.3}
+.nextstep .v{font-size:16px}
+
+/* premium CTA under every output — its own soft paper strip, a small gap below the packet card */
+.track-cta{background:var(--canvas-soft);border:none;
+  border-radius:var(--radius-btn);margin-top:14px;padding:20px 26px;
+  display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.track-cta .tc-text{max-width:52ch}
+.track-cta .tc-badge{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--primary);border:1px solid var(--primary);border-radius:9999px;padding:2px 9px;margin-bottom:8px;display:inline-block}
+.track-cta p{margin:0;font-size:15px;color:var(--body);line-height:1.5;font-family:var(--font-sans)}
+.track-cta p b{color:var(--ink)}
+.btn-ghost{font-family:var(--font-sans);font-weight:500;font-size:14px;cursor:pointer;white-space:nowrap;
+  background:var(--surface-card);color:var(--ink);border:1px solid var(--hairline-strong);border-radius:var(--radius-btn);padding:11px 18px;transition:.12s}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary)}
+
+/* email capture (no match) — white feature card */
+.capture{background:var(--surface-card);color:var(--ink);border-radius:var(--radius);
+  padding:28px 26px;box-shadow:var(--shadow-card);
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+.capture .cap-file{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--label);margin:0 0 10px}
+.capture h3{font-family:var(--font-serif);font-weight:400;font-size:26px;letter-spacing:-.008em;margin:0 0 8px;color:var(--ink)}
+.capture .cap-sub{margin:0 0 18px;color:var(--body);font-size:16px;max-width:60ch;font-family:var(--font-sans)}
+.capture .cap-sub b{color:var(--ink)}
+.capform{display:flex;gap:10px;flex-wrap:wrap}
+.capform input{flex:1 1 260px;min-width:0;background:var(--surface-card);border:1px solid var(--field-border);color:var(--ink);
+  border-radius:var(--radius-btn);padding:14px 16px;font-family:var(--font-sans);font-size:16px}
+.capform input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(217,119,87,.18)}
+.capform .btn{color:var(--on-primary)}
+.cap-note{font-family:var(--font-mono);font-size:11px;color:var(--label);margin:12px 2px 0}
+.cap-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:14px 0 0;display:none}
+.cap-done.show{display:block}
+
+/* ---------- landing: premium panel — ink-inverted "featured" band ---------- */
+/* slim horizontal band (newsletter pattern): pitch on the left, email form on the right.
+   Full-width but short, so it reads as a secondary ask — never as a second hero,
+   and never mistakable for the search console above it. */
+.premium{background:var(--ink);border:none;border-radius:var(--radius);padding:28px 32px;
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;
+  gap:24px 48px;flex-wrap:wrap}
+.premium .p-left{flex:1 1 340px;min-width:0;max-width:56ch}
+.premium .p-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--primary);border:1px solid rgba(217,119,87,.55);border-radius:9999px;padding:2px 8px;display:inline-block;margin:0 0 10px}
+/* .p-title (0,2,0) outranks the generic .section h2 (0,1,1) — no !important needed */
+.premium .p-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(19px,2.4vw,24px);letter-spacing:-.008em;
+  margin:0 0 6px;color:var(--on-ink);line-height:1.25}
+.premium .p-body{color:var(--on-ink-soft);font-size:14px;margin:0;line-height:1.45;font-family:var(--font-sans)}
+.premium .p-body b{color:var(--on-ink)}
+
+/* waitlist — deliberately smaller field + a label, so it never reads as the search bar */
+.waitlist{flex:1 1 280px;max-width:360px;margin:0;position:relative}
+.waitlist .wl-lbl{font-family:var(--font-mono);font-size:10px;color:var(--on-ink-soft);margin:0 0 6px;line-height:1.3}
+.wlform{display:flex;gap:6px;flex-wrap:wrap}
+.wlform input{flex:1 1 200px;min-width:0;background:var(--surface-card);border:1px solid transparent;color:var(--ink);
+  border-radius:var(--radius-btn);padding:10px 13px;font-family:var(--font-sans);font-size:14px}
+.wlform input::placeholder{color:var(--muted-soft)}
+.wlform input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(217,119,87,.32)}
+.wl-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success-on-ink);margin:14px 0 0;display:none}
+.wl-done.show{display:block}
+
+/* ---------- sections ---------- */
+.section{padding:64px 0}
+/* extra top room before Premium so it never crowds the search/result area above it,
+   regardless of whether a result card is currently showing */
+.section-premium{padding-top:96px}
+/* pages that open directly on content (track record) sit closer to the top bar */
+.section-tight{padding-top:44px}
+.section-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--label);margin:0 0 14px}
+.section h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(28px,4.2vw,40px);letter-spacing:-.01em;
+  margin:0 0 10px;color:var(--ink);line-height:1.15}
+.section .sub{color:var(--muted);max-width:56ch;margin:0 0 26px;font-size:17px;font-family:var(--font-sans)}
+
+/* track record ledger — white card list with hairline rows */
+.ledger{box-shadow:var(--shadow-card);border-radius:var(--radius);overflow:hidden;background:var(--surface-card)}
+.ledger-row{display:grid;grid-template-columns:130px 1fr auto;gap:14px;align-items:center;
+  padding:16px 20px;border-bottom:1px solid var(--hairline);font-family:var(--font-mono);font-size:14px;
+  text-decoration:none;color:inherit}
+.ledger-row:last-child{border-bottom:none}
+.ledger-row .date{color:var(--body);font-size:12.5px}
+.ledger-row .subj{color:var(--ink);font-size:15px;font-family:var(--font-sans);font-weight:500}
+.ledger-row .vd{font-weight:600;font-size:12px;letter-spacing:.02em;text-transform:uppercase;
+  white-space:nowrap;padding:5px 11px;border-radius:9999px;border:1px solid currentColor;font-family:var(--font-sans)}
+.ledger-note{font-family:var(--font-mono);font-size:12px;color:var(--label);margin:16px 2px 0;line-height:1.6}
+.ledger-row.clickable{cursor:pointer;transition:background .12s}
+.ledger-row.clickable:hover{background:var(--canvas-soft)}
+
+/* what you get (unused, kept) */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cell{background:var(--surface-card);border:1px solid var(--hairline);border-radius:var(--radius);padding:22px}
+.cell .n{font-family:var(--font-mono);font-size:12px;color:var(--label);letter-spacing:.06em}
+.cell h4{font-family:var(--font-sans);font-weight:600;font-size:17px;margin:10px 0 6px;color:var(--ink)}
+.cell p{margin:0;font-size:15px;color:var(--muted);line-height:1.5;font-family:var(--font-sans)}
+
+/* how it works strip (unused, kept) */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:var(--surface-card);border:1px solid var(--hairline);border-radius:var(--radius);padding:22px}
+.step .sn{font-family:var(--font-mono);font-weight:400;font-size:28px;color:var(--muted-soft);line-height:1}
+.step h4{font-family:var(--font-sans);font-weight:600;font-size:17px;margin:12px 0 6px;color:var(--ink)}
+.step p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;font-family:var(--font-sans)}
+
+/* ---------- footer — light cream, hairline top ---------- */
+footer{background:var(--canvas);border-top:1px solid var(--hairline);padding:52px 0 60px;margin-top:24px}
+footer .fwrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+footer .fbrand{font-family:var(--font-sans);font-weight:600;font-size:17px;color:var(--ink)}
+footer p{font-family:var(--font-sans);font-size:14px;color:var(--muted);line-height:1.6;margin:8px 0 0;max-width:46ch}
+footer .toplink{color:var(--muted)}
+footer .toplink:hover{color:var(--ink)}
+.disc{font-family:var(--font-mono);font-size:11px;color:var(--label);margin-top:18px;
+  border-top:1px solid var(--hairline);padding-top:16px}
+
+@media(max-width:720px){
+  body{font-size:16px}
+  /* mobile nav: stack centered — brand on top, the three links centered below it.
+     Drop the desktop 3-column grid back to a centered flex column so the links stay
+     in the middle (matching the desktop centering) and never overflow off-screen. */
+  .topbar .wrap{display:flex;flex-direction:column;height:auto;min-height:64px;
+    gap:8px;padding-top:12px;padding-bottom:12px}
+  .nav-left{justify-content:center}
+  .nav-center{gap:18px;flex-wrap:wrap;justify-content:center}
+  .brand{white-space:nowrap}
+  .hero{padding:52px 0 36px}
+  /* the search pill stays a single inline bar on phones — icon + input + inset button.
+     The input just flexes; the button stays inline (overriding the full-width .btn below). */
+  .field input{flex:1 1 auto}
+  .field .btn{width:auto;height:44px;padding:0 16px}
+  /* the OTHER buttons (capture / waitlist) still go full-width when they wrap onto
+     their own flex line — real vertical padding keeps them from collapsing to ~20px. */
+  .btn{width:100%;padding:13px 22px}
+  .cta-row{flex-direction:column;align-items:stretch}
+  .cta-row a.btn,.cta-row .btn-line{width:100%;justify-content:center}
+  .trio,.grid,.steps{grid-template-columns:1fr}
+  .premium{padding:24px 20px}
+  .waitlist{max-width:none}
+  .wlform input{flex-basis:100%}
+  .ledger-row{grid-template-columns:1fr auto;gap:8px}
+  .ledger-row .date{grid-column:1/-1}
+  /* long verdicts ("Worth trying — with caveats") must never escape the card */
+  .ledger-row .vd{white-space:normal;text-align:center;line-height:1.35}
+  .track-cta{flex-direction:column;align-items:flex-start}
+  .btn-ghost{width:100%;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}

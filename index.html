@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reality Filter — is that AI launch real, or just fog?</title>
+<meta name="description" content="Check any AI launch and get a straight, evidence-backed verdict on what's hype and what's real. Free." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=6">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="nav-left">
+      <a class="brand" href="index.html"><span class="dot"></span> Reality Filter</a>
+    </div>
+    <nav class="nav-center">
+      <a class="toplink" href="#top" id="navCheck">Check a launch</a>
+      <a class="toplink" href="track-record.html">Track record</a>
+      <a class="toplink" href="#premium">Premium</a>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+  <!-- HERO = centered + stacked: the pitch, then the search tool directly below it -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span>Hype vs Reality · for AI launches</span></p>
+        <h1 class="display mid">Is that AI launch<br><span class="real-word">real</span> — or just <span class="fog-word">fog?</span></h1>
+        <p class="lede">Check any AI launch. Get a straight verdict, backed by evidence. Free.</p>
+      </div>
+      <div class="hero-search">
+        <div class="console" aria-label="Check a launch">
+          <form class="field" id="checkForm" autocomplete="off">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input id="query" type="text" placeholder="Paste an AI launch, tool, or model…" aria-label="AI launch or tool" />
+            <button class="btn" type="submit">Check&nbsp;→</button>
+          </form>
+          <div class="chips">
+            <span class="chips-lbl">Try one:</span>
+            <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
+            <button class="chip" data-q="Claude Fable 5">Claude Fable 5</button>
+            <button class="chip" data-q="Salesforce Agentforce">Salesforce Agentforce</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="result" aria-live="polite"><div class="result-inner" id="resultInner" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- PREMIUM (compact) -->
+  <section class="section section-premium" id="premium">
+    <div class="wrap">
+      <div class="premium">
+        <div class="p-left">
+          <span class="p-badge">Premium · coming soon</span>
+          <h2 class="p-title">Stop checking back. We'll watch it for you.</h2>
+          <p class="p-body">Pick a topic once. We'll alert you only when something real happens — never daily noise.</p>
+        </div>
+        <div class="waitlist">
+          <p class="wl-lbl">Leave your email — we'll tell you when it's live</p>
+          <form class="wlform" id="wlForm" autocomplete="off">
+            <input type="email" id="wlEmail" required placeholder="you@work.com" aria-label="Your email" />
+            <button class="btn" type="submit">Notify me</button>
+          </form>
+          <p class="wl-done" id="wlDone">✓ You're on the list.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fwrap">
+    <div>
+      <div class="fbrand">Reality Filter</div>
+      <p>The accountable verdict on what's real in AI — every call backed by evidence and kept on a public, dated record.</p>
+    </div>
+    <a class="toplink" href="track-record.html">See the track record →</a>
+  </div>
+  <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
+</footer>
+
+<script src="packets.js"></script>
+<script>
+const inner = document.getElementById('resultInner');
+
+function renderPacket(p){
+  return `
+  <article class="packet">
+    <div class="packet-head">
+      <div>
+        <p class="packet-file">${p.file}</p>
+        <h2 class="packet-name">${p.name}</h2>
+        <p class="packet-by">${p.by}</p>
+      </div>
+      <div class="stamp ${p.verdictClass}">
+        <span class="st-lbl">${p.stampLbl}</span>
+        <span class="st-verdict">${p.verdict}</span>
+      </div>
+    </div>
+    <div class="packet-body">
+      <div class="row"><p class="k">Official claim</p><p class="v">${p.claim}</p></div>
+      <div class="row found"><p class="k">Proof found</p><p class="v">${p.found}</p></div>
+      <div class="row miss"><p class="k">Proof missing</p><p class="v">${p.missing}</p></div>
+      <div class="row"><p class="k">Real user signals</p><p class="v">${p.signals}</p></div>
+      <div class="row"><p class="k">Pricing & limits</p><p class="v">${p.pricing}</p></div>
+      <div class="row">
+        <p class="k">Hype risk</p>
+        <div class="meter ${p.verdictClass}">
+          <div class="meter-track"><div class="meter-fill" style="width:${p.fog}%"></div></div>
+          <p class="meter-cap"><span>${p.fogWhy}</span><b>${p.fogLabel}</b></p>
+        </div>
+      </div>
+      <div class="row"><p class="k">Suggested next step</p>
+        <div class="nextstep"><span class="arrow">→</span><p class="v">${p.next}</p></div>
+      </div>
+    </div>
+  </article>
+  <div class="track-cta">
+    <div class="tc-text">
+      <span class="tc-badge">Premium</span>
+      <p><b>Want us to watch this for you?</b> We'll alert you only when something real changes — never daily noise.</p>
+    </div>
+    <button class="btn-ghost" data-track="${p.name}">Track this →</button>
+  </div>`;
+}
+
+function renderCapture(q){
+  const safe = q.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `
+  <div class="capture">
+    <p class="cap-file">NOT YET ON RECORD</p>
+    <h3>We haven't filed this one yet.</h3>
+    <p class="cap-sub">Leave your email and we'll research <b>“${safe}”</b> and send you the verdict, usually within a day.</p>
+    <form class="capform" id="capForm">
+      <input type="email" id="capEmail" required placeholder="you@work.com" aria-label="Your email" />
+      <button class="btn" type="submit">Email me the verdict</button>
+    </form>
+    <p class="cap-done" id="capDone">✓ Got it. We'll email you the verdict.</p>
+  </div>`;
+}
+
+function findPacket(q){
+  const s = q.toLowerCase().trim();
+  if(!s) return null;
+  for(const key in PACKETS){
+    if(PACKETS[key].match.some(m=>s.includes(m)||m.includes(s))) return PACKETS[key];
+  }
+  return null;
+}
+
+function showResult(q){
+  const p = findPacket(q);
+  inner.innerHTML = p ? renderPacket(p) : renderCapture(q);
+  inner.hidden = false;
+  bindResultActions();
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function bindResultActions(){
+  const cf = document.getElementById('capForm');
+  if(cf){
+    cf.addEventListener('submit',e=>{
+      e.preventDefault();
+      const email = document.getElementById('capEmail').value.trim();
+      if(!email) return;
+      document.getElementById('capDone').classList.add('show');
+      cf.querySelector('input').disabled = true;
+      cf.querySelector('button').disabled = true;
+      cf.querySelector('button').textContent = 'Sent ✓';
+    });
+  }
+  document.querySelectorAll('[data-track]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      b.textContent = "You're on the list ✓";
+      b.disabled = true;
+      b.style.opacity = .8;
+    });
+  });
+}
+
+/* form + chips */
+document.getElementById('checkForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  showResult(document.getElementById('query').value);
+});
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.getElementById('query').value = c.dataset.q;
+    showResult(c.dataset.q);
+  });
+});
+
+/* premium waitlist */
+document.getElementById('wlForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!document.getElementById('wlEmail').value.trim()) return;
+  document.getElementById('wlDone').classList.add('show');
+  this.querySelector('input').disabled=true;
+  const b=this.querySelector('button');b.disabled=true;b.textContent="On the list ✓";b.style.opacity=.85;
+});
+
+/* nav CTA: on this page "Check a launch" means "put my cursor in the search bar" */
+document.getElementById('navCheck').addEventListener('click',e=>{
+  e.preventDefault();
+  const q = document.getElementById('query');
+  q.scrollIntoView({behavior:'smooth',block:'center'});
+  q.focus({preventScroll:true});
+});
+
+/* deep-link: arriving from the track record (index.html?q=…) auto-runs a check */
+(function(){
+  const q = new URLSearchParams(location.search).get('q');
+  if(q){ document.getElementById('query').value = q; showResult(q); }
+})();
+</script>
+</body>
+</html>

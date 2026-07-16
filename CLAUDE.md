@@ -1,0 +1,70 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+A **validation-first MVP** for "Reality Filter" — a hype-vs-reality check for AI launches. A user pastes an AI launch/tool/topic and gets a verdict (`worth trying now` · `watch later` · `too early` · `mostly fog machine`) backed by an evidence packet. This is a demand test, **not** the real product — there is intentionally no backend, database, or build system yet.
+
+The two markdown files are the product's source of truth, written as pre-PRD specs:
+- `research-brief.md` — the decided model, MVP scope, validation plan, and open questions.
+- `deep-research-report.md` — market/moat analysis behind the brief.
+
+Read these before changing product behavior. Key locked decisions from them:
+- **Scope is locked to AI launches only** (Option A, confirmed with the user). It is explicitly NOT a competitor tracker, strategy advisor, or daily news feed. Do not broaden the subject to "any company/tool/news."
+- **Do NOT build the backend/automation yet.** Building it before real users show up is the documented trap. Concierge/manual delivery is the plan until demand + willingness-to-track are proven.
+- The moat is the **public dated track record** + the **Premium tracking workflow**, not the research itself (ChatGPT/Perplexity already do ~80% of the raw research).
+
+## The app
+
+Static files, no framework/bundler/dependencies (Google Fonts via CDN):
+- `index.html` — **the main page**. Centered, search-first hero — `.hero-copy` (eyebrow + h1 + lede, capped 760px) stacked above `.hero-search` (the console, capped 640px, 44px of air between them); the verdict renders below at an 860px reading width, block-centered but left-aligned text → then the Premium waitlist as a slim full-width ink band. **The hero is deliberately stacked, not a left/right split.** A Vercel-style split was tried and reverted: a split works when the right column is passive (a screenshot or video), but here the right column would be the search bar — the page's only action — so splitting makes the eye choose between reading the headline and using the tool instead of landing on one obvious target. Anthropic.com's centered search-first hero is the reference, not Vercel's split. Kept deliberately minimal — the user pushed hard to cut text, so do NOT re-add "what's in a packet", "how it works", or long marketing copy without being asked. Reads `?q=<launch>` from the URL and auto-runs a check (this is how track-record rows deep-link into a verdict). The nav is a plain link row (Check a launch · Track record · Premium); the homepage's "Check a launch" link (`#navCheck`) just scrolls to and focuses the search input — there's no separate CTA button because the search bar *is* the check action.
+- `track-record.html` — the **public dated ledger** on its own page (it grows over time, so it lives apart from the tool). Each row links to `index.html?q=<name>` to open that verdict.
+- `packets.js` — **single source of truth for the launch data** (`PACKETS` + `LEDGER_ORDER`). Loaded by both pages. Add a launch here and it appears in the tool's matching AND the track record. Each packet has a `date` used by the ledger.
+- `styles.css` — **shared design system** (tokens + components). Contains a few classes not currently used on any page (e.g. `.trio`, `.steps`, `.grid`, landing hero variants); leave them.
+
+There is no `app.html` — an earlier two-page split (landing + tool) was reverted; the current split is instead tool vs. track-record.
+
+This directory is **not a git repository**. Skills/tools that assume git (e.g. some security-review flows) will fail here — fall back to manual review methods rather than erroring out. `git init` hasn't been run; ask before doing so.
+
+### Run / preview locally
+`file://` is blocked in the in-app preview browser, so serve over HTTP:
+```
+python -m http.server 8731
+# → http://localhost:8731/index.html
+```
+`.claude/launch.json` defines this as the `reality-filter` preview server, so the in-app Browser pane can start it via `preview_start`. Browser-pane CSS caching is aggressive during iteration — add a throwaway query param (`?v=…`) to force fresh loads.
+There is no build, lint, or test step. "Testing" = drive the flow in a browser (see below). Note: automated clicks on the example chips can miss; calling `showResult('GPT-5.6')` in the console is a reliable way to verify rendering.
+
+### Architecture (tool logic in `index.html`, data in `packets.js`)
+- **`PACKETS` object (`packets.js`)** — the single source of truth for content. Each key is a filed launch with `match` (lowercase substring aliases used for lookup), `date` (for the ledger), the packet fields (`claim`, `found`, `missing`, `signals`, `pricing`, `next`), and the verdict (`verdict`, `verdictClass`, `fog`/`fogLabel`/`fogWhy` for the hype meter). To add or edit a packet, edit this file — both the tool and the track record pick it up. Add its key to `LEDGER_ORDER` to show it in the track record.
+- **`findPacket(q)`** (in `index.html`) — case-insensitive substring match of the query against each packet's `match` aliases. Match → `renderPacket()` (evidence packet). No match → `renderCapture()` (email-capture panel).
+- **Premium "Track this" CTA** renders under the packet output — this is the paid-tier demand probe and must not be removed.
+- Example chips and the `?q=` deep-link both call `showResult()`; the track-record rows (in `track-record.html`) deep-link into it via `index.html?q=<name>`.
+
+### Deliberately stubbed (validation build)
+- **All three forms are UI-only and send nothing:** the email capture (no-match path), the "Track this" buttons, and the Premium waitlist. They just update the UI ("✓ Got it" / "You're on the list ✓"). Real wiring (Formspree was chosen) is deferred until the backend phase, per the user.
+- Packet content is hardcoded, not fetched.
+
+## Design system (keep consistent when editing UI)
+Concept: a warm parchment-canvas editorial shell modeled on **Claude/Anthropic's** product design language (this replaced an earlier Cursor-style reskin — cream canvas, sans-only Inter, hairline-only depth, orange accent — which the user deliberately abandoned in favor of this look; do not revert to the Cursor system described in old history without being asked). The pairing is **serif headlines + sans body/UI**: `.display`, `.packet-name`, `.section h2`, `.premium .p-title`, and `.capture h3` all use the book-serif `--font-serif` at weight 400 with only slight negative tracking (serif tracks badly with tight negative letter-spacing — don't push it past about `-.01em`); everything else (body copy, nav, buttons, mono labels) stays on Inter/JetBrains Mono. Depth is **soft shadow, not hairline**: outer cards (`.packet`, `.capture`, `.ledger`) use `--shadow-card` instead of a `border`; hairlines (`--hairline`/`--hairline-strong`) are kept only for *internal* dividers (packet rows, ledger rows). Signature elements unchanged in role: the white evidence card, the hype-risk "fog meter", and the ink-inverted Premium band.
+- Fonts: `Source Serif 4` (`--font-serif`, headlines only), `Inter` (`--font-sans`, body/UI), `JetBrains Mono` (`--font-mono`, every label/data/caption/ledger surface). All three loaded via the Google Fonts `<link>` in both HTML pages — if you add a font weight/style, update that link, not just the CSS var.
+- Surfaces: `--canvas` (#f0eee6 warm parchment page floor) → `--surface-card` (#fff white cards: packet, capture, ledger, chips, inputs) → `--surface-strong`/`--canvas-soft` (soft fills) → `--ink` (#3d3929, the Premium band — the one "inverted featured" surface). Outer cards float via `--shadow-card`; hairlines still separate rows *within* a card.
+- **Claude terracotta (`--primary` #d97757) is the single brand voltage and stays scarce** — only the true conversion CTAs (`.btn` search/capture/waitlist) and the `.real-word` hero accent. The nav is plain text links (no button), which keeps the accent rare and avoids a redundant CTA next to the search bar. Don't paint eyebrows, labels, or borders terracotta as decoration. Any hardcoded `rgba(...)` shadow/border tied to the accent (focus rings, badge borders) must use the terracotta RGB (217,119,87), not the old orange (245,78,0) — grep for `245,78,0` if you see an orange-tinted ring after a color-token change.
+- Small mono labels on cream/white use `--label` (#6b6552), a tone tuned to clear ~4.5:1 at caption size; `--muted`/`--muted-soft` are for larger or secondary text only (they fail AA at 11–13px).
+- **AI-timeline pastels** (`--tl-thinking/grep/read/edit/done` — peach/mint/blue/lavender/gold): scoped to the evidence packet's row dots as "investigation stages," driven by `:nth-child` on the fixed `renderPacket()` row order (1 claim=peach · 4 signals=blue · 5 pricing=lavender · 6 meter=mint · 7 next=gold; rows 2/3 found/miss keep semantic green/red). If you change the row order in `renderPacket()`, update those `nth-child` targets in `styles.css`.
+- Verdict colors are a 4-point scale via CSS vars/classes, darkened to read on white/cream: `v-go` (green), `v-watch` (gold), `v-early` (blue), `v-fog` (red/pink). Use these, not one-off colors.
+- All colors/spacing come from CSS custom properties in `:root`. Derive new styles from those tokens.
+- **`.track-cta`** (the "Track this" strip under the evidence packet) is its own soft `--canvas-soft` block with a small gap above it, not fused to the packet's bottom edge — that fused-border trick only worked when `.packet` had a hairline border, which it no longer does now that packets use `--shadow-card`.
+- **Premium band layout**: `.premium` is a slim full-width horizontal flex band (pitch in `.p-left`, email form in `.waitlist` on the right) so it never reads as a second hero or gets confused with the search bar. Its heading is `<h2 class="p-title">` styled via `.premium .p-title` — that two-class selector deliberately outranks the generic `.section h2` rule (a known cascade collision); do NOT restyle it as a bare `.premium h2` or with `!important`.
+- **Mobile (≤720px) nav**: brand left, the three links (Check a launch · Track record · Premium) right-aligned. When they don't fit beside the brand the `.topbar .wrap` flex-wraps them onto a second row under it (topbar grows to fit); the brand never wraps. Don't hide `.nav-center` — those links are the only route to the track record on phones. Other mobile rules that look odd but are load-bearing: `.btn` gets real vertical padding (it collapses to ~20px tall when it wraps off the input's flex line), and `.ledger-row .vd` allows wrapping so long verdicts ("Worth trying — with caveats") stay inside the ledger card.
+
+## Automated review (two subagents, auto-triggered)
+After any code change, TWO review subagents run automatically to check it before the user sees it:
+- **`code-reviewer`** (`.claude/agents/code-reviewer.md`) — bugs and quality issues.
+- **`security-reviewer`** (`.claude/agents/security-reviewer.md`) — XSS, injection, data leaks, risky third-party loads.
+
+Both load the `find-skills` skill first, are read-only (report, don't edit), and run in parallel. Wiring is in `.claude/settings.json`: a `PostToolUse` hook flags `.claude/.review-pending` when a `.html`/`.css`/`.js` file is edited, and the `Stop` hook injects a reminder to dispatch both reviewers before the turn ends (then clears the flag). To pause, remove the `Stop` hook from `.claude/settings.json`. Note: after editing `.claude/settings.json` you may need to reload config (`/hooks` or restart) for changes to take effect.
+
+## Content integrity
+Verdicts are the product's only asset — accuracy is the whole point. Packet content must be real and evidence-based (researched from current sources), never invented placeholder data. A wrong "worth trying now" damages trust, which is the moat.

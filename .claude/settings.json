@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "in=$(cat); printf \"%s\" \"$in\" | grep -qiE \"\\.(html|css|js)\\\"\" && touch \"${CLAUDE_PROJECT_DIR:-.}/.claude/.review-pending\" 2>/dev/null; true",
+            "statusMessage": "Flagging change for review"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "f=\"${CLAUDE_PROJECT_DIR:-.}/.claude/.review-pending\"; if [ -f \"$f\" ]; then rm -f \"$f\"; printf \"%s\" '{\"decision\": \"block\", \"reason\": \"Code files changed this turn. Before finishing, run BOTH review subagents in parallel via the Agent tool, in a single message with two Agent calls: (1) subagent_type code-reviewer and (2) subagent_type security-reviewer. Tell each what the user asked for and which files changed. If either returns issues/findings, fix them and re-run that reviewer; only report the work as done once code-reviewer is CLEAN and security-reviewer has NO ISSUES. To pause this, remove the Stop hook from .claude/settings.json.\"}'; fi",
+            "statusMessage": "Checking if reviewers should run"
+          }
+        ]
+      }
+    ]
+  }
+}

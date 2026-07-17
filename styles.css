@@ -121,6 +121,18 @@ body{
 .toplink::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:1.5px;background:var(--primary);transition:right .22s ease}
 .toplink:hover::after{right:0}
 .toplink:hover{color:var(--ink)}
+/* Draw the eye to the demand-signal links — Feedback (we want more of it) and
+   Premium (interest here is our read on willingness to pay). Terracotta accent
+   with a slow light-sweep across the text; solid accent under reduced-motion.
+   .toplink.shine (0,2,0) outranks .nav-center .toplink and footer .toplink. */
+.toplink.shine{color:var(--primary);font-weight:600;
+  background:linear-gradient(110deg,var(--primary) 0%,var(--primary) 43%,#ffe2d5 50%,var(--primary) 57%,var(--primary) 100%);
+  background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shineSweep 3.6s ease-in-out infinite}
+.toplink.shine::after{background:var(--primary)}
+@keyframes shineSweep{0%{background-position:125% 0}100%{background-position:-125% 0}}
+@media (prefers-reduced-motion:reduce){
+  .toplink.shine{animation:none;background:none;-webkit-text-fill-color:var(--primary)}}
 /* nav CTA = ink "download-style" button; keeps orange scarce for the true primary action */
 .btn-sm{font-family:var(--font-sans);font-weight:500;font-size:14px;text-decoration:none;
   background:var(--ink);color:var(--on-ink);border-radius:var(--radius-btn);padding:9px 16px;white-space:nowrap;transition:.12s}

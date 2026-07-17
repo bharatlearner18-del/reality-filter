@@ -550,20 +550,12 @@ html.dark .theme-toggle .ic-sun{display:none}
 .fb-form .btn{align-self:flex-end;padding:12px 22px}
 .fb-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:8px 0 0}
 .fb-err{font-family:var(--font-sans);font-size:13.5px;color:var(--error);margin:2px 0 0}
-/* feedback invite line in the footer of the launch page */
-/* This class sits on the same <p> that footer p also matches, so font-size and
-   max-width deliberately fall through from that rule (not inheritance — max-width
-   isn't an inherited property; it only lands because both rules hit this element).
-   footer p caps paragraphs at 46ch and ch scales with font-size, so declaring a
-   size here — it shipped at 14.5px — widens the cap and pushes this box's right
-   edge past the brand blurb's. Keep the class on a <p> inside <footer>.
-   The negative left margin (-19px = 18px padding + 1px border) outdents the pill
-   so the TEXT inside it lines up with the brand blurb and disclaimer text above
-   and below, instead of sitting indented by the box padding. */
-.fb-invite{font-family:var(--font-sans);color:var(--body);margin:26px 0 0 -19px;
-  padding:14px 18px;border:1px dashed var(--hairline-strong);border-radius:var(--radius-btn);display:inline-block}
-.fb-invite a{color:var(--primary-active);font-weight:600;text-decoration:none}
-.fb-invite a:hover{text-decoration:underline}
+/* feedback invite row in the footer of the launch page — mirrors the brand row
+   above it: descriptive text on the left, a terse CTA link on the right that
+   lines up under "See the track record →". Uses .fwrap (the same flex
+   space-between row as the brand line) plus a top margin for the gap. */
+footer .fb-row{margin-top:26px;align-items:center}
+footer .fb-note{margin:0;color:var(--body)}
 /* feedback as its own page: warm graphic card — gradient wash, radar rings, serif watermark */
 .fb-inpage{max-width:560px;padding:28px 30px;position:relative;overflow:hidden;
   background:linear-gradient(130deg,#fffdf8 0%,var(--surface-card) 45%,#f6e9df 100%);

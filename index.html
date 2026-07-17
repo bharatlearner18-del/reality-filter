@@ -176,23 +176,31 @@ function renderCapture(q){
   </div>`;
 }
 
-/* The query must CONTAIN a whole alias. It used to also match when an alias
-   contained the query (`m.includes(s)`), which fired a full verdict for "ai"
-   (inside "openai gpt"), "able" (inside "claude fable"), "sales", even "a" —
-   handing someone a confident verdict they never asked for and swallowing the
-   email capture, which is the demand signal we exist to collect.
-   Deliberately NOT token-subset matching ("every alias word appears anywhere").
-   That would catch "gemini version 3" for a "gemini 3" packet, but it also
-   catches "Gemini Ultra 3" — a different product — because tier names look like
-   filler to it. In this domain (Sol/Terra/Luna, Ultra/Pro/Nano) that collision is
-   likely, and a wrong verdict costs trust, which is the moat; a miss just routes
-   the user to the email capture and we answer by hand. So: miss safely, and cover
-   real phrasings by adding aliases to `match` in packets.js. */
+/* Match a launch even when the user phrases it loosely ("heyy the new launch of
+   chatgpt, tell me about it") — not only when they type an alias exactly. Two ways
+   to hit:
+     (a) the query CONTAINS a whole alias verbatim  ("...launch of chatgpt..." ⊇ "chatgpt")
+     (b) after dropping conversational filler (STOP), the query's remaining content
+         words are the SAME SET as an alias's  ("gemini version 3" → {gemini,3} = alias "gemini 3")
+   (b) is set-EQUALITY, not subset — that's what keeps it safe. Subset would also
+   match "Gemini Ultra 3" to a "gemini 3" packet (a different product), because a
+   tier word looks like filler to it. Equality rejects it: {gemini,ultra,3} ≠ {gemini,3}.
+   STOP holds only conversational filler — never product/tier words (pro, ultra,
+   mini, sol, turbo, numbers), or those would get stripped and collide.
+   This still can't match "ai"→GPT-5.6 or "able"→Fable 5 (a bare fragment is neither
+   contained as a whole alias nor equal to an alias's content set), so those keep
+   routing to the email capture — the demand signal we exist to collect. When a real
+   phrasing still misses, the fix is to add an alias to `match` in packets.js. */
+const STOP = new Set(('the a an of to is are new news latest about tell me my us let know knows i we want whats what how good any on for in into this that hey heyy hi please could can you your our so and give given launch launched update updates updated version model thing get got release released do does vs anyone someone real reality').split(' '));
+const contentKey = t => [...new Set(t.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().split(' ').filter(w=>w && !STOP.has(w)))].sort().join(' ');
+
 function findPacket(q){
   const s = q.toLowerCase().trim();
   if(!s) return null;
+  const qk = contentKey(q);
   for(const key in PACKETS){
-    if(PACKETS[key].match.some(m=>s.includes(m))) return PACKETS[key];
+    const hit = PACKETS[key].match.some(m => s.includes(m) || (contentKey(m) !== '' && contentKey(m) === qk));
+    if(hit) return PACKETS[key];
   }
   return null;
 }

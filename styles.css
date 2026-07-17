@@ -122,17 +122,19 @@ body{
 .toplink:hover::after{right:0}
 .toplink:hover{color:var(--ink)}
 /* Draw the eye to the demand-signal links — Feedback (we want more of it) and
-   Premium (interest here is our read on willingness to pay). Terracotta accent
-   with a slow light-sweep across the text; solid accent under reduced-motion.
+   Premium (interest here is our read on willingness to pay). The text stays --ink
+   (bold, ~10:1 on cream, so it reads AA and already outweighs the --muted nav
+   siblings); a terracotta + light glint sweeps across it like a reflection.
+   Base color must stay dark, not --primary: terracotta text on cream is only
+   ~2.7:1 and fails AA at this size. #ffeadf is a bespoke glint tint (no token).
    .toplink.shine (0,2,0) outranks .nav-center .toplink and footer .toplink. */
-.toplink.shine{color:var(--primary);font-weight:600;
-  background:linear-gradient(110deg,var(--primary) 0%,var(--primary) 43%,#ffe2d5 50%,var(--primary) 57%,var(--primary) 100%);
+.toplink.shine{color:var(--ink);font-weight:600;
+  background:linear-gradient(110deg,var(--ink) 0%,var(--ink) 40%,var(--primary) 47%,#ffeadf 50%,var(--primary) 53%,var(--ink) 60%,var(--ink) 100%);
   background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   animation:shineSweep 3.6s ease-in-out infinite}
-.toplink.shine::after{background:var(--primary)}
 @keyframes shineSweep{0%{background-position:125% 0}100%{background-position:-125% 0}}
 @media (prefers-reduced-motion:reduce){
-  .toplink.shine{animation:none;background:none;-webkit-text-fill-color:var(--primary)}}
+  .toplink.shine{animation:none;background:none;-webkit-text-fill-color:var(--ink)}}
 /* nav CTA = ink "download-style" button; keeps orange scarce for the true primary action */
 .btn-sm{font-family:var(--font-sans);font-weight:500;font-size:14px;text-decoration:none;
   background:var(--ink);color:var(--on-ink);border-radius:var(--radius-btn);padding:9px 16px;white-space:nowrap;transition:.12s}

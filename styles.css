@@ -554,7 +554,7 @@ html.dark .theme-toggle .ic-sun{display:none}
    above it: descriptive text on the left, a terse CTA link on the right that
    lines up under "See the track record →". Uses .fwrap (the same flex
    space-between row as the brand line) plus a top margin for the gap. */
-footer .fb-row{margin-top:26px;align-items:center}
+footer .fb-row{margin-top:26px}
 footer .fb-note{margin:0;color:var(--body)}
 /* feedback as its own page: warm graphic card — gradient wash, radar rings, serif watermark */
 .fb-inpage{max-width:560px;padding:28px 30px;position:relative;overflow:hidden;

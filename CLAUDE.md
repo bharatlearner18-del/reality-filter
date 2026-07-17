@@ -45,9 +45,16 @@ There is no build, lint, or test step. "Testing" = drive the flow in a browser (
 - **Premium "Track this" CTA** renders under the packet output — this is the paid-tier demand probe and must not be removed.
 - Example chips and the `?q=` deep-link both call `showResult()`; the track-record rows (in `track-record.html`) deep-link into it via `index.html?q=<name>`.
 
-### Deliberately stubbed (validation build)
-- **All four forms are UI-only and send nothing:** the email capture (no-match path), the "Track this" buttons, the Premium waitlist, and the feedback form. They just update the UI ("✓ Got it" / "You're on the list ✓" / "✓ Filed"). Real wiring (Formspree was chosen) is deferred until the backend phase, per the user. `feedback.html` arrived from the design handoff with a live `fetch()` to `https://formspree.io/f/YOUR_FORM_ID` — an unconfigured placeholder that made every submit fail — so it was stubbed to match the others. Wire all four together when the backend phase starts.
-- Packet content is hardcoded, not fetched.
+### Forms → Formspree (`forms.js`)
+All four demand-signal forms (the no-match email capture, the Premium waitlist, the "Track this" buttons, and the feedback form) post through `sendSignal()` in **`forms.js`**, loaded by `index.html` and `feedback.html`.
+- **`FORMSPREE_ID` at the top of `forms.js` is the only thing to set.** Paste the ID from `https://formspree.io/f/XXXXXXXX`.
+- **While it's empty every form stays a stub**: `sendSignal()` returns `{ok:true, skipped:true}`, so the success state shows and nothing is sent. This is deliberate — the design handoff shipped a hardcoded `YOUR_FORM_ID` placeholder that made *every* submit fail with an error, and this is the guard against repeating that. An unconfigured site must never show users an error.
+- All four post to the **same endpoint**; the `type` field (`packet request` / `premium waitlist` / `track this` / `feedback`) tells them apart in the inbox, which keeps it inside Formspree's free single-form tier. `page` is added automatically.
+- On a real send failure (network down, 4xx) `sendSignal` returns `{ok:false}` and the handler re-enables the form and shows `.form-err` — never a silent success, since the user believes they're on the list.
+- The "Track this" CTA has no email field, so its signal is an anonymous click count (launch name only). If follow-up matters, that needs a product change, not a wiring one.
+
+### Still deliberately stubbed (validation build)
+- Packet content is hardcoded in `packets.js`, not fetched. Concierge delivery (manual Gmail) is still the plan — see the validation plan in `research-brief.md`.
 
 ## Design system (keep consistent when editing UI)
 Concept: a warm parchment-canvas editorial shell modeled on **Claude/Anthropic's** product design language (this replaced an earlier Cursor-style reskin — cream canvas, sans-only Inter, hairline-only depth, orange accent — which the user deliberately abandoned in favor of this look; do not revert to the Cursor system described in old history without being asked). The pairing is **serif headlines + sans body/UI**: `.display`, `.packet-name`, `.section h2`, `.premium .p-title`, and `.capture h3` all use the book-serif `--font-serif` at weight 400 with only slight negative tracking (serif tracks badly with tight negative letter-spacing — don't push it past about `-.01em`); everything else (body copy, nav, buttons, mono labels) stays on Inter/JetBrains Mono. Depth is **soft shadow, not hairline**: outer cards (`.packet`, `.capture`, `.ledger`) use `--shadow-card` instead of a `border`; hairlines (`--hairline`/`--hairline-strong`) are kept only for *internal* dividers (packet rows, ledger rows). Signature elements unchanged in role: the white evidence card, the hype-risk "fog meter", and the ink-inverted Premium band.

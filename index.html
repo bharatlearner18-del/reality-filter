@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=34">
+<link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
 
@@ -101,6 +101,7 @@
 </footer>
 
 <script src="packets.js"></script>
+<script src="forms.js"></script>
 <script>
 // reveal the premium band when it scrolls into view
 (function initPremiumReveal(){
@@ -242,20 +243,29 @@ function showResult(q, instant){
 function bindResultActions(){
   const cf = document.getElementById('capForm');
   if(cf){
-    cf.addEventListener('submit',e=>{
+    cf.addEventListener('submit',async e=>{
       e.preventDefault();
       const email = document.getElementById('capEmail').value.trim();
       if(!email) return;
+      const btn = cf.querySelector('button');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      const r = await sendSignal({type:'packet request', email, launch:document.getElementById('query').value.trim()});
+      if(!r.ok){ btn.disabled = false; btn.textContent = 'Email me the verdict'; showFormError(cf); return; }
+      clearFormError(cf);
       document.getElementById('capDone').classList.add('show');
       cf.querySelector('input').disabled = true;
-      cf.querySelector('button').disabled = true;
-      cf.querySelector('button').textContent = 'Sent ✓';
+      btn.textContent = 'Sent ✓';
     });
   }
   document.querySelectorAll('[data-track]').forEach(b=>{
-    b.addEventListener('click',()=>{
+    b.addEventListener('click',async ()=>{
+      b.disabled = true; b.textContent = 'Sending…';
+      // no email field on this CTA — the click itself is the demand signal
+      const r = await sendSignal({type:'track this', launch:b.dataset.track});
+      // .track-cta is a flex row, so an injected .form-err would become a third
+      // column — report failure in the label instead; the button is the retry
+      if(!r.ok){ b.disabled = false; b.textContent = "Couldn't send — try again"; return; }
       b.textContent = "You're on the list ✓";
-      b.disabled = true;
       b.style.opacity = .8;
     });
   });
@@ -274,12 +284,18 @@ document.querySelectorAll('.chip').forEach(c=>{
 });
 
 /* premium waitlist */
-document.getElementById('wlForm').addEventListener('submit',function(e){
+document.getElementById('wlForm').addEventListener('submit',async function(e){
   e.preventDefault();
-  if(!document.getElementById('wlEmail').value.trim()) return;
+  const email = document.getElementById('wlEmail').value.trim();
+  if(!email) return;
+  const b=this.querySelector('button');
+  b.disabled=true; b.textContent="Sending…";
+  const r = await sendSignal({type:'premium waitlist', email});
+  if(!r.ok){ b.disabled=false; b.textContent="Notify me"; showFormError(this); return; }
+  clearFormError(this);
   document.getElementById('wlDone').classList.add('show');
   this.querySelector('input').disabled=true;
-  const b=this.querySelector('button');b.disabled=true;b.textContent="On the list ✓";b.style.opacity=.85;
+  b.textContent="On the list ✓";b.style.opacity=.85;
 });
 
 /* nav CTA: on this page "Check a launch" means "put my cursor in the search bar" */

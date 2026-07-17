@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=34">
+<link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
 
@@ -60,12 +60,22 @@
   <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
 </footer>
 
+<script src="forms.js"></script>
 <script>
-/* UI-only, like the waitlist and capture forms — Formspree wiring waits for the backend phase */
 const form = document.getElementById('fbForm');
-form.addEventListener('submit', function(e){
+form.addEventListener('submit', async function(e){
   e.preventDefault();
-  if(!document.getElementById('fbText').value.trim()) return;
+  const message = document.getElementById('fbText').value.trim();
+  if(!message) return;
+  const btn = form.querySelector('.btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const r = await sendSignal({
+    type:'feedback',
+    message,
+    email: document.getElementById('fbEmail').value.trim() || '(not provided)'
+  });
+  if(!r.ok){ btn.disabled = false; btn.textContent = 'Send feedback'; showFormError(form); return; }
+  clearFormError(form);
   form.hidden = true;
   document.querySelector('.fb-done').hidden = false;
 });

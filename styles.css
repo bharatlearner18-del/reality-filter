@@ -563,7 +563,9 @@ html.dark .theme-toggle .ic-sun{display:none}
 .fb-form textarea:focus,.fb-form input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(217,119,87,.15)}
 .fb-form .btn{align-self:flex-end;padding:12px 22px}
 .fb-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:8px 0 0}
-.fb-err{font-family:var(--font-sans);font-size:13.5px;color:var(--error);margin:2px 0 0}
+/* shared by all four forms — injected by showFormError() in forms.js, and only
+   ever on a real send failure, never when FORMSPREE_ID is unset */
+.form-err{font-family:var(--font-sans);font-size:13.5px;color:var(--error);margin:8px 0 0}
 /* feedback invite row in the footer of the launch page — mirrors the brand row
    above it: descriptive text on the left, a terse CTA link on the right that
    lines up under "See the track record →". Uses .fwrap (the same flex

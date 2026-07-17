@@ -535,8 +535,11 @@ footer .toplink:hover{color:var(--ink)}
    privacy note reads as fine print rather than a CTA competing with the footer links */
 .disc a{color:var(--label);text-decoration:underline;text-underline-offset:2px}
 .disc a:hover{color:var(--ink)}
+/* 60ch, overriding footer p's 46ch: ch scales with font-size, so at 11px mono the
+   inherited cap is only ~304px and the disclaimer + Formspree disclosure wrapped to
+   four cramped lines. 60ch lands near the brand blurb's width above it. */
 .disc{font-family:var(--font-mono);font-size:11px;color:var(--label);margin-top:18px;
-  border-top:1px solid var(--hairline);padding-top:16px}
+  max-width:60ch;border-top:1px solid var(--hairline);padding-top:16px}
 
 /* theme toggle — last item in the nav */
 .theme-toggle{background:none;border:1px solid var(--hairline-strong);border-radius:9999px;cursor:pointer;

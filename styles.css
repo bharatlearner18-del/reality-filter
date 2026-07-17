@@ -531,6 +531,10 @@ footer .fbrand{font-family:var(--font-sans);font-weight:600;font-size:17px;color
 footer p{font-family:var(--font-sans);font-size:14px;color:var(--muted);line-height:1.6;margin:8px 0 0;max-width:46ch}
 footer .toplink{color:var(--muted)}
 footer .toplink:hover{color:var(--ink)}
+/* the only link in the disclaimer — stays --label like the text around it, so the
+   privacy note reads as fine print rather than a CTA competing with the footer links */
+.disc a{color:var(--label);text-decoration:underline;text-underline-offset:2px}
+.disc a:hover{color:var(--ink)}
 .disc{font-family:var(--font-mono);font-size:11px;color:var(--label);margin-top:18px;
   border-top:1px solid var(--hairline);padding-top:16px}
 

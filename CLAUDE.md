@@ -28,7 +28,13 @@ There is no build step, so the `?v=NN` cache-buster on each page's `<link rel="s
 
 There is no `app.html` — an earlier two-page split (landing + tool) was reverted; the current split is instead tool vs. track-record.
 
-This directory **is a git repository** (initialized when the Claude Design handoff was ported, so the pre-port site stayed recoverable). There is **no remote** — nothing has been pushed anywhere; ask before adding one or pushing. Because there's no remote, skills/tools that diff against `origin/HEAD` (e.g. the `security-review` skill) still fail here — fall back to manual review methods, or diff against a local commit, rather than erroring out.
+This directory **is a git repository**, pushed to the `bharatlearner18-del/reality-filter` GitHub remote (see Deployment below) — `origin/HEAD` resolves and `git diff origin/HEAD...` works, so skills/tools that diff against it (e.g. `security-review`) no longer need the manual-diff fallback this file used to describe. Keep local in sync with `git pull --rebase origin main` before relying on that diff.
+
+### Deployment
+Live at **https://bharatlearner18-del.github.io/reality-filter/** — GitHub Pages, deployed from the public repo `bharatlearner18-del/reality-filter` (branch `main`) via the `.github/workflows/static.yml` GitHub Actions workflow (the "Static HTML" Pages template, not Jekyll — this site has no Jekyll front matter and would render wrong under it). Every push to `main` triggers a redeploy automatically, live in 1-2 minutes; no manual step after `git push`.
+- **The user has two GitHub accounts** (`bharatlearner18-del`, the repo owner, and an older `bharattewatia463-cmd` that was cached in Windows' credential manager and caused a 403 on the first push). If a push is ever rejected with a permission error, that's almost certainly the cause — check which account the credential manager is using.
+- `static.yml` was added through GitHub's web UI (the Pages setup flow), not from a local commit — so **local can silently drift behind the remote**. `git pull --rebase origin main` before starting new work, not just before pushing.
+- Formspree (`forms.js`'s `FORMSPREE_ID`) should be domain-locked in the Formspree dashboard to the Pages host once it's live, or the public form ID can be spammed from other origins.
 
 ### Run / preview locally
 `file://` is blocked in the in-app preview browser, so serve over HTTP:

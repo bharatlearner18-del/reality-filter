@@ -326,6 +326,7 @@ article.packet{color:var(--ink)}
 .packet-body .row:nth-child(5){animation-delay:.42s}
 .packet-body .row:nth-child(6){animation-delay:.5s}
 .packet-body .row:nth-child(7){animation-delay:.58s}
+.packet-body .row:nth-child(8){animation-delay:.66s}
 .row{padding:18px 12px;margin:0 -12px;border-bottom:1px solid var(--hairline);border-radius:10px;transition:background .15s}
 .packet-body .row:hover{background:var(--canvas-soft)}
 .row:last-child{border-bottom:none}
@@ -333,14 +334,17 @@ article.packet{color:var(--ink)}
   color:var(--body);margin:0 0 6px;display:flex;align-items:center;gap:8px}
 .row .k::before{content:"";width:7px;height:7px;border-radius:9999px;background:var(--hairline-strong)}
 /* AI-timeline pastel "stages": all 5 signature pastels track the fixed row order from
-   renderPacket() (1 claim=peach · 4 signals=blue · 5 pricing=lavender · 6 meter=mint · 7 next=gold);
-   found/miss (rows 2/3) keep their semantic green/red.
+   renderPacket() (1 claim=peach · 2 why-this-matters=peach · 5 experts=blue ·
+   6 pricing=lavender · 7 meter=mint · 8 next=gold);
+   found/miss (rows 3/4) keep their semantic green/red — no nth-child rule may
+   target 3 or 4, or it outranks the .found/.miss class colors.
    If renderPacket() row order changes, update these nth-child targets. */
-.packet-body .row:nth-child(1) .k::before{background:var(--tl-thinking)}
-.packet-body .row:nth-child(4) .k::before{background:var(--tl-read)}
-.packet-body .row:nth-child(5) .k::before{background:var(--tl-edit)}
-.packet-body .row:nth-child(6) .k::before{background:var(--tl-grep)}
-.packet-body .row:nth-child(7) .k::before{background:var(--tl-done)}
+.packet-body .row:nth-child(1) .k::before,
+.packet-body .row:nth-child(2) .k::before{background:var(--tl-thinking)}
+.packet-body .row:nth-child(5) .k::before{background:var(--tl-read)}
+.packet-body .row:nth-child(6) .k::before{background:var(--tl-edit)}
+.packet-body .row:nth-child(7) .k::before{background:var(--tl-grep)}
+.packet-body .row:nth-child(8) .k::before{background:var(--tl-done)}
 .row.miss .k::before{background:var(--error)}
 .row.found .k::before{background:var(--success)}
 .row .v{margin:0;font-size:16px;line-height:1.55;color:var(--ink);font-family:var(--font-sans)}

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=37">
+<link rel="stylesheet" href="styles.css?v=38">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
       <div class="hero-copy">
         <p class="eyebrow"><span>Hype vs Reality · for AI launches</span></p>
         <h1 class="display mid">Is that AI launch<br><span class="real-word">real</span> — or just <span class="fog-word">fog?</span></h1>
-        <p class="lede">Check any AI launch. Get a straight verdict, backed by evidence. Free.</p>
+        <p class="lede">Check any AI launch. Get a straight verdict, backed by evidence — and kept on a public, dated record. Free.</p>
       </div>
       <div class="hero-search">
         <div class="console" aria-label="Check a launch">
@@ -70,7 +70,7 @@
         <div class="p-left">
           <span class="p-badge">Premium · coming soon</span>
           <h2 class="p-title">Stop checking back. We'll watch it for you.</h2>
-          <p class="p-body">Pick a topic once. We'll alert you only when something real happens — never daily noise.</p>
+          <p class="p-body">Track a launch once. We keep re-checking the evidence — new independent benchmarks, pricing moves, adoption numbers, quiet walk-backs — and email you only when the verdict actually changes. That replaces hours of tab-hopping with the one email that matters, and unlike asking a chatbot, every call stays on our public record.</p>
         </div>
         <div class="waitlist">
           <p class="wl-lbl">Leave your email — we'll tell you when it's live</p>
@@ -136,9 +136,10 @@ function renderPacket(p){
     </div>
     <div class="packet-body">
       <div class="row"><p class="k">Official claim</p><p class="v">${p.claim}</p></div>
+      <div class="row"><p class="k">Why this matters</p><p class="v">${p.stakes}</p></div>
       <div class="row found"><p class="k">Proof found</p><p class="v">${p.found}</p></div>
       <div class="row miss"><p class="k">Proof missing</p><p class="v">${p.missing}</p></div>
-      <div class="row"><p class="k">Real user signals</p><p class="v">${p.signals}</p></div>
+      <div class="row"><p class="k">Experts &amp; real users</p><p class="v">${p.signals}</p></div>
       <div class="row"><p class="k">Pricing & limits</p><p class="v">${p.pricing}</p></div>
       <div class="row">
         <p class="k">Hype risk</p>
@@ -155,7 +156,7 @@ function renderPacket(p){
   <div class="track-cta">
     <div class="tc-text">
       <span class="tc-badge">Premium</span>
-      <p><b>Want us to watch this for you?</b> We'll alert you only when something real changes — never daily noise.</p>
+      <p><b>Want us to watch this for you?</b> Verdicts age as facts change — we re-check the evidence and alert you only when something real happens. Never daily noise.</p>
     </div>
     <button class="btn-ghost" data-track="${p.name}">Track this →</button>
   </div>`;
@@ -167,7 +168,7 @@ function renderCapture(q){
   <div class="capture">
     <p class="cap-file">NOT YET ON RECORD</p>
     <h3>We haven't filed this one yet.</h3>
-    <p class="cap-sub">Leave your email and we'll research <b>“${safe}”</b> and send you the verdict, usually within a day.</p>
+    <p class="cap-sub">Leave your email and we'll research <b>“${safe}”</b> by hand — launch docs, pricing, independent benchmarks, what real users report — and send you the verdict, usually within a day.</p>
     <form class="capform" id="capForm">
       <input type="email" id="capEmail" required placeholder="you@work.com" aria-label="Your email" />
       <button class="btn" type="submit">Email me the verdict</button>

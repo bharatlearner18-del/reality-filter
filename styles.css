@@ -262,6 +262,8 @@ a.btn{text-decoration:none}
 .chips>*:nth-child(2){animation-delay:.63s}
 .chips>*:nth-child(3){animation-delay:.71s}
 .chips>*:nth-child(4){animation-delay:.79s}
+.chips>*:nth-child(5){animation-delay:.87s}
+.chips>*:nth-child(6){animation-delay:.95s}
 .chips .chips-lbl{font-family:var(--font-mono);font-size:11px;color:var(--label);
   letter-spacing:.04em;margin-right:2px}
 .chip{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--body);background:var(--surface-card);
@@ -492,6 +494,8 @@ article.packet{color:var(--ink)}
 .ledger-row:nth-child(3){animation-delay:.16s}
 .ledger-row:nth-child(4){animation-delay:.24s}
 .ledger-row:nth-child(5){animation-delay:.32s}
+.ledger-row:nth-child(6){animation-delay:.4s}
+.ledger-row:nth-child(7){animation-delay:.48s}
 .ledger-row:last-child{border-bottom:none}
 .ledger-row .date{color:var(--body);font-size:12.5px}
 .ledger-row .subj{color:var(--ink);font-size:15px;font-family:var(--font-sans);font-weight:500;display:flex;align-items:center;gap:9px;transition:color .15s}

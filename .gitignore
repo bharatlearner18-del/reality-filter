@@ -1,1 +1,5 @@
 .claude/.review-pending
+
+# Private working file — real people's feedback (may contain emails/names).
+# Kept local only; the repo deploys to a public GitHub Pages site, so this must NOT be pushed.
+FEEDBACK.md

@@ -65,8 +65,71 @@ const PACKETS = {
     fogLabel:"High",
     fogWhy:"The gap between \"1 billion agents\" and ~6% paid adoption is the whole story.",
     next:"Buying: pilot one narrow, measurable use case with a hard success metric and an exit clause — pay for that outcome, not the roadmap. Building in this space: the expansion data proves committed adopters do get value from agents; the ~94% who won't pay yet is your real market signal."
+  },
+  sonnet5:{
+    match:["claude sonnet 5","sonnet 5","sonnet5","sonnet-5"],
+    name:"Claude Sonnet 5",
+    by:"Anthropic · launched June 30, 2026",
+    file:"CASE FILE · AI-2026-015",
+    date:"2026-07-19",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"The most agentic Sonnet yet — it plans, drives browsers and terminals, and performs close to Opus 4.8 on reasoning, tool use and coding, at a lower price.",
+    stakes:"If you run coding agents or tool-driven pipelines, this launch decides your monthly bill — the sticker price says \"cheaper than Opus,\" but the per-task math can say the opposite. If you just want a strong daily model, the capability claim mostly holds; it's the economics you need to check before migrating.",
+    found:"Real and generally available since June 30. The capability story checks out on independent numbers: 80.4% on Terminal-Bench 2.1 (beating Opus 4.8's 74.6%), 1,618 Elo on GDPval-AA v2 knowledge work (edging Opus's 1,615), 81.2% on OSWorld-Verified, 63.2% on SWE-bench Pro (vs Opus's 69.2%). 1M-token context, shipped with intro pricing.",
+    missing:"The \"cheaper\" part. Simon Willison flagged that the new tokenizer emits <b>~30% more tokens for the same text</b>, so the lower sticker price doesn't translate into a lower bill. Artificial Analysis measured an average Intelligence Index task at <b>$2.29 on Sonnet 5 — more than the $1.97 the \"pricier\" Opus 4.8 costs</b>, and nearly double Sonnet 4.6's $1.20. Community analysis calls it a cost-per-task inversion: above medium effort, the cheaper model is the worse deal per solved task.",
+    signals:"Launch week was rough — Hacker News and Reddit threads centred on the hidden cost math and the forced default switch, not on capability. A week later, hands-on coding reviews are largely positive: the model is genuinely strong. The criticism is about pricing transparency, not performance — which is exactly why you should run your own cost math.",
+    pricing:"$2/$10 per 1M tokens (intro, until Aug 31, 2026), then $3/$15 — but budget on tokens-per-task, not price-per-token: the tokenizer change means the same work consumes ~30% more tokens.",
+    fog:40,
+    fogLabel:"Medium",
+    fogWhy:"Strong model with real benchmarks — the fog is \"cheaper than Opus,\" which per task it often isn't.",
+    next:"Builders: benchmark your real workload's cost on Sonnet 5 vs Opus 4.8 before switching — per-task cost, not per-token price, is the number that matters, and intro pricing ends Aug 31. Everyone else: it's a genuinely strong daily model — use it and ignore the pricing drama."
+  },
+  grok45:{
+    match:["grok 4.5","grok4.5","grok-4.5","xai grok"],
+    name:"Grok 4.5",
+    by:"xAI · launched July 2026",
+    file:"CASE FILE · AI-2026-016",
+    date:"2026-07-19",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"xAI's smartest model — built for coding, agentic tasks and knowledge work, pitched as the cheapest frontier-class coding model on the market.",
+    stakes:"If your agent or coding bills are climbing, this is the launch that actually changes the math: frontier-class coding at $2/$6 with far fewer tokens burned per task. But if you're buying for a company, the parent company's privacy and moderation record is a procurement question no benchmark answers.",
+    found:"Real and available (API, Cursor, the Grok apps), and the value claim holds up independently: #1 on agentic tool use per Artificial Analysis (Intelligence Index 54, #4 overall), 83.3% on Terminal-Bench 2.1, 64.7% on SWE-Bench Pro (a hair above GPT-5.6 Sol's 64.6%), top of the July 2026 Long-Horizon Terminal Bench, and 29% on Snorkel's GDPVal+ professional tasks — above GPT-5.5 (22%) and Opus 4.8 (21%). The efficiency is the headline: ~16K output tokens per SWE-Bench Pro task vs Opus 4.8's ~67K — 4.2x fewer.",
+    missing:"Reliability and trust. On AA-Omniscience, accuracy improved but the measured <b>hallucination rate roughly doubled to ~54%</b> — it attempts more answers and is confidently wrong more often. And the record around it is genuinely messy: Grok Build was caught uploading <b>27,800x more data than its task required</b> (xAI disabled the behavior and promised to delete the data), on top of earlier moderation and image-generation scandals that drew regulatory scrutiny in multiple countries.",
+    signals:"Developer sentiment lands on powerful but polarizing. The emerging pro workflow is telling: teams use GPT-5.6 Sol or Claude Fable 5 to plan, then route execution to Grok 4.5 to cut costs — trusting it as the cheap workhorse, not the brain. Enterprise skeptics point at the controversy record, including the debate over its government integrations.",
+    pricing:"$2/$6 per 1M tokens with a 500K context — the cheapest frontier-class coder right now, and the 4.2x token efficiency compounds the saving on agentic work.",
+    fog:50,
+    fogLabel:"Medium",
+    fogWhy:"The coding value is real and independently measured — the fog is a doubled hallucination rate and a parent company with a trust problem.",
+    next:"Builders: try it as the execution layer in your pipeline this week — the cost math is genuinely compelling — but gate its output with tests, given the hallucination jump. Buying for a company: run the privacy/procurement review alongside the benchmark; the technical case and the trust case point in different directions. Casual users: fine to try — verify factual answers."
+  },
+  gemini31:{
+    /* deliberately NO bare "gemini 3" alias: Gemini 3 Pro is a different, weaker
+       model (this packet's own copy says 3.1 doubled its ARC-AGI-2 score), so a
+       "gemini 3 pro" query must MISS to email capture, not get 3.1's verdict. */
+    match:["gemini 3.1 pro","gemini 3.1","gemini-3.1"],
+    name:"Gemini 3.1 Pro",
+    by:"Google DeepMind · launched February 19, 2026",
+    file:"CASE FILE · AI-2026-017",
+    date:"2026-07-19",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"Google's most advanced model — launch materials touted wins on 13 of 16 benchmarks, PhD-level reasoning, and the top spot on the leaderboards that matter.",
+    stakes:"If you pick models off leaderboards, this is the case study in curated benchmark marketing — the wins are real, and so are the losses that didn't make the launch post. And if your work punishes confident wrong answers (research, law, medicine), one number below should make the decision for you.",
+    found:"The intelligence is real and independently verified: #1 on Artificial Analysis' Intelligence Index (57 — 4 points clear of Claude Opus 4.6), first in 6 of its 10 categories, 77.1% on ARC-AGI-2 (more than double Gemini 3 Pro's score), 76.2% on SWE-bench with real strengths in monorepo analysis and long context. Hallucination genuinely improved — from 88% to 50% on AA-Omniscience. This is a frontier model, not vapor.",
+    missing:"The benchmarks left out. SmartScope's analysis of the \"13 of 16 wins\" found the omissions tell the other half: GDPval-AA has Claude ahead by <b>300+ points</b>, and the hallucination number is still stark — <b>~50% on AA-Omniscience: when it doesn't know, it guesses half the time</b> — with its tendency to answer confidently rather than admit uncertainty unchanged. Reviewers also call the gap between the model's intelligence and the Gemini app's day-to-day utility the widest in the industry.",
+    signals:"Towards AI's take sums up the expert consensus: it takes the benchmark crown, but the tools race is another matter — brilliant engine, weaker product. Real users echo it: strong on defined reasoning tasks, inconsistent on multi-step agent work, where reviewers say rival models had already caught up by early 2026.",
+    pricing:"Available now via the Gemini app and API, no gate, competitively priced — long-context and monorepo work is where the price-performance genuinely shines.",
+    fog:55,
+    fogLabel:"Medium",
+    fogWhy:"A real frontier model wrapped in curated marketing — the published wins are true; the omitted losses are the story.",
+    next:"Builders: use it where it demonstrably leads — long context, monorepo analysis, hard reasoning — but run your own agentic evals before trusting it in multi-step workflows. If factual reliability is your constraint, the ~50% hallucination-under-uncertainty number says test before you trust. Everyone else: excellent for reasoning-heavy questions — verify anything factual."
   }
 };
 
 /* newest first — controls order in the track record */
-const LEDGER_ORDER = ["gpt56","fable5","agentforce"];
+const LEDGER_ORDER = ["grok45","sonnet5","gemini31","gpt56","fable5","agentforce"];

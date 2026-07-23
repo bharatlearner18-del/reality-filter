@@ -24,7 +24,7 @@ Static files, no framework/bundler/dependencies (Google Fonts via CDN):
 - `packets.js` — **single source of truth for the launch data** (`PACKETS` + `LEDGER_ORDER`). Loaded by both pages. Add a launch here and it appears in the tool's matching AND the track record. Each packet has a `date` used by the ledger.
 - `styles.css` — **shared design system** (tokens + components). Contains a few classes not currently used on any page (e.g. `.trio`, `.steps`, `.grid`, landing hero variants); leave them.
 
-There is no build step, so the `?v=NN` cache-buster on each page's `<link rel="stylesheet" href="styles.css?v=NN">` is hand-maintained. **Any edit to `styles.css` must bump that number in all three HTML files** (`index.html`, `track-record.html`, `feedback.html`) — otherwise a browser that already loaded the old `styles.css?v=NN` keeps serving it from cache and the change won't be visible until the number changes.
+There is no build step, so the `?v=NN` cache-buster on each page's `<link rel="stylesheet" href="styles.css?v=NN">` is hand-maintained. **Any edit to `styles.css` must bump that number in all three HTML files** (`index.html`, `track-record.html`, `premium.html`) — otherwise a browser that already loaded the old `styles.css?v=NN` keeps serving it from cache and the change won't be visible until the number changes. (2026-07-23: `feedback.html` was deleted and Premium moved to its own `premium.html`, so the three pages loading `styles.css` are now index / track-record / premium.)
 
 There is no `app.html` — an earlier two-page split (landing + tool) was reverted; the current split is instead tool vs. track-record.
 

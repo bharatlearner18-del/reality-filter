@@ -141,7 +141,7 @@ body{
 
 /* ---------- hero — centered + stacked: pitch above, the search tool directly below ----------
    The search bar is the page's single action, so nothing sits beside it competing for the eye. */
-.hero{position:relative;overflow:hidden;padding:84px 0 56px}
+.hero{position:relative;overflow:hidden;padding:84px 0 120px}
 /* drifting fog: three soft pastel washes (the site's timeline palette) breathing behind the headline */
 .hero::before{content:"";position:absolute;inset:-25% -15%;pointer-events:none;
   background:

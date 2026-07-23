@@ -4,12 +4,12 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reality Filter — is that AI launch real, or just fog?</title>
-<meta name="description" content="Check any AI launch and get a straight, evidence-backed verdict on what's hype and what's real. Free." />
+<meta name="description" content="Pick a company or AI topic. We read the launches, benchmarks, expert takes and real user reports — and email you what's actually real. Free." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=39">
+<link rel="stylesheet" href="styles.css?v=44">
 </head>
 <body>
 
@@ -19,10 +19,9 @@
       <a class="brand" href="index.html"><span class="dot"></span> Reality Filter</a>
     </div>
     <nav class="nav-center">
-      <a class="toplink" href="#top" id="navCheck">Check a launch</a>
+      <a class="toplink" href="#how">How it works</a>
+      <a class="toplink" href="#check" id="navCheck">Check a launch</a>
       <a class="toplink" href="track-record.html">Track record</a>
-      <a class="toplink shine" href="#premium">Premium</a>
-      <a class="toplink shine" href="feedback.html">Feedback</a>
           <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
         <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
@@ -32,14 +31,198 @@
 </div>
 
 <main id="top">
-  <!-- HERO = centered + stacked: the pitch, then the search tool directly below it -->
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-copy">
-        <p class="eyebrow"><span>Hype vs Reality · for AI launches</span></p>
-        <h1 class="display mid">Is that AI launch<br><span class="real-word">real</span> — or just <span class="fog-word">fog?</span></h1>
-        <p class="lede">Check any AI launch. Get a straight verdict, backed by evidence — and kept on a public, dated record. Free.</p>
+
+  <!-- HERO — the tracking pitch + signup card. id="premium" stays on this section so
+       the "Start tracking" links on the other two pages (index.html#premium) land here. -->
+  <section class="hero-track" id="premium">
+    <div class="wrap ht-grid">
+      <div class="ht-copy">
+        <p class="eyebrow"><span>Hype vs reality · tracked for you</span></p>
+        <h1 class="display mid">Track a company.<br>Read only what's <span class="real-word">real</span>.</h1>
+        <p class="lede">Pick a company — say <b>OpenAI</b> or <b>Anthropic</b> — or a topic like AI agents. We read every launch, benchmark, expert take and real-user thread about it, so you don't have to. What reaches you is the reality: what's proven, what's marketing, and what it changes for you — so the call that used to cost you a week of reading takes five minutes.</p>
+        <ul class="ht-points">
+          <li><b>Decide faster, and be right more often</b> — build, buy or ignore, called on evidence instead of a headline</li>
+          <li><b>Get your hours back</b> — stop scanning X, Reddit, YouTube, blogs and a dozen news feeds</li>
+          <li><b>Don't lose weeks to an overhyped tool</b> — you'll know the limits before you build on them</li>
+          <li><b>Bring your team the receipts</b> — forward one email and the whole debate has the same facts</li>
+        </ul>
       </div>
+      <div class="ht-card">
+        <span class="free-badge">Free for the next 6 days</span>
+        <h2 class="ht-card-title">Start tracking in 20 seconds</h2>
+        <p class="wl-lbl"><b>1 ·</b> Pick a company or topic <span class="wl-hint" id="wlHint">— choose at least one</span></p>
+        <div class="wl-topics" id="wlTopics">
+          <button type="button" class="wl-chip" data-topic="OpenAI" aria-pressed="false">OpenAI</button>
+          <button type="button" class="wl-chip" data-topic="Anthropic" aria-pressed="false">Anthropic</button>
+          <button type="button" class="wl-chip" data-topic="New model launches" aria-pressed="false">New model launches</button>
+          <button type="button" class="wl-chip" data-topic="AI coding tools" aria-pressed="false">AI coding tools</button>
+          <button type="button" class="wl-chip" data-topic="AI agents" aria-pressed="false">AI agents</button>
+          <button type="button" class="wl-chip" data-topic="AI startups" aria-pressed="false">AI startups</button>
+        </div>
+        <p class="wl-lbl"><b>2 ·</b> Where should the reality land?</p>
+        <form class="wlform" id="wlForm" autocomplete="off">
+          <input type="email" id="wlEmail" required placeholder="you@work.com" aria-label="Your email" />
+          <button class="btn" type="submit">Start tracking</button>
+        </form>
+        <p class="wl-done" id="wlDone">✓ You're in. We've started watching — your first reality check lands within a day.</p>
+        <p class="wl-note">That's it — no step 3. Hand-researched, so we're capped at 15 trackers right now.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS — the three steps, with the real GPT-5.6 re-check playing beside them -->
+  <section class="section how" id="how">
+    <div class="wrap">
+      <p class="section-eyebrow">// how it works</p>
+      <h2>You pick. We read everything. You get the reality.</h2>
+      <div class="how-grid">
+        <ol class="how-steps">
+          <li>
+            <span class="how-num">1</span>
+            <div>
+              <h3>Pick what to track</h3>
+              <p>A company (OpenAI, Anthropic) or a topic (AI agents, coding tools, startups). One click and your email — that's the whole setup.</p>
+            </div>
+          </li>
+          <li>
+            <span class="how-num">2</span>
+            <div>
+              <h3>We read everything about it</h3>
+              <p>Every launch and announcement, the company's own claims, independent benchmarks, expert reviews, and what real users actually report.</p>
+              <div class="src-row" aria-label="Sources we read for you">
+                <span class="src-pill">X / Twitter</span>
+                <span class="src-pill">Reddit</span>
+                <span class="src-pill">YouTube</span>
+                <span class="src-pill">Blogs</span>
+                <span class="src-pill">Benchmarks</span>
+                <span class="src-pill">News</span>
+                <span class="src-pill">Launch docs</span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <span class="how-num">3</span>
+            <div>
+              <h3>You get the reality in your inbox</h3>
+              <p>One email that separates genuine progress from marketing hype — the evidence for and against, with context, and what it means for you. Not a feed. Never noise.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="how-side">
+          <p class="how-side-lbl">Watch it happen — a real one from our record:</p>
+          <!-- auto-playing 4-step demo; the story inside is the real GPT-5.6 re-check
+               (filed "Too early" Jul 14 → upgraded Jul 18 when independent benchmark
+               numbers landed; GA rollout had already begun Jul 9), not invented data.
+               These frames hand-duplicate packets.js's gpt56 entry — if that verdict
+               is ever re-checked again, update the frames here too or they misstate
+               the record. aria-hidden tracks the active frame (toggled in show()). -->
+          <div class="p-demo" id="pDemo">
+            <div class="p-demo-frames">
+              <div class="p-frame on" aria-hidden="false">
+                <p class="p-frame-tag">Step 1 — you pick</p>
+                <div class="p-frame-chips" aria-hidden="true">
+                  <span class="p-mini-chip sel">OpenAI</span>
+                  <span class="p-mini-chip">Anthropic</span>
+                  <span class="p-mini-chip">AI agents</span>
+                </div>
+                <p class="p-frame-line dim">Tell us what to watch for you.</p>
+              </div>
+              <div class="p-frame" aria-hidden="true">
+                <p class="p-frame-tag">Step 2 — we keep re-checking</p>
+                <p class="p-frame-line">Jul 14 · GPT-5.6 filed: <span class="v-early">Too early</span></p>
+                <p class="p-frame-line dim">…benchmarks, pricing, adoption re-checked…</p>
+                <p class="p-frame-line">Jul 18 · independent benchmark numbers land</p>
+              </div>
+              <div class="p-frame" aria-hidden="true">
+                <p class="p-frame-tag">Step 3 — the verdict changes</p>
+                <div class="p-frame-verdict">
+                  <span class="p-v-launch">GPT-5.6</span>
+                  <span class="p-v-old v-early">Too early</span>
+                  <span class="p-v-arrow" aria-hidden="true">→</span>
+                  <span class="p-v-new v-watch">Worth trying — with caveats</span>
+                </div>
+                <p class="p-frame-line dim">This really happened — it's on our track record.</p>
+              </div>
+              <div class="p-frame" aria-hidden="true">
+                <p class="p-frame-tag">Step 4 — you get one email</p>
+                <p class="p-frame-mail"><b>Reality Filter → you:</b> “GPT-5.6 verdict changed.”</p>
+                <p class="p-frame-line dim">That's the whole service — one email, not a feed.</p>
+              </div>
+            </div>
+            <div class="p-demo-dots">
+              <button type="button" class="on" aria-current="true" aria-label="Show step 1 — you pick"></button>
+              <button type="button" aria-current="false" aria-label="Show step 2 — we keep re-checking"></button>
+              <button type="button" aria-current="false" aria-label="Show step 3 — the verdict changes"></button>
+              <button type="button" aria-current="false" aria-label="Show step 4 — you get one email"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT LANDS IN YOUR INBOX -->
+  <section class="section inbox">
+    <div class="wrap">
+      <p class="section-eyebrow">// what lands in your inbox</p>
+      <h2>Everything that matters. Nothing that doesn't.</h2>
+      <ul class="inbox-grid">
+        <li><b>Launches &amp; announcements</b> that actually change something — not every press release.</li>
+        <li><b>Claims vs evidence</b> — what the company says, next to what's independently verified.</li>
+        <li><b>Expert takes</b> — what named reviewers and researchers actually found.</li>
+        <li><b>Real user reports</b> — what people who tried it say, not what the demo shows.</li>
+        <li><b>Progress vs hype</b> — a straight call on what's genuine and what's marketing.</li>
+        <li><b>Context</b> — why it matters for you, so the numbers mean something.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="section for-who">
+    <div class="wrap">
+      <p class="section-eyebrow">// who it's for</p>
+      <h2>Built for people who decide things.</h2>
+      <div class="for-grid">
+        <article class="for-card">
+          <p class="for-tag">Founders</p>
+          <h3>Watch the market without living on X.</h3>
+          <ul>
+            <li>Know within a day whether a rival's launch is meaningful or just noise</li>
+            <li>Make product and strategy calls on evidence, not headlines</li>
+            <li>Get back the hours you spend scrolling for signal</li>
+            <li>Stay informed automatically — no daily checking</li>
+          </ul>
+        </article>
+        <article class="for-card">
+          <p class="for-tag">Product managers</p>
+          <h3>Walk into every debate with evidence.</h3>
+          <ul>
+            <li>Track competitors and market trends in one place</li>
+            <li>Back product decisions with verified numbers, not vibes</li>
+            <li>Spot real shifts before they're obvious</li>
+            <li>Skip the hours of manual research every week</li>
+          </ul>
+        </article>
+        <article class="for-card">
+          <p class="for-tag">Builders &amp; developers</p>
+          <h3>Integrate what's real. Skip what isn't.</h3>
+          <ul>
+            <li>Know if an API, model or tool is worth integrating before you start</li>
+            <li>See the limitations before you build on top of them</li>
+            <li>Avoid weeks lost to overhyped products</li>
+            <li>Make technical calls faster, on evidence</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY THE ENGINE — the original checker, kept below the pitch -->
+  <section class="section check" id="check">
+    <div class="wrap">
+      <p class="section-eyebrow">// try the engine</p>
+      <h2>See a verdict before you sign up.</h2>
+      <p class="sub">Your tracking emails are built from these. Check any AI launch against our public, dated record — free, no email needed.</p>
       <div class="hero-search">
         <div class="console" aria-label="Check a launch">
           <form class="field" id="checkForm" autocomplete="off">
@@ -62,27 +245,7 @@
       </div>
 
       <div id="result" aria-live="polite"><div class="result-inner" id="resultInner" hidden></div></div>
-    </div>
-  </section>
-
-  <!-- PREMIUM (compact) -->
-  <section class="section section-premium" id="premium">
-    <div class="wrap">
-      <div class="premium">
-        <div class="p-left">
-          <span class="p-badge">Premium · coming soon</span>
-          <h2 class="p-title">Stop checking back. We'll watch it for you.</h2>
-          <p class="p-body">Track a launch once. We keep re-checking the evidence — new independent benchmarks, pricing moves, adoption numbers, quiet walk-backs — and email you only when the verdict actually changes. That replaces hours of tab-hopping with the one email that matters, and unlike asking a chatbot, every call stays on our public record.</p>
-        </div>
-        <div class="waitlist">
-          <p class="wl-lbl">Leave your email — we'll tell you when it's live</p>
-          <form class="wlform" id="wlForm" autocomplete="off">
-            <input type="email" id="wlEmail" required placeholder="you@work.com" aria-label="Your email" />
-            <button class="btn" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>Notify me</button>
-          </form>
-          <p class="wl-done" id="wlDone">✓ You're on the list.</p>
-        </div>
-      </div>
+      <p class="check-record"><a class="toplink" href="track-record.html">Every verdict stays on the public track record →</a></p>
     </div>
   </section>
 </main>
@@ -95,26 +258,52 @@
     </div>
     <a class="toplink" href="track-record.html">See the track record →</a>
   </div>
-  <div class="wrap fwrap fb-row">
-    <p class="fb-note">Spotted something off, or have an idea?</p>
-    <a class="toplink shine" href="feedback.html">Give us your feedback →</a>
-  </div>
   <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters. Anything you send us is delivered through <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Formspree</a>.</p></div>
 </footer>
 
 <script src="packets.js"></script>
 <script src="forms.js"></script>
 <script>
-// reveal the premium band when it scrolls into view
-(function initPremiumReveal(){
+/* how-it-works demo — plays like a short clip: 4 frames auto-advance on a loop while
+   in view. Dots are manual controls; hover pauses; prefers-reduced-motion stops
+   the auto-advance entirely (dots still step through). */
+(function initHowDemo(){
   const run = ()=>{
-    const band = document.querySelector('.premium');
-    if(!band) return;
-    if(!('IntersectionObserver' in window)){band.classList.add('in-view');return}
-    const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){band.classList.add('in-view');io.disconnect()}}),{threshold:.25});
-    io.observe(band);
-    // safety net: never leave the band invisible
-    setTimeout(()=>band.classList.add('in-view'), 2500);
+    const demo = document.getElementById('pDemo');
+    if(!demo) return;
+    const frames = [...demo.querySelectorAll('.p-frame')];
+    const dots   = [...demo.querySelectorAll('.p-demo-dots button')];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null, hovering = false;
+    const show = n=>{
+      i = (n + frames.length) % frames.length;
+      // aria-hidden tracks the visual state: opacity alone leaves every frame in the
+      // accessibility tree, which reads as four overlapping steps at once
+      frames.forEach((f,k)=>{ f.classList.toggle('on', k===i); f.setAttribute('aria-hidden', k===i ? 'false' : 'true'); });
+      dots.forEach((d,k)=>{ d.classList.toggle('on', k===i); d.setAttribute('aria-current', k===i ? 'true' : 'false'); });
+    };
+    const play = ()=>{ if(reduced || timer) return; timer = setInterval(()=>show(i+1), 3200); };
+    const stop = ()=>{ clearInterval(timer); timer = null; };
+    // hovering/focused gate every play() call, so neither an IntersectionObserver
+    // re-fire (resize, layout shift) nor a dot activation can restart the loop while
+    // the reader is paused on it. focused only latches for keyboard focus
+    // (:focus-visible) — a mouse click that happens to focus a dot shouldn't pin
+    // the loop paused after the pointer leaves.
+    let focused = false;
+    const paused = ()=> hovering || focused;
+    dots.forEach((d,k)=>d.addEventListener('click', ()=>{ stop(); show(k); if(!paused()) play(); }));
+    demo.addEventListener('mouseenter', ()=>{ hovering = true; stop(); });
+    demo.addEventListener('mouseleave', ()=>{ hovering = false; if(!paused()) play(); });
+    demo.addEventListener('focusin', e=>{
+      let kb = true; // browsers without :focus-visible pause on any focus — safe default
+      try{ kb = e.target.matches(':focus-visible'); }catch(_){ }
+      if(kb){ focused = true; stop(); }
+    });
+    demo.addEventListener('focusout', ()=>{ focused = false; if(!paused()) play(); });
+    if(!('IntersectionObserver' in window)){ play(); return; }
+    // run only while on screen — saves the loop from spinning in a background tab
+    const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ if(!paused()) play(); } else stop(); }),{threshold:.3});
+    io.observe(demo);
   };
   if(document.readyState==='loading') addEventListener('DOMContentLoaded', run); else run();
 })();
@@ -157,7 +346,7 @@ function renderPacket(p){
   </article>
   <div class="track-cta">
     <div class="tc-text">
-      <span class="tc-badge">Premium</span>
+      <span class="tc-badge">Tracking</span>
       <p><b>Want us to watch this for you?</b> Verdicts age as facts change — we re-check the evidence and alert you only when something real happens. Never daily noise.</p>
     </div>
     <button class="btn-ghost" data-track="${p.name}">Track this →</button>
@@ -306,19 +495,34 @@ document.querySelectorAll('.chip').forEach(c=>{
   });
 });
 
-/* premium waitlist */
+/* tracking signup — step 1: toggle topic chips, step 2: email. The chosen topics
+   ride along in the signal, so the inbox shows WHAT each person wants tracked. */
+document.querySelectorAll('.wl-chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const on = c.classList.toggle('sel');
+    c.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if(on) document.getElementById('wlHint').classList.remove('show');
+  });
+});
 document.getElementById('wlForm').addEventListener('submit',async function(e){
   e.preventDefault();
   const email = document.getElementById('wlEmail').value.trim();
   if(!email) return;
+  const topics = [...document.querySelectorAll('.wl-chip.sel')].map(c=>c.dataset.topic);
+  if(!topics.length){
+    document.getElementById('wlHint').classList.add('show');
+    document.getElementById('wlTopics').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
   const b=this.querySelector('button');
   b.disabled=true; b.textContent="Sending…";
-  const r = await sendSignal({type:'premium waitlist', email});
-  if(!r.ok){ b.disabled=false; b.textContent="Notify me"; showFormError(this); return; }
+  const r = await sendSignal({type:'tracking signup', email, watching: topics.join(', ')});
+  if(!r.ok){ b.disabled=false; b.textContent="Start tracking"; showFormError(this); return; }
   clearFormError(this);
   document.getElementById('wlDone').classList.add('show');
   this.querySelector('input').disabled=true;
-  b.textContent="On the list ✓";b.style.opacity=.85;
+  document.querySelectorAll('.wl-chip').forEach(c=>c.disabled=true);
+  b.textContent="Tracking ✓";b.style.opacity=.85;
 });
 
 /* nav CTA: on this page "Check a launch" means "put my cursor in the search bar" */

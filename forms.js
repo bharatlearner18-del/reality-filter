@@ -1,5 +1,5 @@
-/* Formspree wiring for the four demand-signal forms: the no-match email capture,
-   the Premium waitlist, the "Track this" buttons, and the feedback form.
+/* Formspree wiring for the demand-signal forms: the no-match email capture,
+   the tracking signup, and the "Track this" buttons.
 
    ── SET THIS ──────────────────────────────────────────────────────────────────
    Paste the ID from your Formspree form's endpoint:
@@ -11,9 +11,9 @@
    placeholder that made every submit fail, which is the trap this avoids).
    ─────────────────────────────────────────────────────────────────────────────
 
-   All four post to the SAME endpoint; the `type` field tells them apart in the
+   All post to the SAME endpoint; the `type` field tells them apart in the
    Formspree inbox, which keeps this inside the free tier's single-form limit. */
-const FORMSPREE_ID = 'mvzekadw';
+const FORMSPREE_ID = 'xbdnyoao';
 
 const FORMSPREE_URL = FORMSPREE_ID ? 'https://formspree.io/f/' + FORMSPREE_ID : null;
 

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Feedback — Reality Filter</title>
+<meta name="description" content="Grade us back — honest feedback on Reality Filter." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="stylesheet" href="styles.css?v=39">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="nav-left">
+      <a class="brand" href="index.html"><span class="dot"></span> Reality Filter</a>
+    </div>
+    <nav class="nav-center">
+      <a class="toplink" href="index.html">Check a launch</a>
+      <a class="toplink" href="track-record.html">Track record</a>
+      <a class="toplink" href="index.html#premium">Premium</a>
+      <a class="toplink active" href="feedback.html">Feedback</a>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+  <section class="section section-tight tr-hero">
+    <div class="wrap">
+      <p class="section-eyebrow">// feedback</p>
+      <h2 class="tr-title">We'd love your honest thoughts<span class="tr-dot">.</span></h2>
+      <p class="sub">We grade AI launches for honesty — please grade us back. If something felt confusing, missing, or plain wrong, tell us. It genuinely helps, and every note is read.</p>
+      <div class="fb-card fb-inpage">
+        <form class="fb-form" id="fbForm">
+          <textarea id="fbText" required rows="5" placeholder="Your honest advice…" aria-label="Your feedback"></textarea>
+          <input type="email" id="fbEmail" placeholder="you@work.com (optional — if you want a reply)" aria-label="Your email (optional)" />
+          <button class="btn" type="submit">Send feedback</button>
+        </form>
+        <p class="fb-done" hidden>✓ Filed. Thank you — we read every one.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fwrap">
+    <div>
+      <div class="fbrand">Reality Filter</div>
+      <p>The accountable verdict on what's real in AI — every call backed by evidence and kept on a public, dated record.</p>
+    </div>
+    <a class="toplink" href="index.html">← Back to check a launch</a>
+  </div>
+  <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters. Anything you send us is delivered through <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Formspree</a>.</p></div>
+</footer>
+
+<script src="forms.js"></script>
+<script>
+const form = document.getElementById('fbForm');
+form.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const message = document.getElementById('fbText').value.trim();
+  if(!message) return;
+  const btn = form.querySelector('.btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const r = await sendSignal({
+    type:'feedback',
+    message,
+    email: document.getElementById('fbEmail').value.trim() || '(not provided)'
+  });
+  if(!r.ok){ btn.disabled = false; btn.textContent = 'Send feedback'; showFormError(form); return; }
+  clearFormError(form);
+  form.hidden = true;
+  document.querySelector('.fb-done').hidden = false;
+});
+</script>
+<script>
+// topbar shadow once the page scrolls
+const tb = document.querySelector('.topbar');
+addEventListener('scroll', ()=>tb.classList.toggle('scrolled', scrollY>8), {passive:true});
+</script>
+<script>
+// theme toggle
+document.querySelector('[data-theme-toggle]').addEventListener('click', ()=>{
+  const dark = document.documentElement.classList.toggle('dark');
+  try{ localStorage.setItem('rf-theme', dark?'dark':'light'); }catch(e){}
+});
+</script>
+</body>
+</html>

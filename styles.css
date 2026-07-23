@@ -72,9 +72,12 @@ html.dark{
 html.dark body::after{opacity:.07}
 html.dark .topbar{background:rgba(38,37,33,.88)}
 html.dark .hero::before{opacity:.5}
-html.dark .field input,html.dark .wlform input,html.dark .capform input{background:var(--canvas);color:var(--ink)}
+html.dark .field input,html.dark .wlform input,html.dark .capform input,
+html.dark .fb-form textarea,html.dark .fb-form input{background:var(--canvas);color:var(--ink)}
 html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--muted-soft)}
+html.dark .premium{background:var(--canvas-soft)}
 html.dark .track-cta{background:linear-gradient(105deg,var(--canvas-soft),#343128)}
+html.dark .fb-inpage{background:linear-gradient(130deg,#34322c 0%,var(--surface-card) 45%,#3a3129 100%)}
 html.dark .meter-track{background:var(--canvas)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -118,9 +121,8 @@ body{
 .toplink::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:1.5px;background:var(--primary);transition:right .22s ease}
 .toplink:hover::after{right:0}
 .toplink:hover{color:var(--ink)}
-/* Draws the eye to whichever demand-signal link needs it most — currently unused
-   in markup (its last use, the Feedback nav link/footer CTA, was removed 2026-07-23
-   along with feedback.html), kept for reuse on a future link. The text stays --ink
+/* Draw the eye to the demand-signal links — Feedback (we want more of it) and
+   Premium (interest here is our read on willingness to pay). The text stays --ink
    (bold, ~10:1 on cream, so it reads AA and already outweighs the --muted nav
    siblings); a terracotta + light glint sweeps across it like a reflection.
    Base color must stay dark, not --primary: terracotta text on cream is only
@@ -138,13 +140,30 @@ body{
   background:var(--ink);color:var(--on-ink);border-radius:var(--radius-btn);padding:9px 16px;white-space:nowrap;transition:.12s}
 .btn-sm:hover{background:#38362c}
 
-/* fogdrift is shared by .hero-track::before and .tr-hero::before */
+/* ---------- hero — centered + stacked: pitch above, the search tool directly below ----------
+   The search bar is the page's single action, so nothing sits beside it competing for the eye. */
+.hero{position:relative;overflow:hidden;padding:84px 0 56px}
+/* drifting fog: three soft pastel washes (the site's timeline palette) breathing behind the headline */
+.hero::before{content:"";position:absolute;inset:-25% -15%;pointer-events:none;
+  background:
+    radial-gradient(640px 340px at 16% 18%, rgba(223,168,143,.26), transparent 68%),
+    radial-gradient(720px 380px at 84% 12%, rgba(159,187,224,.20), transparent 70%),
+    radial-gradient(560px 320px at 58% 96%, rgba(159,201,162,.16), transparent 70%);
+  filter:blur(6px);animation:fogdrift 16s ease-in-out infinite alternate}
 @keyframes fogdrift{to{transform:translate3d(2.5%,2%,0) scale(1.05)}}
-/* the console column — now used by the #check section (capped narrower than the copy) */
+.hero .wrap{position:relative;z-index:1}
+/* orchestrated load: eyebrow → headline → lede → console rise in sequence */
+.hero .eyebrow{animation:rise .5s .05s cubic-bezier(.2,.7,.2,1) both}
+.hero h1.display{animation:rise .55s .16s cubic-bezier(.2,.7,.2,1) both}
+.hero .lede{animation:rise .55s .3s cubic-bezier(.2,.7,.2,1) both}
+.hero .hero-search{animation:rise .6s .44s cubic-bezier(.2,.7,.2,1) both}
+.hero.compact{padding:56px 0 32px}
+.hero .wrap{text-align:center}
+.hero-copy{max-width:760px;margin:0 auto}
+/* the console gets its own breathing room under the headline, capped narrower than the copy */
 .hero-search{width:100%;max-width:640px;margin:44px auto 0}
-/* left-aligned by default: the eyebrow lives in the left-aligned .hero-track pitch column */
 .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--label);margin:0 0 22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  color:var(--label);margin:0 0 22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
 .eyebrow .sep{width:22px;height:1px;background:var(--hairline-strong)}
 h1.display{font-weight:400;letter-spacing:-.012em;line-height:1.08;margin:0;
   font-size:clamp(40px,7.4vw,72px);color:var(--ink)}
@@ -386,135 +405,36 @@ article.packet{color:var(--ink)}
 .cap-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:14px 0 0;display:none}
 .cap-done.show{display:block}
 
-/* ---------- landing: tracking hero — pitch left, signup card right ----------
-   The hero IS the signup now: copy + proof points on the left, the two-step
-   card (topic chips → email) on the right. A left/right split is safe here
-   because the left column is passive reading and the card is the one action —
-   unlike the old search-bar split this replaced. */
-.hero-track{position:relative;overflow:hidden;padding:76px 0 64px}
-.hero-track::before{content:"";position:absolute;inset:-25% -15%;pointer-events:none;
-  background:
-    radial-gradient(620px 320px at 12% 8%, rgba(223,168,143,.22), transparent 68%),
-    radial-gradient(700px 360px at 88% 4%, rgba(159,187,224,.17), transparent 70%);
-  filter:blur(6px);animation:fogdrift 18s ease-in-out infinite alternate}
-.hero-track .wrap{position:relative;z-index:1}
-.ht-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:28px 56px;align-items:center}
-.ht-copy .lede{margin-left:0;max-width:54ch}
-.ht-copy .lede b{color:var(--ink)}
-/* load order: copy rises first, then the card */
-.hero-track .eyebrow{animation:rise .5s .05s cubic-bezier(.2,.7,.2,1) both}
-.hero-track h1.display{animation:rise .55s .16s cubic-bezier(.2,.7,.2,1) both}
-.hero-track .lede{animation:rise .55s .3s cubic-bezier(.2,.7,.2,1) both}
-.ht-points{animation:rise .55s .42s cubic-bezier(.2,.7,.2,1) both}
-.ht-card{animation:rise .6s .5s cubic-bezier(.2,.7,.2,1) both}
-.ht-points{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
-/* NOT display:flex — each point is one wrapping sentence with a bold lead-in, and
-   flex would make the <b> and the text after it separate columns. */
-.ht-points li{font-family:var(--font-mono);font-size:12px;line-height:1.55;color:var(--body);position:relative;padding-left:18px}
-.ht-points li::before{content:"✓";color:var(--v-go);font-weight:700;position:absolute;left:0;top:0}
-/* the payoff half of each point carries the weight; the "why" trails in body tone */
-.ht-points li b{font-weight:700;color:var(--ink)}
-/* the signup card — the page's one action */
-.ht-card{background:var(--surface-card);border-radius:var(--radius);box-shadow:var(--shadow-card);padding:26px 28px}
-.free-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--primary);border:1px solid rgba(217,119,87,.55);border-radius:9999px;padding:3px 10px 3px 8px;
-  display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;background:rgba(217,119,87,.06)}
-.free-badge::before{content:"";width:6px;height:6px;border-radius:9999px;background:var(--primary);animation:pulse 2.2s ease-in-out infinite}
+/* ---------- landing: premium panel — ink-inverted "featured" band ---------- */
+/* slim horizontal band (newsletter pattern): pitch on the left, email form on the right.
+   Full-width but short, so it reads as a secondary ask — never as a second hero,
+   and never mistakable for the search console above it. */
+.premium{background:linear-gradient(115deg,#fbfaf6 0%,var(--canvas) 55%,#f3e7de 100%);border:1px solid var(--hairline-strong);border-radius:var(--radius);padding:34px 38px;
+  box-shadow:var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.7);
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;
+  gap:24px 48px;flex-wrap:wrap}
+/* slow-turning dashed “radar” seals — quiet graphic signature for the watching service */
+.premium::after{content:"";position:absolute;right:-70px;top:50%;margin-top:-115px;width:230px;height:230px;
+  border:1.5px dashed rgba(217,119,87,.4);border-radius:50%;pointer-events:none;animation:spinSlow 46s linear infinite}
+.premium::before{content:"";position:absolute;right:-32px;top:50%;margin-top:-77px;width:154px;height:154px;
+  border:1px dashed rgba(217,119,87,.25);border-radius:50%;pointer-events:none;animation:spinSlow 30s linear infinite reverse}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.premium .p-left{position:relative;z-index:1}
+.premium .waitlist{z-index:1}
+.premium .p-left{flex:1 1 340px;min-width:0;max-width:56ch}
+.premium .p-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--primary);border:1px solid rgba(217,119,87,.55);border-radius:9999px;padding:3px 10px 3px 8px;display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;background:rgba(255,255,255,.6)}
+.premium .p-badge::before{content:"";width:6px;height:6px;border-radius:9999px;background:var(--primary);animation:pulse 2.2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(217,119,87,.45)}55%{box-shadow:0 0 0 5px rgba(217,119,87,0)}}
-.ht-card-title{font-family:var(--font-serif);font-weight:400;font-size:22px;letter-spacing:-.008em;
-  margin:0 0 16px;color:var(--ink);line-height:1.2}
+/* .p-title (0,2,0) outranks the generic .section h2 (0,1,1) — no !important needed */
+.premium .p-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(19px,2.4vw,24px);letter-spacing:-.008em;
+  margin:0 0 6px;color:var(--ink);line-height:1.25}
+.premium .p-body{color:var(--body);font-size:14px;margin:0;line-height:1.45;font-family:var(--font-sans)}
+.premium .p-body b{color:var(--ink)}
 
-/* ---------- how it works — numbered steps + the demo clip ---------- */
-.how-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:36px 56px;align-items:start;margin-top:26px}
-.how-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:28px}
-.how-steps li{display:flex;gap:16px}
-.how-num{font-family:var(--font-mono);font-size:13px;color:var(--primary);border:1px solid rgba(217,119,87,.45);
-  border-radius:9999px;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:2px}
-.how-steps h3{font-family:var(--font-sans);font-weight:600;font-size:16px;color:var(--ink);margin:4px 0 6px}
-.how-steps p{font-family:var(--font-sans);font-size:14.5px;line-height:1.55;color:var(--body);margin:0}
-.src-row{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
-.src-pill{font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:9999px;
-  border:1px solid var(--hairline-strong);color:var(--label);background:var(--surface-card)}
-.how-side{position:sticky;top:92px}
-.how-side-lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--label);margin:0 0 8px}
-
-/* ---------- what lands in your inbox ---------- */
-.inbox-grid{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:0 44px}
-.inbox-grid li{font-family:var(--font-sans);font-size:14.5px;line-height:1.55;color:var(--body);
-  padding:14px 0 14px 26px;border-bottom:1px solid var(--hairline);position:relative}
-.inbox-grid li::before{content:"✓";position:absolute;left:2px;top:14px;color:var(--v-go);font-weight:700}
-.inbox-grid li b{color:var(--ink)}
-
-/* ---------- who it's for ---------- */
-.for-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
-.for-card{background:var(--surface-card);border-radius:var(--radius);box-shadow:var(--shadow-card);padding:24px 24px 20px}
-.for-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--label);margin:0 0 10px}
-.for-card h3{font-family:var(--font-serif);font-weight:400;font-size:20px;letter-spacing:-.008em;color:var(--ink);margin:0 0 12px;line-height:1.25}
-.for-card ul{list-style:none;margin:0;padding:0}
-.for-card li{font-family:var(--font-sans);font-size:13.5px;line-height:1.5;color:var(--body);
-  padding:8px 0 8px 18px;border-top:1px solid var(--hairline);position:relative}
-.for-card li::before{content:"→";position:absolute;left:0;top:8px;color:var(--label);font-size:12px}
-.for-card li:first-child{border-top:none}
-
-/* ---------- try the engine (the checker, demoted below the pitch) ---------- */
-.check{text-align:center}
-.check .sub{margin:0 auto}
-.check .chips{justify-content:center}
-.check .hero-search{margin-top:30px}
-.check-record{margin:34px 0 0;font-family:var(--font-sans);font-size:14px}
-
-/* how-it-works demo — plays like a short clip (4 auto-advancing frames on a loop,
-   driven by initHowDemo in index.html). The story inside is the real GPT-5.6
-   re-check (filed "Too early" Jul 14, upgraded at GA Jul 18) — same .v-early/.v-watch
-   tokens as the packet/ledger. Frames are grid-stacked (all in cell 1/1) so the card
-   sizes itself to the tallest frame with no hardcoded height; the dots double as
-   manual controls, and prefers-reduced-motion stops the auto-advance in JS. */
-.p-demo{margin:16px 0 0;background:var(--surface-card);border-radius:10px;
-  padding:12px 14px 10px;box-shadow:0 4px 14px rgba(61,57,41,.08);max-width:100%}
-.p-demo-frames{display:grid}
-.p-frame{grid-area:1/1;opacity:0;transform:translateY(4px);
-  transition:opacity .45s ease,transform .45s ease;pointer-events:none}
-.p-frame.on{opacity:1;transform:none;pointer-events:auto}
-.p-frame-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--label);margin:0 0 8px}
-.p-frame-line{font-family:var(--font-mono);font-size:11px;line-height:1.6;color:var(--body);margin:0}
-.p-frame-line.dim{color:var(--label)}
-.p-frame-chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
-.p-mini-chip{font-family:var(--font-mono);font-size:10px;padding:3px 9px;border-radius:9999px;
-  border:1px solid var(--hairline-strong);color:var(--label);background:var(--surface-card)}
-.p-mini-chip.sel{border-color:rgba(217,119,87,.65);color:var(--ink);background:rgba(217,119,87,.10);font-weight:700}
-.p-frame-verdict{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--font-sans);margin:0 0 6px}
-.p-v-launch{font-weight:600;font-size:13px;color:var(--ink)}
-.p-v-old{font-size:12px;text-decoration:line-through;opacity:.75}
-.p-v-arrow{color:var(--label);font-size:12px}
-.p-v-new{font-weight:600;font-size:12.5px}
-.p-frame-mail{font-family:var(--font-sans);font-size:12.5px;color:var(--body);margin:0 0 4px}
-.p-frame-mail b{color:var(--ink)}
-/* dots read as 7px but hit as 24px (WCAG 2.5.8 minimum target size): the 8.5px
-   padding is invisible tap-slop (background-clip:content-box keeps the fill off it)
-   — don't shrink it back. Unselected fill is --field-border, the token the design
-   system notes as clearing the 3:1 non-text-contrast bar (--hairline-strong doesn't). */
-.p-demo-dots{display:flex;gap:0;margin:1.5px 0 0 -8.5px}
-.p-demo-dots button{width:24px;height:24px;border-radius:9999px;border:0;padding:8.5px;
-  background:var(--field-border);background-clip:content-box;cursor:pointer;transition:background-color .2s,transform .2s}
-.p-demo-dots button.on{background-color:var(--primary);transform:scale(1.25)}
-.p-demo-dots button:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(217,119,87,.32)}
-
-/* signup card internals — two numbered steps: 1 · topic chips, 2 · email */
-.wl-lbl{font-family:var(--font-mono);font-size:10px;color:var(--label);margin:0 0 6px;line-height:1.3}
-.wl-lbl b{color:var(--ink)}
-.wl-topics{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
-.wl-chip{font-family:var(--font-mono);font-size:11px;letter-spacing:.01em;padding:7px 12px;border-radius:9999px;
-  border:1px solid var(--field-border);background:var(--surface-card);color:var(--body);cursor:pointer;
-  transition:border-color .15s,background .15s,color .15s,box-shadow .15s}
-.wl-chip:hover{border-color:var(--primary)}
-.wl-chip:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(217,119,87,.32)}
-.wl-chip.sel{border-color:rgba(217,119,87,.75);background:rgba(217,119,87,.12);color:var(--ink);font-weight:700}
-.wl-chip.sel::before{content:"✓ ";color:var(--primary)}
-.wl-chip:disabled{opacity:.6;cursor:default}
-.wl-note{font-family:var(--font-mono);font-size:10px;color:var(--label);margin:0 0 14px;line-height:1.4}
-.wl-hint{color:var(--error);display:none}
-.wl-hint.show{display:inline}
+/* waitlist — deliberately smaller field + a label, so it never reads as the search bar */
+.waitlist{flex:1 1 280px;max-width:360px;margin:0;position:relative}
+.waitlist .wl-lbl{font-family:var(--font-mono);font-size:10px;color:var(--label);margin:0 0 6px;line-height:1.3}
 .wlform{display:flex;gap:6px;flex-wrap:wrap}
 .wlform input{flex:1 1 200px;min-width:0;background:#ffffff;border:1px solid var(--field-border);color:var(--ink);
   border-radius:var(--radius-btn);padding:12px 14px;font-family:var(--font-sans);font-size:14px;
@@ -526,6 +446,9 @@ article.packet{color:var(--ink)}
 
 /* ---------- sections ---------- */
 .section{padding:64px 0}
+/* extra top room before Premium so it never crowds the search/result area above it,
+   regardless of whether a result card is currently showing */
+.section-premium{padding-top:96px}
 /* pages that open directly on content (track record) sit closer to the top bar */
 .section-tight{padding-top:44px}
 .section-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -636,14 +559,52 @@ footer .toplink:hover{color:var(--ink)}
 html.dark .theme-toggle .ic-moon{display:block}
 html.dark .theme-toggle .ic-sun{display:none}
 
+/* ---------- feedback modal ---------- */
+.fb-overlay{position:fixed;inset:0;z-index:80;background:rgba(61,57,41,.4);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;padding:20px;animation:fbFade .2s ease both}
+@keyframes fbFade{from{opacity:0}}
+.fb-card{background:var(--surface-card);border-radius:var(--radius);box-shadow:0 24px 70px rgba(61,57,41,.3);
+  width:100%;max-width:480px;padding:30px 32px;position:relative;animation:rise .3s cubic-bezier(.2,.7,.2,1) both}
+.fb-x{position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;line-height:1;
+  color:var(--muted-soft);cursor:pointer;padding:4px}
+.fb-x:hover{color:var(--ink)}
+.fb-eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);margin:0 0 10px}
+.fb-title{font-family:var(--font-serif);font-weight:400;font-size:26px;letter-spacing:-.008em;margin:0 0 8px;color:var(--ink)}
+.fb-sub{margin:0 0 18px;color:var(--body);font-size:14.5px;line-height:1.5;font-family:var(--font-sans)}
+.fb-form{display:flex;flex-direction:column;gap:10px}
+.fb-form textarea,.fb-form input{background:#fff;border:1px solid var(--field-border);border-radius:var(--radius-btn);
+  padding:12px 14px;font-family:var(--font-sans);font-size:14px;color:var(--ink);resize:vertical;
+  transition:border-color .12s,box-shadow .12s}
+.fb-form textarea:focus,.fb-form input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(217,119,87,.15)}
+.fb-form .btn{align-self:flex-end;padding:12px 22px}
+.fb-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:8px 0 0}
 /* shared by all four forms — injected by showFormError() in forms.js, and only
    ever on a real send failure, never when FORMSPREE_ID is unset */
 .form-err{font-family:var(--font-sans);font-size:13.5px;color:var(--error);margin:8px 0 0}
+/* feedback invite row in the footer of the launch page — mirrors the brand row
+   above it: descriptive text on the left, a terse CTA link on the right that
+   lines up under "See the track record →". Uses .fwrap (the same flex
+   space-between row as the brand line) plus a top margin for the gap. */
+footer .fb-row{margin-top:26px}
+footer .fb-note{margin:0;color:var(--body)}
+/* feedback as its own page: warm graphic card — gradient wash, radar rings, serif watermark */
+.fb-inpage{max-width:560px;padding:28px 30px;position:relative;overflow:hidden;
+  background:linear-gradient(130deg,#fffdf8 0%,var(--surface-card) 45%,#f6e9df 100%);
+  box-shadow:var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.8);
+  animation:rise .55s .3s cubic-bezier(.2,.7,.2,1) both}
+.fb-inpage::before{content:"";position:absolute;right:-80px;top:-80px;width:230px;height:230px;
+  border:1.5px dashed rgba(217,119,87,.35);border-radius:50%;pointer-events:none;animation:spinSlow 44s linear infinite}
+.fb-inpage::after{content:"";position:absolute;right:-46px;top:-46px;width:162px;height:162px;
+  border:1px dashed rgba(217,119,87,.22);border-radius:50%;pointer-events:none;animation:spinSlow 30s linear infinite reverse}
+.fb-inpage .fb-form,.fb-inpage .fb-done{position:relative;z-index:1}
+.fb-inpage .fb-form textarea,.fb-inpage .fb-form input{background:rgba(255,255,255,.85)}
 
 /* ---------- large desktop: use the space instead of leaving wide empty margins ---------- */
 @media(min-width:1440px){
   :root{--maxw:1200px}
   body{font-size:17px}
+  .hero{padding:104px 0 72px}
+  .hero-copy{max-width:860px}
   h1.display{font-size:clamp(56px,4.6vw,84px)}
   .lede{font-size:20px;max-width:52ch}
   .hero-search{max-width:720px;margin-top:52px}
@@ -655,24 +616,23 @@ html.dark .theme-toggle .ic-sun{display:none}
   .packet-body{padding:8px 32px 28px}
   .packet-head{padding:28px 32px 22px}
   .row .v{font-size:17px}
-  .ht-card{padding:32px 34px}
-  .ht-card-title{font-size:24px}
+  .premium{padding:36px 44px}
+  .premium .p-title{font-size:26px}
+  .premium .p-body{font-size:15px}
+  .waitlist{max-width:420px}
   .section{padding:80px 0}
   .ledger-row{padding:18px 26px}
 }
 
+/* premium band reveals as you scroll to it */
+.premium{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.premium.in-view{opacity:1;transform:none}
+.wlform .btn svg{width:16px;height:16px;flex:0 0 auto}
+.wlform .btn:hover svg{animation:bellring .5s ease}
+@keyframes bellring{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg)}55%{transform:rotate(11deg)}80%{transform:rotate(-6deg)}}
 .wl-done{animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
 /* footer brand: terracotta full-stop + hover glow on link */
 .fbrand::after{content:".";color:var(--primary)}
-
-/* tablet & down: the three landing grids stack; the sticky demo unsticks */
-@media(max-width:960px){
-  .ht-grid{grid-template-columns:1fr;gap:34px}
-  .how-grid{grid-template-columns:1fr}
-  .how-side{position:static}
-  .for-grid{grid-template-columns:1fr}
-  .inbox-grid{grid-template-columns:1fr}
-}
 
 @media(max-width:720px){
   body{font-size:16px}
@@ -684,6 +644,7 @@ html.dark .theme-toggle .ic-sun{display:none}
   .nav-left{justify-content:center}
   .nav-center{gap:18px;flex-wrap:wrap;justify-content:center}
   .brand{white-space:nowrap}
+  .hero{padding:52px 0 36px}
   /* the search pill stays a single inline bar on phones — icon + input + inset button.
      The input just flexes; the button stays inline (overriding the full-width .btn below). */
   .field input{flex:1 1 auto}
@@ -697,8 +658,8 @@ html.dark .theme-toggle .ic-sun{display:none}
   .cta-row{flex-direction:column;align-items:stretch}
   .cta-row a.btn,.cta-row .btn-line{width:100%;justify-content:center}
   .trio,.grid,.steps{grid-template-columns:1fr}
-  .hero-track{padding:44px 0 40px}
-  .ht-card{padding:22px 18px}
+  .premium{padding:24px 20px}
+  .waitlist{max-width:none}
   .wlform input{flex-basis:100%}
   .ledger-row{grid-template-columns:1fr auto;gap:8px}
   .ledger-row .idx,.ledger-row .go{display:none}

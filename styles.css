@@ -117,7 +117,8 @@ body{
 .nav-cta:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-1px)}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-sans);font-weight:600;
   letter-spacing:-.01em;font-size:18px;color:var(--ink);text-decoration:none}
-.brand .dot{width:10px;height:10px;border-radius:2px;background:var(--primary);animation:pulse 2.6s ease-in-out infinite}
+.brand-mark{display:inline-flex;flex-shrink:0;line-height:0}
+.brand-mark svg{display:block}
 .brand small{font-family:var(--font-mono);font-weight:400;font-size:11px;color:var(--muted);
   letter-spacing:.04em;text-transform:uppercase}
 .topnav{display:flex;align-items:center;gap:18px}

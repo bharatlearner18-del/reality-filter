@@ -400,10 +400,10 @@ article.packet{color:var(--ink)}
 /* slim horizontal band (newsletter pattern): pitch on the left, email form on the right.
    Full-width but short, so it reads as a secondary ask — never as a second hero,
    and never mistakable for the search console above it. */
-.premium{background:linear-gradient(115deg,#fbfaf6 0%,var(--canvas) 55%,#f3e7de 100%);border:1px solid var(--hairline-strong);border-radius:var(--radius);padding:34px 38px;
+.premium{background:linear-gradient(115deg,#fbfaf6 0%,var(--canvas) 55%,#f3e7de 100%);border:1px solid var(--hairline-strong);border-radius:var(--radius);padding:46px 50px;
   box-shadow:var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.7);
   position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:space-between;
-  gap:24px 48px;flex-wrap:wrap}
+  gap:32px 60px;flex-wrap:wrap}
 /* slow-turning dashed “radar” seals — quiet graphic signature for the watching service */
 .premium::after{content:"";position:absolute;right:-70px;top:50%;margin-top:-115px;width:230px;height:230px;
   border:1.5px dashed rgba(217,119,87,.4);border-radius:50%;pointer-events:none;animation:spinSlow 46s linear infinite}
@@ -412,21 +412,21 @@ article.packet{color:var(--ink)}
 @keyframes spinSlow{to{transform:rotate(360deg)}}
 .premium .p-left{position:relative;z-index:1}
 .premium .waitlist{z-index:1}
-.premium .p-left{flex:1 1 340px;min-width:0;max-width:56ch}
+.premium .p-left{flex:1 1 360px;min-width:0;max-width:60ch}
 .premium .p-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--primary);border:1px solid rgba(217,119,87,.55);border-radius:9999px;padding:3px 10px 3px 8px;display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;background:rgba(255,255,255,.6)}
 .premium .p-badge::before{content:"";width:6px;height:6px;border-radius:9999px;background:var(--primary);animation:pulse 2.2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(217,119,87,.45)}55%{box-shadow:0 0 0 5px rgba(217,119,87,0)}}
 /* .p-title (0,2,0) outranks the generic .section h2 (0,1,1) — no !important needed */
-.premium .p-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(19px,2.4vw,24px);letter-spacing:-.008em;
-  margin:0 0 6px;color:var(--ink);line-height:1.25}
-.premium .p-body{color:var(--body);font-size:14px;margin:0;line-height:1.45;font-family:var(--font-sans)}
+.premium .p-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(23px,2.8vw,30px);letter-spacing:-.008em;
+  margin:0 0 12px;color:var(--ink);line-height:1.22}
+.premium .p-body{color:var(--body);font-size:15px;margin:0;line-height:1.55;font-family:var(--font-sans)}
 .premium .p-body b{color:var(--ink)}
 /* what-you-get list — three scannable payoff lines so the pitch never crams into one
    dense block; terracotta arrow marker, bold lead-in carries each benefit */
-.premium .p-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:11px}
-.premium .p-list li{position:relative;padding-left:22px;font-family:var(--font-sans);
-  font-size:13.5px;line-height:1.5;color:var(--body)}
+.premium .p-list{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.premium .p-list li{position:relative;padding-left:24px;font-family:var(--font-sans);
+  font-size:14.5px;line-height:1.6;color:var(--body)}
 .premium .p-list li::before{content:"→";position:absolute;left:0;top:0;color:var(--primary);font-weight:700}
 .premium .p-list b{color:var(--ink);font-weight:600}
 
@@ -578,9 +578,9 @@ html.dark .theme-toggle .ic-sun{display:none}
   .packet-body{padding:8px 32px 28px}
   .packet-head{padding:28px 32px 22px}
   .row .v{font-size:17px}
-  .premium{padding:36px 44px}
-  .premium .p-title{font-size:26px}
-  .premium .p-body{font-size:15px}
+  .premium{padding:56px 60px}
+  .premium .p-title{font-size:32px}
+  .premium .p-body{font-size:16px}
   .waitlist{max-width:420px}
   .section{padding:80px 0}
   .ledger-row{padding:18px 26px}
@@ -620,7 +620,7 @@ html.dark .theme-toggle .ic-sun{display:none}
   .cta-row{flex-direction:column;align-items:stretch}
   .cta-row a.btn,.cta-row .btn-line{width:100%;justify-content:center}
   .trio,.grid,.steps{grid-template-columns:1fr}
-  .premium{padding:24px 20px}
+  .premium{padding:30px 24px}
   .waitlist{max-width:none}
   .wlform input{flex-basis:100%}
   .ledger-row{grid-template-columns:1fr auto;gap:8px}

@@ -58,10 +58,10 @@ There is no build, lint, or test step. "Testing" = drive the flow in a browser (
 - Example chips and the `?q=` deep-link both call `showResult()`; the track-record rows (in `track-record.html`) deep-link into it via `index.html?q=<name>`.
 
 ### Forms → Formspree (`forms.js`)
-All four demand-signal forms (the no-match email capture, the Premium waitlist, the "Track this" buttons, and the feedback form) post through `sendSignal()` in **`forms.js`**, loaded by `index.html` and `feedback.html`.
+The two demand-signal forms — the no-match email capture (on `index.html`) and the Premium/Pricing waitlist (on `premium.html`) — post through `sendSignal()` in **`forms.js`**, loaded by both pages. (History: a "Track this" button and a standalone feedback form also used this, both removed 2026-07-23.)
 - **`FORMSPREE_ID` at the top of `forms.js` is the only thing to set.** Paste the ID from `https://formspree.io/f/XXXXXXXX`.
 - **While it's empty every form stays a stub**: `sendSignal()` returns `{ok:true, skipped:true}`, so the success state shows and nothing is sent. This is deliberate — the design handoff shipped a hardcoded `YOUR_FORM_ID` placeholder that made *every* submit fail with an error, and this is the guard against repeating that. An unconfigured site must never show users an error.
-- All four post to the **same endpoint**; the `type` field (`packet request` / `premium waitlist` / `track this` / `feedback`) tells them apart in the inbox, which keeps it inside Formspree's free single-form tier. `page` is added automatically.
+- Both post to the **same endpoint**; the `type` field (`packet request` / `premium waitlist`) tells them apart in the inbox, which keeps it inside Formspree's free single-form tier. `page` is added automatically.
 - On a real send failure (network down, 4xx) `sendSignal` returns `{ok:false}` and the handler re-enables the form and shows `.form-err` — never a silent success, since the user believes they're on the list.
 
 ### Still deliberately stubbed (validation build)

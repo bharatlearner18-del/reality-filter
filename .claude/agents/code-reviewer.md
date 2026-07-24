@@ -42,7 +42,7 @@ Go looking for real failure, not style nits:
 - **`packets.js` is the single source of truth** for launch data — the tool and the track record must agree.
 - **Content must be real and evidence-based** — flag anything that reads like invented placeholder data.
 - **Scope is AI launches only** — flag drift toward "any company / news / competitor tracking."
-- **The three forms are UI-only on purpose** (email capture, "Track this", Premium waitlist). They send nothing yet — that's the intended validation build, NOT a bug. Don't report it as one.
+- **The demand-signal forms are UI-only on purpose** (the no-match email capture and the Premium/Pricing waitlist). While `FORMSPREE_ID` is unset they send nothing — that's the intended validation build, NOT a bug. Don't report it as one.
 
 ## STEP 5 — Actually check it runs, don't guess
 

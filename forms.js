@@ -1,5 +1,5 @@
-/* Formspree wiring for the demand-signal forms: the no-match email capture,
-   the Premium waitlist, and the "Track this" buttons.
+/* Formspree wiring for the demand-signal forms: the no-match email capture
+   and the Premium waitlist.
 
    ── SET THIS ──────────────────────────────────────────────────────────────────
    Paste the ID from your Formspree form's endpoint:

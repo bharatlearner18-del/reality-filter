@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=44">
+<link rel="stylesheet" href="styles.css?v=45">
 </head>
 <body>
 
@@ -113,14 +113,7 @@ function renderPacket(p){
         <div class="nextstep"><span class="arrow">→</span><p class="v">${p.next}</p></div>
       </div>
     </div>
-  </article>
-  <div class="track-cta">
-    <div class="tc-text">
-      <span class="tc-badge">Premium</span>
-      <p><b>Want us to watch this for you?</b> Verdicts age as facts change — we re-check the evidence and alert you only when something real happens. Never daily noise.</p>
-    </div>
-    <button class="btn-ghost" data-track="${p.name}">Track this →</button>
-  </div>`;
+  </article>`;
 }
 
 function renderCapture(q){
@@ -239,18 +232,6 @@ function bindResultActions(){
       btn.textContent = 'Sent ✓';
     });
   }
-  document.querySelectorAll('[data-track]').forEach(b=>{
-    b.addEventListener('click',async ()=>{
-      b.disabled = true; b.textContent = 'Sending…';
-      // no email field on this CTA — the click itself is the demand signal
-      const r = await sendSignal({type:'track this', launch:b.dataset.track});
-      // .track-cta is a flex row, so an injected .form-err would become a third
-      // column — report failure in the label instead; the button is the retry
-      if(!r.ok){ b.disabled = false; b.textContent = "Couldn't send — try again"; return; }
-      b.textContent = "You're on the list ✓";
-      b.style.opacity = .8;
-    });
-  });
 }
 
 /* form + chips */

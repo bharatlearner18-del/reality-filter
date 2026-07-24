@@ -75,7 +75,6 @@ html.dark .hero::before{opacity:.5}
 html.dark .field input,html.dark .wlform input,html.dark .capform input{background:var(--canvas);color:var(--ink)}
 html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--muted-soft)}
 html.dark .premium{background:var(--canvas-soft)}
-html.dark .track-cta{background:linear-gradient(105deg,var(--canvas-soft),#343128)}
 html.dark .meter-track{background:var(--canvas)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -364,19 +363,6 @@ article.packet{color:var(--ink)}
 .nextstep .arrow{font-family:var(--font-sans);font-weight:600;color:var(--primary);font-size:18px;line-height:1.3}
 .nextstep .v{font-size:16px}
 
-/* premium CTA under every output — its own soft paper strip, a small gap below the packet card */
-.track-cta{background:linear-gradient(105deg,var(--canvas-soft),#f6efe6);border:none;
-  border-radius:var(--radius-btn);margin-top:14px;padding:20px 26px;
-  display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
-  animation:rise .5s .7s cubic-bezier(.2,.7,.2,1) both}
-.track-cta .tc-text{max-width:52ch}
-.track-cta .tc-badge{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--primary);border:1px solid var(--primary);border-radius:9999px;padding:2px 9px;margin-bottom:8px;display:inline-block}
-.track-cta p{margin:0;font-size:15px;color:var(--body);line-height:1.5;font-family:var(--font-sans)}
-.track-cta p b{color:var(--ink)}
-.btn-ghost{font-family:var(--font-sans);font-weight:500;font-size:14px;cursor:pointer;white-space:nowrap;
-  background:var(--surface-card);color:var(--ink);border:1px solid var(--hairline-strong);border-radius:var(--radius-btn);padding:11px 18px;transition:.12s}
-.btn-ghost:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px);box-shadow:0 6px 16px rgba(61,57,41,.1)}
 
 /* email capture (no match) — white feature card */
 .capture{background:var(--surface-card);color:var(--ink);border-radius:var(--radius);
@@ -633,8 +619,6 @@ html.dark .theme-toggle .ic-sun{display:none}
   .ledger-row .date{grid-column:1/-1}
   /* long verdicts ("Worth trying — with caveats") must never escape the card */
   .ledger-row .vd{white-space:normal;text-align:center;line-height:1.35}
-  .track-cta{flex-direction:column;align-items:flex-start}
-  .btn-ghost{width:100%;text-align:center}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}

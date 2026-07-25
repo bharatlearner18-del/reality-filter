@@ -310,34 +310,36 @@ a.btn{text-decoration:none}
 article.packet{color:var(--ink)}
 
 .packet-body{padding:8px 26px 24px}
-/* evidence rows file in one by one */
-.packet-body .row{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
-.packet-body .row:nth-child(1){animation-delay:.1s}
-.packet-body .row:nth-child(2){animation-delay:.18s}
-.packet-body .row:nth-child(3){animation-delay:.26s}
-.packet-body .row:nth-child(4){animation-delay:.34s}
-.packet-body .row:nth-child(5){animation-delay:.42s}
-.packet-body .row:nth-child(6){animation-delay:.5s}
-.packet-body .row:nth-child(7){animation-delay:.58s}
-.packet-body .row:nth-child(8){animation-delay:.66s}
+/* the three decision rows file in one by one, then the evidence toggle */
+.packet-body>.row{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+.packet-body>.row:nth-child(1){animation-delay:.1s}
+.packet-body>.row:nth-child(2){animation-delay:.18s}
+.packet-body>.row:nth-child(3){animation-delay:.26s}
+.packet-body>.evidence{animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.34s}
+/* The evidence rows deliberately carry NO entrance animation. They start inside a
+   closed <details>, so the browser render-blocks that subtree: a `rise` animation
+   declared here is created but never advances, and because `rise` fills from
+   opacity:0 the rows stay INVISIBLE after the user opens the panel — an empty
+   ~750px gap. Verified in-browser. They're revealed by a click, not by the initial
+   render, so a stagger buys nothing here anyway. Don't add one back. */
 .row{padding:18px 12px;margin:0 -12px;border-bottom:1px solid var(--hairline);border-radius:10px;transition:background .15s}
 .packet-body .row:hover{background:var(--canvas-soft)}
 .row:last-child{border-bottom:none}
+/* r-next is followed by the evidence <details>, which brings its own top hairline */
+.packet-body>.row.r-next{border-bottom:none}
 .row .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--body);margin:0 0 6px;display:flex;align-items:center;gap:8px}
 .row .k::before{content:"";width:7px;height:7px;border-radius:9999px;background:var(--hairline-strong)}
-/* AI-timeline pastel "stages": all 5 signature pastels track the fixed row order from
-   renderPacket() (1 claim=peach · 2 why-this-matters=peach · 5 experts=blue ·
-   6 pricing=lavender · 7 meter=mint · 8 next=gold);
-   found/miss (rows 3/4) keep their semantic green/red — no nth-child rule may
-   target 3 or 4, or it outranks the .found/.miss class colors.
-   If renderPacket() row order changes, update these nth-child targets. */
-.packet-body .row:nth-child(1) .k::before,
-.packet-body .row:nth-child(2) .k::before{background:var(--tl-thinking)}
-.packet-body .row:nth-child(5) .k::before{background:var(--tl-read)}
-.packet-body .row:nth-child(6) .k::before{background:var(--tl-edit)}
-.packet-body .row:nth-child(7) .k::before{background:var(--tl-grep)}
-.packet-body .row:nth-child(8) .k::before{background:var(--tl-done)}
+/* AI-timeline pastel "stages", keyed to SEMANTIC classes rather than :nth-child.
+   renderPacket() now splits rows across a visible decision zone and a collapsed
+   evidence panel, so positional selectors would silently retarget the wrong rows
+   (and could override .found/.miss). Add a class, not an index, for new rows. */
+.row.r-claim .k::before,
+.row.r-stakes .k::before{background:var(--tl-thinking)}
+.row.r-experts .k::before{background:var(--tl-read)}
+.row.r-pricing .k::before{background:var(--tl-edit)}
+.row.r-hype .k::before{background:var(--tl-grep)}
+.row.r-next .k::before{background:var(--tl-done)}
 .row.miss .k::before{background:var(--error)}
 .row.found .k::before{background:var(--success)}
 .row .v{margin:0;font-size:16px;line-height:1.55;color:var(--ink);font-family:var(--font-sans)}
@@ -359,10 +361,33 @@ article.packet{color:var(--ink)}
   display:flex;justify-content:space-between;gap:12px}
 .meter-cap b{color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
 
-.nextstep{background:var(--canvas-soft);border:1px solid var(--hairline);border-radius:var(--radius-btn);padding:16px 18px;margin:2px 0 0;
-  display:flex;gap:12px;align-items:flex-start}
-.nextstep .arrow{font-family:var(--font-sans);font-weight:600;color:var(--primary);font-size:18px;line-height:1.3}
-.nextstep .v{font-size:16px}
+/* "What you should do" — one card per audience, so a reader scans for their own
+   row instead of unpacking three recommendations out of a single paragraph. */
+.nextstep{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px}
+.ns-item{background:var(--canvas-soft);border:1px solid var(--hairline);border-radius:var(--radius-btn);
+  padding:13px 16px;display:grid;gap:4px;position:relative}
+.ns-who{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--label);font-weight:700}
+.ns-what{font-family:var(--font-sans);font-size:15.5px;line-height:1.5;color:var(--ink)}
+.ns-what b{color:var(--ink)}
+
+/* evidence panel — closed on open so the verdict lands first; the summary names
+   what's inside so the proof still reads as present, not withheld */
+.evidence{border-top:1px solid var(--hairline-strong);margin-top:2px}
+.evidence>summary{list-style:none;cursor:pointer;margin:0 -12px;padding:15px 12px;border-radius:10px;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;transition:background .15s}
+.evidence>summary::-webkit-details-marker{display:none}
+.evidence>summary:hover{background:var(--canvas-soft)}
+.evidence>summary:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.ev-toggle{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+  display:inline-flex;align-items:center;gap:8px}
+.ev-toggle::before{content:"";width:7px;height:7px;border-radius:9999px;background:var(--tl-read);flex:none}
+.ev-toggle::after{content:"▾";font-size:11px;color:var(--label)}
+.evidence[open]>summary .ev-toggle::after{content:"▴"}
+.evidence[open]>summary .ev-open{display:none}
+.evidence:not([open])>summary .ev-close{display:none}
+.ev-meta{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--label)}
+.ev-body>.row:first-child{padding-top:4px}
 
 
 /* email capture (no match) — white feature card */
@@ -620,6 +645,11 @@ html.dark .theme-toggle .ic-sun{display:none}
   .ledger-row .date{grid-column:1/-1}
   /* long verdicts ("Worth trying — with caveats") must never escape the card */
   .ledger-row .vd{white-space:normal;text-align:center;line-height:1.35}
+  /* the section list wraps to three lines on a phone and turns the evidence toggle
+     into a 100px block — the toggle's own label already says what's behind it */
+  .ev-meta{display:none}
+  .packet-head{padding:22px 20px 18px}
+  .packet-body{padding:8px 20px 20px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}

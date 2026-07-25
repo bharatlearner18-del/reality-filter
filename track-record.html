@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=46">
+<link rel="stylesheet" href="styles.css?v=48">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
       <p class="sub">A few calls, put on the record before the dust settled — dated, public, and left exactly as we made them. We said it here first; come back and see how each one held up.</p>
       <div class="tr-stats" id="trStats"></div>
       <div class="ledger" id="ledgerList"></div>
-      <p class="ledger-note"><span class="live-dot"></span>Last filed 2026-07-19 — three new verdicts added (Grok 4.5, Claude Sonnet 5, Gemini 3.1 Pro). GPT-5.6 was upgraded from “Too early” after general availability arrived. We add only the calls worth standing behind — a few each month.</p>
+      <p class="ledger-note"><span class="live-dot"></span>Re-checked 2026-07-25 — all five verdicts here were re-verified against what's happened since filing and still hold up. Claude Fable 5 was pulled from this record: our original research missed that the model had been suspended worldwide by the US Commerce Department, so it's being corrected before it stands here again. We add only the calls worth standing behind — a few each month.</p>
     </div>
   </section>
 </main>
@@ -55,7 +55,7 @@
   <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
 </footer>
 
-<script src="packets.js?v=2"></script>
+<script src="packets.js?v=3"></script>
 <script>
 const ledgerEl = document.getElementById('ledgerList');
 ledgerEl.innerHTML = LEDGER_ORDER.map((k,i)=>{

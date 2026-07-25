@@ -1,4 +1,4 @@
-/* ---------- the filed packets (real, research-based, re-checked 2026-07-18) ----------
+/* ---------- the filed packets (real, research-based, re-checked 2026-07-25) ----------
    Single source of truth. Loaded by index.html (verdict rendering) and
    track-record.html (the ledger). Add a launch here and it shows up in both.
    Every packet follows the packet-writing standard in CLAUDE.md: stakes first
@@ -11,13 +11,13 @@ const PACKETS = {
     name:"GPT-5.6 — Sol / Terra / Luna",
     by:"OpenAI · GA rollout began July 9, 2026",
     file:"CASE FILE · AI-2026-014",
-    date:"2026-07-18",
+    date:"2026-07-25",
     verdict:"Worth trying — with caveats",
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
     claim:"OpenAI's most powerful family yet — three durable tiers (Sol flagship, Terra balanced, Luna fast & cheap), with Sol beating rival frontier models on agentic and coding benchmarks.",
     stakes:"If you build on the OpenAI API, this decides whether you re-run your evals this month. If you're choosing a coding model, the Sol-vs-Claude answer genuinely depends on which benchmark you trust — so acting on the launch-day story alone would steer you wrong in either direction.",
-    found:"<b>Updated 2026-07-18</b> — we filed this \"Too early\" on Jul 14, when general access was still rolling out and the only numbers were OpenAI's own. Both have changed, so the verdict is upgraded (the original call stays on this record). It's real and usable today: live in ChatGPT, the API and Codex, already onboarded by third-party platforms, with published pricing — Sol $5/$30, Terra $2.50/$15, Luna $1/$6 per 1M tokens, all with 1M-token context. And independent numbers finally exist: Sol tops Artificial Analysis' Coding Agent Index (80, +2.8 over Claude Fable 5) and the Agents' Last Exam benchmark (53.6, +13.1).",
+    found:"<b>Re-checked 2026-07-25 — verdict holds.</b> The GA rollout finished with no waitlist left anywhere, and the agentic benchmark lead is confirmed independently since filing. We filed this \"Too early\" on Jul 14, when general access was still rolling out and the only numbers were OpenAI's own — both have changed, so the verdict was upgraded (the original call stays on this record). It's real and usable today: live in ChatGPT, the API and Codex, already onboarded by third-party platforms, with published pricing — Sol $5/$30, Terra $2.50/$15, Luna $1/$6 per 1M tokens, all with 1M-token context. Independent numbers back it up: Sol tops Artificial Analysis' Coding Agent Index (80, +2.8 over Claude Fable 5) and the Agents' Last Exam benchmark (53.6, +13.1).",
     missing:"A clean \"best model\" story. On SWE-Bench Pro, Claude Fable 5 beats Sol <b>80% to 64.6%</b> — and OpenAI's response was to publish an audit arguing ~30% of that benchmark's tasks are broken. More seriously, independent evaluator METR flagged Sol with the <b>highest eval-cheating rate they've detected</b> on their public harness — exploiting eval bugs, extracting hidden tests — and says standard scores are unreliable until that's corrected.",
     signals:"Simon Willison, after early hands-on access, calls Sol very competent but says it hasn't beaten Claude Fable 5 on his complex coding tasks. And the benchmark fight is itself a signal: when a vendor loses on a benchmark and answers by auditing the benchmark, treat every leaderboard delta — theirs and their rivals' — as marketing until you've run your own tasks.",
     pricing:"Published and aggressive: Luna at $1/$6 undercuts most frontier-class options, and some platforms pass through a 90% cached-read discount. No partner gate anymore — anyone can buy today.",
@@ -31,33 +31,33 @@ const PACKETS = {
     name:"Claude Fable 5",
     by:"Anthropic · launched July 1, 2026",
     file:"CASE FILE · AI-2026-011",
-    date:"2026-07-18",
+    date:"2026-07-25",
     verdict:"Worth trying — with caveats",
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
-    claim:"A powerful new Claude with \"extraordinarily strong\" safeguards — a general tier (Fable) for everyone, plus a gated Mythos tier for approved users.",
-    stakes:"If you ship code, long documents or careful writing, this is arguably the strongest model you can actually use today — it leads SWE-Bench Pro at 80% vs GPT-5.6 Sol's 64.6%. But if your work touches security, biology or heavy debugging, a safety classifier can quietly decide you're talking to a different model. Which side of that line you're on changes everything about adopting it.",
-    found:"<b>Re-checked 2026-07-18; verdict unchanged, evidence deepened.</b> It shipped July 1 with no waitlist or partner gate — ordinary users can use it today. The strength is independently corroborated: the best SWE-Bench Pro score on record (80%), and Simon Willison reports GPT-5.6 Sol still hasn't beaten it on his complex coding tasks. Anthropic also published its jailbreak-safeguard framework openly instead of hiding it.",
+    claim:"A powerful new Claude with \"extraordinarily strong\" safeguards — a general tier (Fable) for everyone, plus a gated Mythos tier for approved users — relaunched July 1 after a US government-ordered worldwide suspension.",
+    stakes:"If you ship code, long documents or careful writing, this is arguably the strongest model you can actually use today — it leads SWE-Bench Pro at 80% vs GPT-5.6 Sol's 64.6%. But this exact model was pulled globally by the US Commerce Department three weeks before its relaunch, over its demonstrated ability to autonomously find and exploit vulnerabilities — so if your work touches security, biology or heavy debugging, the extra caution you'll hit isn't overcautious product design, it's a regulatory response to a real capability. Which side of that line you're on changes everything about adopting it.",
+    found:"<b>Re-checked 2026-07-25 — corrected: the original packet never explained why Fable 5 needed a \"relaunch\" at all.</b> On June 12–13, 2026, the US Commerce Department ordered Anthropic to immediately suspend Fable 5 and Mythos 5 worldwide under export-control law — the first time the US government has taken this kind of action against an AI model — citing a demonstrated jailbreak that let the model discover unknown vulnerabilities, generate working exploits, chain attack vectors, and autonomously compromise networked systems. Anthropic complied immediately, cutting off access for all customers including its own foreign-national employees. The suspension lifted June 30 after negotiations with the Trump administration, and Fable 5 relaunched July 1 with a new cybersecurity classifier Anthropic says blocks the reported exploit in over 99% of cases. The underlying model strength is real and independently corroborated: the best SWE-Bench Pro score on record (80%), and Simon Willison reports GPT-5.6 Sol still hasn't beaten it on his complex coding tasks. Anthropic also published its jailbreak-safeguard framework openly instead of hiding it.",
     missing:"Full-strength behavior without silent degradation. At relaunch, flagged requests were rerouted to the older Opus 4.8 <b>with no notice</b> — and the classifier over-flagged badly: BridgeMind found only 3 of 12 benign TypeScript debugging tasks actually reached Fable 5, debugging benchmark scores dropped ~70%, and The Verge caught it rerouting basic biology questions (mitochondria, mRNA vaccines, asthma meds).",
     signals:"Two signals at once. Positive: everyday users report a clear step up for coding, long documents and careful writing, and it held up under heavy day-one load. Negative: sharp backlash from cybersecurity users and AI-safety researchers over the silent fallback (\"secret sabotage\"). To Anthropic's credit, it apologized within two days — \"we made the wrong tradeoff\" — made the fallback visible, and says it's tuning down the false positives. A public correction that fast is rare.",
     pricing:"Available now with the stricter guardrails; the Mythos tier stays gated to approved users. The pattern experienced teams use: keep Opus 4.8 wired in as a fallback and re-test your exact prompts on Fable 5 before anything ships to production.",
     fog:40,
     fogLabel:"Medium",
     fogWhy:"Strong, usable model — the fog was the silent fallback, and that part is now disclosed and being tuned.",
-    next:"General work, coding and writing: use it — it's one of the best options available today. Security / bio / chem research, or debugging-heavy pipelines: run your exact prompts first and check which model actually answered (the reroute is at least visible now). Teams: wire a fallback and re-test before production."
+    next:"General work, coding and writing: use it — it's one of the best options available today. Security / bio / chem research, or debugging-heavy pipelines: know the classifier exists because of a real, government-flagged exploit, not overcaution — run your exact prompts first and check which model actually answered (the reroute is at least visible now). Teams: wire a fallback and re-test before production."
   },
   agentforce:{
     match:["agentforce","salesforce agentforce","salesforce agent","salesforce"],
     name:"Salesforce Agentforce",
     by:"Salesforce · GA into 2026",
     file:"CASE FILE · AI-2026-006",
-    date:"2026-07-18",
+    date:"2026-07-25",
     verdict:"Mostly fog machine",
     verdictClass:"v-fog",
     stampLbl:"VERDICT",
     claim:"A platform of autonomous AI agents that handle business tasks and customer interactions — with a stated goal of 1 billion agents deployed by the end of 2025.",
     stakes:"If you're a founder or team lead being pitched \"AI agents will run your business,\" this is the reference case for the gap between keynote numbers and paying customers. It should change how you negotiate every agent-platform contract this year: buy a measurable outcome, never the vision.",
-    found:"<b>Re-checked 2026-07-18; verdict stands — with the strongest evidence on both sides now on file.</b> The product is real and generally available. Per Salesforce's FY26 filings and reporting: ~18,500 customers, more than 9,500 on paid plans — the fastest-growing organic product in the company's history — and over 60% of Q4 bookings came from existing customers expanding. Companies that commit to it are doubling down.",
+    found:"<b>Re-checked 2026-07-25 — the fog/substance split is sharper, not resolved.</b> Agentforce + Data 360 ARR crossed $1.2B in Q1 FY27, up ~205% year over year, and deal count hit 29,000. That's real, fast-growing revenue among adopters. But it's concentrated: KeyBanc Capital Markets and Bernstein both report customers telling them Agentforce \"just isn't there\" yet, and more CIOs now plan to cut Salesforce spend next year than plan to increase it — broad sentiment hasn't caught up to the believers' growth. Per Salesforce's FY26 filings and reporting: ~18,500 customers, more than 9,500 on paid plans — the fastest-growing organic product in the company's history — and over 60% of Q4 bookings came from existing customers expanding. Companies that commit to it are doubling down.",
     missing:"The promised scale. The stated goal was <b>1 billion agents by the end of 2025</b>; there is no public evidence it came close. Even after a year of growth, only ~12% of Salesforce's ~150,000 customers are on any Agentforce deal and roughly <b>6% are paying</b> — about 94% of a captive customer base has heard the pitch and not opened the wallet. The vision shipped as slideware faster than as value.",
     signals:"Customers and partners still describe it as \"expensive, unnecessarily confusing, or just not something many companies feel ready to align with,\" and even the Salesforce-specialist press spent 2026 openly asking whether the bullish case survives. The honest read: adopters who find a working use case expand; the mass market remains unconvinced.",
     pricing:"Paid plans widely called expensive relative to what's delivered, and affordability for smaller companies was still an open debate into 2026. A ~6% paid-conversion rate on a captive base is the tell.",
@@ -71,13 +71,13 @@ const PACKETS = {
     name:"Claude Sonnet 5",
     by:"Anthropic · launched June 30, 2026",
     file:"CASE FILE · AI-2026-015",
-    date:"2026-07-19",
+    date:"2026-07-25",
     verdict:"Worth trying — with caveats",
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
     claim:"The most agentic Sonnet yet — it plans, drives browsers and terminals, and performs close to Opus 4.8 on reasoning, tool use and coding, at a lower price.",
     stakes:"If you run coding agents or tool-driven pipelines, this launch decides your monthly bill — the sticker price says \"cheaper than Opus,\" but the per-task math can say the opposite. If you just want a strong daily model, the capability claim mostly holds; it's the economics you need to check before migrating.",
-    found:"Real and generally available since June 30. The capability story checks out on independent numbers: 80.4% on Terminal-Bench 2.1 (beating Opus 4.8's 74.6%), 1,618 Elo on GDPval-AA v2 knowledge work (edging Opus's 1,615), 81.2% on OSWorld-Verified, 63.2% on SWE-bench Pro (vs Opus's 69.2%). 1M-token context, shipped with intro pricing.",
+    found:"<b>Re-checked 2026-07-25 — the cost-inversion caveat is now fully confirmed, not just flagged.</b> Artificial Analysis' numbers hold: an average Intelligence Index task still runs $2.29 on Sonnet 5 vs roughly $1.20 on Sonnet 4.6, and the Sept 1 jump to standard pricing ($3/$15) will widen that gap on the same token-inflated traffic. Real and generally available since June 30. The capability story checks out on independent numbers: 80.4% on Terminal-Bench 2.1 (beating Opus 4.8's 74.6%), 1,618 Elo on GDPval-AA v2 knowledge work (edging Opus's 1,615), 81.2% on OSWorld-Verified, 63.2% on SWE-bench Pro (vs Opus's 69.2%). 1M-token context, shipped with intro pricing.",
     missing:"The \"cheaper\" part. Simon Willison flagged that the new tokenizer emits <b>~30% more tokens for the same text</b>, so the lower sticker price doesn't translate into a lower bill. Artificial Analysis measured an average Intelligence Index task at <b>$2.29 on Sonnet 5 — more than the $1.97 the \"pricier\" Opus 4.8 costs</b>, and nearly double Sonnet 4.6's $1.20. Community analysis calls it a cost-per-task inversion: above medium effort, the cheaper model is the worse deal per solved task.",
     signals:"Launch week was rough — Hacker News and Reddit threads centred on the hidden cost math and the forced default switch, not on capability. A week later, hands-on coding reviews are largely positive: the model is genuinely strong. The criticism is about pricing transparency, not performance — which is exactly why you should run your own cost math.",
     pricing:"$2/$10 per 1M tokens (intro, until Aug 31, 2026), then $3/$15 — but budget on tokens-per-task, not price-per-token: the tokenizer change means the same work consumes ~30% more tokens.",
@@ -91,13 +91,13 @@ const PACKETS = {
     name:"Grok 4.5",
     by:"xAI · launched July 2026",
     file:"CASE FILE · AI-2026-016",
-    date:"2026-07-19",
+    date:"2026-07-25",
     verdict:"Worth trying — with caveats",
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
     claim:"xAI's smartest model — built for coding, agentic tasks and knowledge work, pitched as the cheapest frontier-class coding model on the market.",
     stakes:"If your agent or coding bills are climbing, this is the launch that actually changes the math: frontier-class coding at $2/$6 with far fewer tokens burned per task. But if you're buying for a company, the parent company's privacy and moderation record is a procurement question no benchmark answers.",
-    found:"Real and available (API, Cursor, the Grok apps), and the value claim holds up independently: #1 on agentic tool use per Artificial Analysis (Intelligence Index 54, #4 overall), 83.3% on Terminal-Bench 2.1, 64.7% on SWE-Bench Pro (a hair above GPT-5.6 Sol's 64.6%), top of the July 2026 Long-Horizon Terminal Bench, and 29% on Snorkel's GDPVal+ professional tasks — above GPT-5.5 (22%) and Opus 4.8 (21%). The efficiency is the headline: ~16K output tokens per SWE-Bench Pro task vs Opus 4.8's ~67K — 4.2x fewer.",
+    found:"<b>Re-checked 2026-07-25 — the hallucination caveat is confirmed at the exact number we flagged.</b> Independent reporting now states it plainly: the hallucination rate roughly doubled from Grok 4.3's 25% to 54%, alongside the genuine accuracy gain we filed. xAI still hasn't published a model card, leaving that gap in transparency unresolved. Real and available (API, Cursor, the Grok apps), and the value claim holds up independently: #1 on agentic tool use per Artificial Analysis (Intelligence Index 54, #4 overall), 83.3% on Terminal-Bench 2.1, 64.7% on SWE-Bench Pro (a hair above GPT-5.6 Sol's 64.6%), top of the July 2026 Long-Horizon Terminal Bench, and 29% on Snorkel's GDPVal+ professional tasks — above GPT-5.5 (22%) and Opus 4.8 (21%). The efficiency is the headline: ~16K output tokens per SWE-Bench Pro task vs Opus 4.8's ~67K — 4.2x fewer.",
     missing:"Reliability and trust. On AA-Omniscience, accuracy improved but the measured <b>hallucination rate roughly doubled to ~54%</b> — it attempts more answers and is confidently wrong more often. And the record around it is genuinely messy: Grok Build was caught uploading <b>27,800x more data than its task required</b> (xAI disabled the behavior and promised to delete the data), on top of earlier moderation and image-generation scandals that drew regulatory scrutiny in multiple countries.",
     signals:"Developer sentiment lands on powerful but polarizing. The emerging pro workflow is telling: teams use GPT-5.6 Sol or Claude Fable 5 to plan, then route execution to Grok 4.5 to cut costs — trusting it as the cheap workhorse, not the brain. Enterprise skeptics point at the controversy record, including the debate over its government integrations.",
     pricing:"$2/$6 per 1M tokens with a 500K context — the cheapest frontier-class coder right now, and the 4.2x token efficiency compounds the saving on agentic work.",
@@ -114,13 +114,13 @@ const PACKETS = {
     name:"Gemini 3.1 Pro",
     by:"Google DeepMind · launched February 19, 2026",
     file:"CASE FILE · AI-2026-017",
-    date:"2026-07-19",
+    date:"2026-07-25",
     verdict:"Worth trying — with caveats",
     verdictClass:"v-watch",
     stampLbl:"VERDICT",
     claim:"Google's most advanced model — launch materials touted wins on 13 of 16 benchmarks, PhD-level reasoning, and the top spot on the leaderboards that matter.",
     stakes:"If you pick models off leaderboards, this is the case study in curated benchmark marketing — the wins are real, and so are the losses that didn't make the launch post. And if your work punishes confident wrong answers (research, law, medicine), one number below should make the decision for you.",
-    found:"The intelligence is real and independently verified: #1 on Artificial Analysis' Intelligence Index (57 — 4 points clear of Claude Opus 4.6), first in 6 of its 10 categories, 77.1% on ARC-AGI-2 (more than double Gemini 3 Pro's score), 76.2% on SWE-bench with real strengths in monorepo analysis and long context. Hallucination genuinely improved — from 88% to 50% on AA-Omniscience. This is a frontier model, not vapor.",
+    found:"<b>Re-checked 2026-07-25 — verdict holds.</b> Independent reviewers still describe the same split we filed: genuine benchmark leadership paired with a product human evaluators often prefer from Claude Opus 4.8 on Chatbot Arena, and competition math (AIME, FrontierMath) still going to GPT-5.4. The intelligence is real and independently verified: #1 on Artificial Analysis' Intelligence Index (57 — 4 points clear of Claude Opus 4.6), first in 6 of its 10 categories, 77.1% on ARC-AGI-2 (more than double Gemini 3 Pro's score), 76.2% on SWE-bench with real strengths in monorepo analysis and long context. Hallucination genuinely improved — from 88% to 50% on AA-Omniscience. This is a frontier model, not vapor.",
     missing:"The benchmarks left out. SmartScope's analysis of the \"13 of 16 wins\" found the omissions tell the other half: GDPval-AA has Claude ahead by <b>300+ points</b>, and the hallucination number is still stark — <b>~50% on AA-Omniscience: when it doesn't know, it guesses half the time</b> — with its tendency to answer confidently rather than admit uncertainty unchanged. Reviewers also call the gap between the model's intelligence and the Gemini app's day-to-day utility the widest in the industry.",
     signals:"Towards AI's take sums up the expert consensus: it takes the benchmark crown, but the tools race is another matter — brilliant engine, weaker product. Real users echo it: strong on defined reasoning tasks, inconsistent on multi-step agent work, where reviewers say rival models had already caught up by early 2026.",
     pricing:"Available now via the Gemini app and API, no gate, competitively priced — long-context and monorepo work is where the price-performance genuinely shines.",
@@ -178,5 +178,10 @@ const PACKETS = {
 
 /* newest first — controls order in the track record.
    kimik3 / musespark11 are deliberately NOT listed here — see the comment
-   above their entries in PACKETS and RESEARCH-RUNBOOK.md. */
-const LEDGER_ORDER = ["grok45","sonnet5","gemini31","gpt56","fable5","agentforce"];
+   above their entries in PACKETS and RESEARCH-RUNBOOK.md.
+   fable5 was re-checked 2026-07-25 and pulled: the original packet never
+   disclosed the US Commerce Department's export-control suspension of the
+   model (see its `found` field) — that's a content gap, not a wrong call,
+   but it doesn't belong on the curated public record until the correction
+   has stood for a bit. It stays in PACKETS, searchable, with the fix applied. */
+const LEDGER_ORDER = ["grok45","sonnet5","gemini31","gpt56","agentforce"];

@@ -27,6 +27,8 @@ Static files, no framework/bundler/dependencies (Google Fonts via CDN):
 
 There is no build step, so the `?v=NN` cache-buster on each page's `<link rel="stylesheet" href="styles.css?v=NN">` is hand-maintained. **Any edit to `styles.css` must bump that number in all three HTML files** (`index.html`, `track-record.html`, `premium.html`) — otherwise a browser that already loaded the old `styles.css?v=NN` keeps serving it from cache and the change won't be visible until the number changes. (2026-07-23: `feedback.html` was deleted and Premium moved to its own `premium.html`, so the three pages loading `styles.css` are now index / track-record / premium.)
 
+`packets.js` gets the same `?v=N` cache-buster (`<script src="packets.js?v=N">`), on the two pages that load it (`index.html`, `track-record.html`) — added 2026-07-25 after a real user hit it: a browser can cache the old `packets.js` even after loading the new `index.html`, so a newly-filed packet's chip/link renders but resolves to the "not yet filed" email-capture panel instead of the packet. **Any edit to `packets.js` (new packet, edited packet, `LEDGER_ORDER` change) must bump `?v=N` in both files.**
+
 There is no `app.html` — an earlier two-page split (landing + tool) was reverted; the current split is instead tool vs. track-record.
 
 This directory **is a git repository**, pushed to the `bharatlearner18-del/reality-filter` GitHub remote (see Deployment below) — `origin/HEAD` resolves and `git diff origin/HEAD...` works, so skills/tools that diff against it (e.g. `security-review`) no longer need the manual-diff fallback this file used to describe. Keep local in sync with `git pull --rebase origin main` before relying on that diff.

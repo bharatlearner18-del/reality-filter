@@ -128,8 +128,55 @@ const PACKETS = {
     fogLabel:"Medium",
     fogWhy:"A real frontier model wrapped in curated marketing — the published wins are true; the omitted losses are the story.",
     next:"Builders: use it where it demonstrably leads — long context, monorepo analysis, hard reasoning — but run your own agentic evals before trusting it in multi-step workflows. If factual reliability is your constraint, the ~50% hallucination-under-uncertainty number says test before you trust. Everyone else: excellent for reasoning-heavy questions — verify anything factual."
+  },
+
+  /* --- filed from user search requests (RESEARCH-RUNBOOK.md) ---
+     Searchable/readable here and via the "Fresh off the wire" row on index.html.
+     Deliberately NOT in LEDGER_ORDER below — the track record stays a small,
+     curated pool; these exist to answer real search demand, not to grow it. */
+  kimik3:{
+    match:["kimi k3","kimi3","kimi-k3","moonshot kimi","moonshot ai kimi","kimi k 3"],
+    name:"Kimi K3",
+    by:"Moonshot AI · launched July 2026, open weights July 27",
+    file:"CASE FILE · AI-2026-018",
+    date:"2026-07-25",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"A 2.8-trillion-parameter open-weight model from a Beijing startup that took the #1 spot on a major frontend/coding leaderboard — the first Chinese model to hold that spot — at a fraction of Western pricing.",
+    stakes:"If you're picking a cheap coding model, K3's leaderboard numbers are real and worth testing this week. If you're evaluating it for a company with regulated or sensitive data, the open weights don't remove the legal question — that decides whether you can actually deploy it, not the benchmark score.",
+    found:"Real and independently ranked: #1 on Arena.AI's Frontend Code Arena (1,679, ahead of Claude Fable 5 and GPT-5.6 Sol), first in 6 of 7 Arena frontend categories, and top-three across six separate coding benchmarks — leading SWE Marathon and Program Bench outright, trailing GPT-5.6 Sol on Terminal-Bench 2.1 by only half a point. Its predecessor ranked 18th on the same leaderboard a generation ago.",
+    missing:"Two things the launch didn't headline. First, an undisclosed hallucination rate — reviewers flag that Moonshot hasn't published comparable honesty/factuality numbers alongside the coding wins. Second, demand outran supply: Moonshot paused new subscriptions 48 hours after launch when its GPU clusters hit capacity, so \"available now\" partly means \"available if you got in early.\"",
+    signals:"Nathan Lambert (Interconnects) calls it an \"open-weights escalation\" in the US-China AI race; VentureBeat frames it as the largest open-source model yet, rivaling top US systems. That framing has consequences: reports say the White House is reviving a push to restrict Chinese AI models over cybersecurity concerns specifically because of K3, and separately, China's National Intelligence and Data Security laws obligate Moonshot to cooperate with state requests — a duty that legal analysts say follows the company, not the server, so self-hosting the open weights doesn't remove it.",
+    pricing:"$3 per 1M input tokens / $15 per 1M output — with cache-hit input dropping to $0.30/1M, notably cheap for the capability class. Open weights land July 27 for self-hosting.",
+    fog:55,
+    fogLabel:"Medium",
+    fogWhy:"The coding capability is real and independently ranked — the fog is trust: an unpublished hallucination rate, a capacity crunch, and a data-law obligation that self-hosting doesn't erase.",
+    next:"Builders testing cheap coding models: try it now via the API, but treat outputs as unverified until Moonshot publishes hallucination numbers. Enterprises with regulated data: get a legal read on the China data-law question before self-hosting the July 27 weights — that answer matters more than the benchmark. Casual users: fine to try, nothing here is a personal-risk issue."
+  },
+  musespark11:{
+    match:["muse spark 1.1","muse spark","meta muse","musespark","muse spark 1.1 model","meta muse spark"],
+    name:"Meta Muse Spark 1.1",
+    by:"Meta · launched July 9, 2026",
+    file:"CASE FILE · AI-2026-019",
+    date:"2026-07-25",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"Meta's first paid frontier model — built for tool use, computer use and multi-agent orchestration, with a 1M-token context and parallel subagents instead of sequential ones, launched the same day as GPT-5.6 with Zuckerberg breaking a three-year silence on X to announce it.",
+    stakes:"If you're building agent pipelines that call lots of tools, Muse Spark's numbers say it's genuinely strong there and worth a look. If you're picking a model for general coding, the same launch's own benchmarks say look elsewhere — knowing which bucket your workload is in is the whole decision here.",
+    found:"Real, shipped via the new Meta Model API and inside Meta AI. The agent/tool-use claim holds up on independent numbers: 88.1 on MCP Atlas (extensive tool usage) vs ~80 for both Opus 4.8 and GPT-5.5, and 54.7 on JobBench (professional tool usage) vs 48.4 for Opus 4.8 and 38.3 for GPT-5.5 — a real lead in this specific lane.",
+    missing:"General coding, and clean benchmark conditions. On Terminal-Bench 2.0 it scored 59.0 — well behind GPT-5.5's 82.7, Gemini's 68.5 and Opus 4.8's 65.4 — and on computer use (OSWorld) it trails Opus 4.8, 80.8 to 83.4. More seriously, Meta's own Terminal-Bench 2.1 run used a 6-CPU-core / 8GB-RAM cap that <b>zero of the benchmark's 89 tasks are designed to allow</b>, and only 8 of 89 allow even the 8GB level — meaning the comparison conditions themselves are disputed, not just the score.",
+    signals:"The launch made news mostly for timing and spectacle — dropping the same day as GPT-5.6 and Zuckerberg's rare X post — more than for technical reception; developer commentary has focused on the Terminal-Bench methodology dispute as a reason to discount Meta's own coding claims specifically, while treating the tool-use numbers (run under normal conditions) as credible.",
+    pricing:"$1.25 per 1M input tokens / $4.25 per 1M output — competitively priced for the tool-use lane it's actually strong in.",
+    fog:50,
+    fogLabel:"Medium",
+    fogWhy:"The tool-use lead is real and measured under normal conditions — the fog is a coding story propped up by a disputed benchmark setup.",
+    next:"Builders doing multi-tool agent orchestration: worth testing against your own MCP-style workflows, where the lead looks genuine. Builders picking a coding model: this isn't it — the gap to GPT-5.5 and Opus 4.8 is large even before the benchmark-conditions dispute. Everyone else: not the model to reach for yet outside agent-heavy use cases."
   }
 };
 
-/* newest first — controls order in the track record */
+/* newest first — controls order in the track record.
+   kimik3 / musespark11 are deliberately NOT listed here — see the comment
+   above their entries in PACKETS and RESEARCH-RUNBOOK.md. */
 const LEDGER_ORDER = ["grok45","sonnet5","gemini31","gpt56","fable5","agentforce"];

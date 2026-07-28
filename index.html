@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=48">
+<link rel="stylesheet" href="styles.css?v=49">
 </head>
 <body>
 
@@ -156,18 +156,52 @@ function renderPacket(p){
   </article>`;
 }
 
+/* Pick the filed packet that best demonstrates the work: the highest fog score,
+   i.e. the call where we most sharply contradict a vendor's own claim. That's the
+   credibility proof — anyone can agree with a press release. Chosen at runtime from
+   PACKETS so it never goes stale as packets are added or re-checked. */
+function sampleVerdict(){
+  const keys = Object.keys(PACKETS);
+  if(!keys.length) return null;
+  // `||0` is load-bearing: a missing fog would make every `n > undefined` false and
+  // silently pin the sample to whichever packet happens to be declared first.
+  return PACKETS[keys.reduce((best,k)=> (PACKETS[k].fog||0) > (PACKETS[best].fog||0) ? k : best, keys[0])];
+}
+
+/* A miss used to dead-end on a bare email form: "we haven't filed this — leave your
+   email." For a cold visitor who arrived from a link and has no reason to trust us
+   yet, that asks for the sale before the demo, so it converted on nothing — they'd
+   seen zero evidence that our research is worth an inbox. It now leads with a
+   complete real verdict (evidence panel and all), and only asks for the email after
+   the reader has seen exactly what they'd be signing up for. The sample can never be
+   the launch they typed: this only renders when that launch produced no match.
+   The "already on file" chips use each packet's `name` as the query, so a name must
+   contain one of that packet's own `match` aliases verbatim or its chip dead-ends
+   (click → miss → straight back to this panel). All current packets satisfy that. */
 function renderCapture(q){
   const safe = q.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const demo = sampleVerdict();
+  const others = Object.keys(PACKETS)
+    .filter(k => !demo || PACKETS[k].name !== demo.name)
+    .slice(0,6)
+    .map(k => `<button class="chip" data-q="${PACKETS[k].name}">${PACKETS[k].name}</button>`)
+    .join('');
   return `
   <div class="capture">
     <p class="cap-file">NOT YET ON RECORD</p>
-    <h3>We haven't filed this one yet.</h3>
-    <p class="cap-sub">Leave your email and we'll research <b>“${safe}”</b> by hand — launch docs, pricing, independent benchmarks, what real users report — and send you the verdict, usually within a day.</p>
-    <form class="capform" id="capForm">
-      <input type="email" id="capEmail" required placeholder="you@work.com" aria-label="Your email" />
-      <button class="btn" type="submit">Email me the verdict</button>
-    </form>
-    <p class="cap-done" id="capDone">✓ Got it. We'll email you the verdict.</p>
+    <h3>We haven't filed “${safe}” yet.</h3>
+    ${demo ? `<p class="cap-sub">So here's a real one we have filed — the whole thing, evidence included — so you can judge the work before you decide it's worth your inbox.</p>
+    <div class="cap-demo">${renderPacket(demo)}</div>` : ''}
+    <div class="cap-ask">
+      <p class="cap-asklead">Want this for <b>“${safe}”</b>?</p>
+      <p class="cap-sub">We'll research it by hand — launch docs, pricing, independent benchmarks, what real users report — and send you the verdict, usually within a day.</p>
+      <form class="capform" id="capForm">
+        <input type="email" id="capEmail" required placeholder="you@work.com" aria-label="Your email" />
+        <button class="btn" type="submit">Email me the verdict</button>
+      </form>
+      <p class="cap-done" id="capDone">✓ Got it. We'll email you the verdict.</p>
+    </div>
+    ${others ? `<div class="cap-tries"><p class="cap-trylead">Already on file — check one now:</p><div class="chips">${others}</div></div>` : ''}
   </div>`;
 }
 
@@ -256,6 +290,14 @@ function showResult(q, instant){
 }
 
 function bindResultActions(){
+  /* chips rendered inside a result are new nodes, so the page-load binding at the
+     bottom of this file never saw them — wire them up here too. */
+  document.querySelectorAll('#result .chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.getElementById('query').value = c.dataset.q;
+      showResult(c.dataset.q);
+    });
+  });
   const cf = document.getElementById('capForm');
   if(cf){
     cf.addEventListener('submit',async e=>{

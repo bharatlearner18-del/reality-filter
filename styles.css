@@ -407,6 +407,19 @@ article.packet{color:var(--ink)}
 .cap-note{font-family:var(--font-mono);font-size:11px;color:var(--label);margin:12px 2px 0}
 .cap-done{font-family:var(--font-sans);font-weight:500;font-size:16px;color:var(--success);margin:14px 0 0;display:none}
 .cap-done.show{display:block}
+/* sample verdict shown on a miss, so the reader can judge the work before being
+   asked for an email. It's a card inside a card, so drop the outer float and use a
+   hairline instead — two stacked shadows read as two separate answers, and this is
+   one. Its own rise animation is cancelled: the .capture around it already rises. */
+.cap-demo{margin:0 0 24px}
+.cap-demo .packet{box-shadow:none;border:1px solid var(--hairline);animation:none}
+.cap-ask{border-top:1px solid var(--hairline-strong);padding-top:22px}
+.cap-asklead{font-family:var(--font-serif);font-weight:400;font-size:21px;letter-spacing:-.008em;
+  color:var(--ink);margin:0 0 6px}
+.cap-asklead b{font-weight:400;color:var(--ink)}
+.cap-tries{margin-top:22px;padding-top:18px;border-top:1px solid var(--hairline)}
+.cap-trylead{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--label);margin:0 0 10px}
 
 /* ---------- landing: premium panel — ink-inverted "featured" band ---------- */
 /* slim horizontal band (newsletter pattern): pitch on the left, email form on the right.

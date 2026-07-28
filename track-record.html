@@ -55,7 +55,7 @@
   <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
 </footer>
 
-<script src="packets.js?v=3"></script>
+<script src="packets.js?v=4"></script>
 <script>
 const ledgerEl = document.getElementById('ledgerList');
 ledgerEl.innerHTML = LEDGER_ORDER.map((k,i)=>{
@@ -79,7 +79,7 @@ LEDGER_ORDER.forEach(k=>{
 });
 const total = LEDGER_ORDER.length;
 document.getElementById('trStats').innerHTML = [
-  {n:total, l:'launches checked'},
+  {n:total, l:'verdicts on record'},
   {n:counts.real, l:'held up as real'},
   {n:counts.mixed, l:'caveats / too early'},
   {n:counts.fog, l:'called out as fog'}

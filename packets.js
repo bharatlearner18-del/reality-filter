@@ -173,6 +173,78 @@ const PACKETS = {
     fogLabel:"Medium",
     fogWhy:"The tool-use lead is real and measured under normal conditions — the fog is a coding story propped up by a disputed benchmark setup.",
     next:"Builders doing multi-tool agent orchestration: worth testing against your own MCP-style workflows, where the lead looks genuine. Builders picking a coding model: this isn't it — the gap to GPT-5.5 and Opus 4.8 is large even before the benchmark-conditions dispute. Everyone else: not the model to reach for yet outside agent-heavy use cases."
+  },
+
+  /* --- filed proactively for search coverage (2026-07-25) ---
+     High-demand launches people are likely to search for. Same rule as the
+     user-request packets above: searchable here, deliberately NOT in
+     LEDGER_ORDER — the public record stays small and curated.
+     ALIAS NOTE: "deepseek" and "cursor" are bare brand words, safe ONLY while
+     each brand has exactly one packet. The moment a second DeepSeek (V5/R2) or
+     Cursor packet is filed, whichever sits earlier in PACKETS silently wins
+     every bare-word query — drop the bare alias then (see CLAUDE.md).
+     No bare "gemini" alias for the same reason: gemini31 already exists. */
+  deepseekv4:{
+    match:["deepseek v4","deepseek-v4","deepseekv4","deepseek v 4","deepseek pro","deepseek flash","deepseek"],
+    name:"DeepSeek V4",
+    by:"DeepSeek · previewed April 2026, official release mid-July 2026",
+    file:"CASE FILE · AI-2026-020",
+    date:"2026-07-25",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"An open-source Chinese model that matches closed frontier models on coding, at roughly a tenth of what OpenAI and Anthropic charge.",
+    stakes:"If your coding or agent bills are the thing stopping you from shipping, this is the launch that changes the math the most — the price gap is close to 10x, and the coding ability behind it is independently confirmed. But if you handle customer, health or financial data, where your requests physically travel matters more than any benchmark, and that answer may rule it out entirely no matter how good it is.",
+    found:"Real, released, and independently measured — not a paper claim. On the llm-stats tracker (June 2026), DeepSeek-V4-Pro-Max hits <b>80.6% on SWE-bench Verified</b>, statistically tied with Claude Opus 4.7 at 80.8% and within a hair of the 80.9% record. It tops LiveCodeBench at 93.5 and posts a Codeforces ELO of 3206, ahead of GPT-5.5's 3168. Vals AI's Vibe Code Benchmark measured roughly a <b>10x improvement in code generation over V3.2</b>. Both tiers ship a 1M-token context, and the weights are open for anyone to download and self-host.",
+    missing:"Independent confirmation for the cheaper tier, and a straight answer on reliability. The US government's own evaluator, NIST/CAISI, assessed V4 Pro in April 2026 and concluded its capabilities <b>lag the frontier by about 8 months</b> — the benchmark ties don't mean parity across the board. For the Flash tier there's still <b>no contamination-free independent re-run</b>: llm-stats lists V4-Flash-Max at 79.0% on SWE-bench Verified while DeepSeek's own technical report says 73.7%, and nobody has reconciled the gap. DeepSeek also publishes <b>no uptime SLA and no guaranteed latency</b> — the API runs best-effort, and 503s and 429s show up under peak demand.",
+    signals:"The pricing move is the loudest signal: Computerworld and InfoWorld both covered DeepSeek cutting V4-Pro by <b>75% barely a month after launch</b>, read across the industry as deliberately escalating a price war rather than a routine adjustment. Fortune tied the release to close integration with Huawei's chips. Against all that, the caution is specific and documented, not vague China-panic: every API request routes through Chinese servers, Italy banned DeepSeek's R1 outright over GDPR concerns in 2025, and the consumer chat interface enforces Chinese government censorship on politically sensitive topics (the API carries fewer restrictions but keeps alignment constraints from its training data). Analysts also note it trails Western rivals on ecosystem support, IP provenance and native AWS/Azure/GCP integration.",
+    pricing:"After the 75% cut, V4-Pro runs about <b>$3.48 per 1M output tokens — against roughly $30 at OpenAI and $25 at Anthropic</b> for comparable work. Open weights are downloadable, so self-hosting is a real option if the routing question is your blocker.",
+    fog:45,
+    fogLabel:"Medium",
+    fogWhy:"The coding ability is real and independently verified — the fog is everything around the model: where your data travels, no uptime guarantee, and an unverified cheaper tier.",
+    next:"Builders watching costs: run it against your own eval set this week — at a tenth of frontier pricing the test is nearly free, and the coding numbers are real. Enterprises with regulated data: get a legal read on the Chinese-server routing before any pilot, and if the answer is no, self-hosting the open weights is the only path that changes it. Teams needing uptime guarantees: don't put it on a critical path without a fallback — there's no published SLA. Everyone else: fine to try, and the price war it started will likely cut your other AI bills too."
+  },
+  gemini36flash:{
+    /* deliberately NO bare "gemini" alias — gemini31 is a different packet and
+       sits earlier in PACKETS, so a bare alias here would never be reached. */
+    match:["gemini 3.6 flash","gemini 3.6","gemini-3.6","gemini 3.6 flash lite","gemini flash 3.6"],
+    name:"Gemini 3.6 Flash",
+    by:"Google · launched July 21, 2026",
+    file:"CASE FILE · AI-2026-021",
+    date:"2026-07-25",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"Google's newest Flash-tier model — beating the previous Flash on every published benchmark, and even outscoring Google's own Gemini 3.1 Pro on the Artificial Analysis Intelligence Index.",
+    stakes:"If you already run Gemini Flash, switching is close to a free win — same intelligence, lower bill. But if you're upgrading because you expect a smarter model, you'll be disappointed: independent testing puts it at exactly the same intelligence score as the version it replaces. Knowing which of those two things you're buying is the entire decision here.",
+    found:"The efficiency gains are real and specific. Output tokens dropped to <b>$7.50 per 1M from $9.00</b> on Gemini 3.5 Flash while input pricing held at $1.50, and the model burns <b>17% fewer output tokens</b> to finish the same work — so the effective saving is bigger than the sticker cut. The knowledge cutoff jumps from January 2025 to <b>March 2026, a 14-month leap</b>, which matters a lot for anything touching recent events or libraries. On Google's published numbers it beats 3.5 Flash across the board, including 58.7% vs 55.1% on SWE-Bench Pro, and outscores Gemini 3.1 Pro on the AA Intelligence Index, 50 to 46.",
+    missing:"The part the launch framing implies but the data doesn't support. Independent testing scores Gemini 3.6 Flash at <b>50 on the Artificial Analysis Intelligence Index — exactly the same as Gemini 3.5 Flash</b>, the model it replaces. The honest one-line summary from that testing: it is <b>faster and cheaper, not smarter</b>. \"Beats 3.5 Flash on every published benchmark\" is true and still leaves you with the same intelligence tier, because which benchmarks get published is a choice.",
+    signals:"This is the second Gemini launch in a row where our read lands the same way — real, measurable gains wrapped in framing that invites you to infer more than was delivered (see our Gemini 3.1 Pro verdict, where the omitted benchmarks were the story). Worth saying plainly in Google's favour: nothing here is fabricated, the price and token-efficiency improvements are genuine and immediately useful, and a 14-month knowledge-cutoff jump is a bigger practical upgrade for most people than a couple of index points would have been.",
+    pricing:"$1.50 per 1M input / $7.50 per 1M output, down from $9.00 output on 3.5 Flash — and the 17% token reduction compounds that on real workloads.",
+    fog:45,
+    fogLabel:"Medium",
+    fogWhy:"Nothing here is false — the fog is that a cheaper, faster model is being framed in a way that reads like a smarter one, and independently it isn't.",
+    next:"Already on Gemini 3.5 Flash: switch — same intelligence, lower cost, far fresher knowledge, no real downside. Hoping for a capability jump: skip this one and stay on your current model, because independent scoring says the intelligence is flat. Builders on long-context or high-volume pipelines: re-run your cost math, since the 17% token reduction is where most of the actual saving lives. Everyone else: it's the default Flash now — just use it."
+  },
+  cursor35:{
+    match:["cursor 3.5","cursor 3","cursor cloud agents","cursor ide","cursor editor","cursor ai","cursor"],
+    name:"Cursor 3.5 — Cloud Agents",
+    by:"Cursor · 3.0 April 2026, 3.5 launched May 20, 2026",
+    file:"CASE FILE · AI-2026-022",
+    date:"2026-07-25",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"An AI editor rebuilt around orchestrating agents instead of writing lines — with Cloud Agents that run in isolated cloud VMs, work across multiple repos in parallel, and report back to your IDE asynchronously.",
+    stakes:"If you write code for a living, this is the tool most likely to change how your day actually works — and the adoption numbers say your competitors are already on it. But the thing that will bite you isn't the product, it's the bill: several documented cases of a month's subscription draining in a single day, and Cloud Agents are billed separately from the plan you think you're buying. Decide your spending cap before you turn agents loose, not after.",
+    found:"Real, shipped, and adopted at serious scale. Cursor 3 landed in April 2026 with up to <b>8 AI agents running in parallel on isolated Git branches</b>, and 3.5 followed on May 20 with Cloud Agents — isolated cloud VMs with full terminal, browser and desktop access that work across multiple repos and report back asynchronously. The adoption is the strongest evidence: <b>over 1 million developers, roughly 360,000 paying customers, and presence inside 64% of the Fortune 500</b> by mid-2026. This is not an early-access experiment.",
+    missing:"Honest, predictable pricing. Complaints on Trustpilot and Reddit cluster tightly on billing rather than quality: after the June 2025 billing change, effective request counts on the same $20 plan fell from about <b>500 to roughly 225</b>, with documented cases of a subscription <b>depleting in a single day</b>, and rate limits of 1 request per minute / 30 per hour that active developers hit routinely. Most pointed of all — <b>Cloud Agents are billed separately, and that isn't clearly communicated at signup</b>, which is exactly the kind of gap that turns a good product into a surprise invoice.",
+    signals:"Developer consensus is unusually consistent: Cloud Agents are Cursor's real competitive differentiator in 2026, and the pricing is its acknowledged weak point — the common advice to heavy users is to budget deliberately or expect to hit limits mid-sprint. One number deserves a label: the widely-quoted \"<b>1–3 hours saved per developer per day</b>\" is <b>Cursor's own data</b>, not an independent study, so treat it as a vendor claim worth testing rather than a measured fact.",
+    pricing:"Pro at $20/month, Pro+ at $60/month for 3x usage across OpenAI, Claude and Gemini models — but the plan price is only part of it: usage-based model access, on-demand overages and separately-billed Cloud Agents all stack on top.",
+    fog:45,
+    fogLabel:"Medium",
+    fogWhy:"The product and its adoption are real and verifiable — the fog sits entirely in the billing, where the advertised plan price isn't what heavy use actually costs.",
+    next:"Developers trying it: start on Pro and set a hard spend cap before running Cloud Agents — the productivity case is real, the surprise-invoice risk is the documented failure mode. Teams rolling it out: price a pilot on actual agent usage for a month, not on the $20 headline, and confirm who's watching overages. Evaluating the ROI claim: run your own before/after on a real sprint — the 1–3 hours saved figure is the vendor's own, so it needs your data, not theirs. Everyone else: this is where a lot of professional coding is heading — worth understanding even if you don't buy it."
   }
 };
 

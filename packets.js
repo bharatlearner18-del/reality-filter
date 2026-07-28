@@ -245,6 +245,33 @@ const PACKETS = {
     fogLabel:"Medium",
     fogWhy:"The product and its adoption are real and verifiable — the fog sits entirely in the billing, where the advertised plan price isn't what heavy use actually costs.",
     next:"Developers trying it: start on Pro and set a hard spend cap before running Cloud Agents — the productivity case is real, the surprise-invoice risk is the documented failure mode. Teams rolling it out: price a pilot on actual agent usage for a month, not on the $20 headline, and confirm who's watching overages. Evaluating the ROI claim: run your own before/after on a real sprint — the 1–3 hours saved figure is the vendor's own, so it needs your data, not theirs. Everyone else: this is where a lot of professional coding is heading — worth understanding even if you don't buy it."
+  },
+
+  /* Filed 2026-07-28, four days after launch, while the argument was still live.
+     Searchable only — deliberately NOT in LEDGER_ORDER.
+     ALIAS NOTE: no bare "opus" alias. Opus 4.8 is a different, still-current
+     model and a bare alias would swallow every query about it. "opus 5" is the
+     shortest safe form; its content key {opus,5} doesn't collide with fable5
+     {fable,5} or sonnet5 {sonnet,5}. */
+  opus5:{
+    match:["claude opus 5","opus 5","opus5","opus-5","claude opus5","anthropic opus 5","claude-opus-5"],
+    name:"Claude Opus 5",
+    by:"Anthropic · launched July 24, 2026",
+    file:"CASE FILE · AI-2026-023",
+    date:"2026-07-28",
+    verdict:"Worth trying — with caveats",
+    verdictClass:"v-watch",
+    stampLbl:"VERDICT",
+    claim:"The most intelligent model available — Fable 5–level capability at half the input price, a 1M-token context window, and the new default on Claude Max.",
+    stakes:"This is the rare launch where the benchmark claim is true and the people who used it longest still didn't enjoy it. So your real question isn't \"is it good\" — it's whether you have a week to re-learn a setup that already works. On Claude Max it's already your default, so you're deciding either way.",
+    found:"The capability claim holds up independently. <b>Artificial Analysis — who Anthropic engaged to evaluate the model before release — scored Opus 5 (max effort) at 61 on their Intelligence Index</b>, narrowly the highest of any model: ahead of Claude Fable 5 (60), GPT-5.6 Sol (59) and Kimi K3 (57), with the highest GDPval-AA v2 and AA-Briefcase scores recorded so far. They also measured <b>comparable intelligence to Fable 5 at 26% lower cost per task</b>. Vendor-published benchmarks point the same way — more than double Opus 4.8 on Frontier-Bench v0.1, roughly 3x the next-best model on ARC-AGI 3, and within 0.5% of Fable 5's peak on CursorBench 3.2 at half the cost per task. The price is real too: <b>$5/M input and $25/M output, the same as Opus 4.8 and half of Fable 5's input rate</b>.",
+    missing:"Any evidence that \"best on the index\" means \"better in your workflow.\" The gap here isn't a disputed number — it's that the benchmark result and the practitioner experience point in opposite directions, and the launch messaging only tells you about the first one. <b>Nothing in the announcement prepares you for the migration cost</b>: the people who tested it longest found it broke setups that had worked fine, and the fix that worked for them was <i>removing</i> the scaffolding they'd built, which is the opposite of what a drop-in upgrade means. There is also no published guidance that lower reasoning effort can outperform higher — a finding testers had to discover themselves.",
+    signals:"The clearest signal is the split. <b>Dan Shipper, Katie Parrott and Kieran Klaassen at Every</b> spent a week testing it pre-release across coding, writing and their internal agent, and published a verdict titled \"<b>Brilliant in Flashes, Frustrating in Practice</b>\" — calling it \"a hard model to love\" that \"argued with instructions, stopped before the work was finished\" and didn't play well with their existing skills and plugins. Their Day 0 note went further: \"a poor man's Fable,\" with many of Fable's personality quirks but not its top end. <b>Evidence cutting the other way, and it's strong:</b> when the same team deleted their elaborate scaffolding and started fresh, the model got dramatically better — and in a <b>blind taste test Shipper ranked it above every other model, including Fable 5 and GPT-5.6</b>. Kieran Klaassen separately found <b>lower thinking levels produced better results than higher ones</b>. Worth noting the source's own track record too: Henry Dowling publicly pointed out that Every had been enthusiastic about Opus 4.8, which makes a negative review from them harder to dismiss as contrarianism.",
+    pricing:"$5 per million input tokens and $25 per million output — same as Opus 4.8, half Fable 5's input rate. <b>Fast mode is the line to read twice:</b> roughly 2.5x faster output at $10/$50, double the standard rate — and <b>fast-mode tokens do not count against your plan's included usage; they bill from the first token</b>. It draws on a separate rate-limit pool shared across Opus models and silently falls back to standard speed when that pool or your credits run out. Anthropic did double Claude Code's 5-hour rate limits for Pro, Max, Team and seat-based Enterprise and removed peak-hour throttling on Pro and Max — but <b>the weekly cap did not change</b>.",
+    fog:40,
+    fogLabel:"Medium",
+    fogWhy:"The benchmark claim is true and independently checked — the fog is that \"most intelligent model\" is being heard as \"drop-in upgrade,\" and the people who tested it longest found it broke setups that worked fine before.",
+    next:"Already on Claude Max: it's your default now, so give it one real task before judging it — and if it argues or stops early, delete your custom scaffolding and retry plain before concluding it's worse. Migrating an existing agent or skill setup: budget a week, and try lower reasoning effort first — testers found less thinking beat more, which is the opposite of the usual advice. Buying on price: the $5/M input and 26% lower cost per task are verified, so the savings case is the solid part of this launch. Using fast mode: check your billing before you rely on it — those tokens bill from the first token and never touch your plan's included usage. Everyone else: watch this one for a month — a model topping the index while its heaviest testers complain is exactly how a capability gap gets mistaken for a workflow problem, or the reverse."
   }
 };
 

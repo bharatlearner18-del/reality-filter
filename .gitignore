@@ -3,3 +3,30 @@
 # Private working file — real people's feedback (may contain emails/names).
 # Kept local only; the repo deploys to a public GitHub Pages site, so this must NOT be pushed.
 FEEDBACK.md
+
+# Dev-only dependencies (Playwright etc. used for local layout verification).
+# Never needed by the site — it is plain static HTML/CSS/JS with no build step.
+node_modules/
+
+# Local verification screenshots. Some tools name these after the absolute path,
+# which embeds the real Windows username — and this repo is PUBLIC, so a stray
+# `git add -A` would publish that. Screenshots belong in the scratchpad, not here.
+# Scoped to the repo root on purpose: a real asset (e.g. assets/og.png) still works.
+/*.png
+Users*Hype-Reality-Mvp*
+
+# Per-developer Claude Code settings. Machine-specific by design — it stores
+# absolute paths that contain the real Windows username, and this repo is PUBLIC.
+# The shared config lives in .claude/settings.json, which IS tracked.
+.claude/settings.local.json
+
+# Throwaway git worktrees from agent sessions. Each is a full nested checkout
+# carrying its own .claude/settings.local.json (username again), so it must never
+# be committed. This was only covered by local .git/info/exclude, which does not
+# travel with the repo — keeping it here protects any future clone too.
+.claude/worktrees/
+
+# Unbuilt roadmap + pricing thinking. Same reasoning as FEEDBACK.md above: this
+# repo is public, and none of it is decided yet. Remove this line if you ever
+# want to build in public deliberately.
+FUTURE-IDEAS.md

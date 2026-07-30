@@ -4,7 +4,16 @@
    Every packet follows the packet-writing standard in CLAUDE.md: stakes first
    (why the reader should care), named evidence, expert/company signals, and a
    next step segmented by reader type. Facts changed since first filing are
-   re-checked and the change is stated inside the packet — never edited quietly. */
+   re-checked and the change is stated inside the packet — never edited quietly.
+
+   DRIFT WARNING: about.html hardcodes three facts from here, and nothing loads
+   packets.js on that page, so a re-check below will silently desync it:
+     - opus5's verdict + fog value  -> the mock verdict card in explainer scene 4
+     - gpt56's "Too early" -> "Worth trying" history -> the Read panel
+     - agentforce's $1.2B ARR figure (from agentforce.found) -> the Read panel
+   When you re-check opus5, gpt56 or agentforce, update about.html to match.
+   (It used to mirror ledger rows too; that scene was removed 2026-07-30 because
+   showing the ledger implied every packet gets published, which it doesn't.) */
 const PACKETS = {
   gpt56:{
     match:["gpt-5.6","gpt5.6","gpt 5.6","gpt-56","gpt56","sol terra luna","openai gpt","gpt-5-6"],

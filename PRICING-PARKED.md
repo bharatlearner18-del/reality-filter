@@ -1,3 +1,68 @@
+# Pricing / Premium page — PARKED (not deleted)
+
+**Parked 2026-07-30 on the user's instruction.** Their words: *"remove pricing now for
+this time — don't delete it, just save it inside `.md`. When we will think to add, we
+will do, but now we don't need it."*
+
+This file is the archive. `premium.html` was removed from the site and its complete
+source is preserved verbatim below, along with everything else that had to change to
+unlink it. **Nothing was rewritten or trimmed** — restoring is a copy-paste job, not a
+rebuild.
+
+## Why it was parked
+
+The page advertised **"Premium · coming soon"** with a waitlist email field, for a
+product that does not exist yet and has no committed price. The user decided the site
+should not carry it right now. This is a reversible pause, not an abandonment — the
+Premium tracking workflow is still named in `CLAUDE.md` as half the product's moat.
+
+## What changed when it was parked
+
+| File | Change |
+|---|---|
+| `premium.html` | **Deleted** from the repo. Full source archived below. |
+| `index.html` | Removed the nav link `<a class="nav-cta" href="premium.html">Pricing</a>`. |
+| `about.html` | Same nav link removed. |
+| `track-record.html` | Same nav link removed. |
+| `CLAUDE.md` | Cache-buster rule dropped from four HTML files to three; `forms.js` consumer list dropped to one page; the Premium/Pricing references now point here. |
+
+**Deliberately left untouched, so a restore is clean:**
+
+- **All the CSS.** `.premium`, `.section-premium`, `.p-left`, `.p-badge`, `.p-title`,
+  `.p-body`, `.p-list`, `.waitlist`, `.wlform`, `.wl-lbl`, `.wl-done` and `.nav-cta`
+  all still live in `styles.css`, including their `html.dark` overrides. They are
+  currently unused — that is intentional, matching the project's standing rule about
+  leaving unused design-system classes alone. **Do not "clean them up".**
+- **`forms.js`.** Untouched and still generic. It is now loaded only by `index.html`
+  (for the no-match email capture). Its `type:'premium waitlist'` path simply has no
+  caller until this page returns.
+- **Git history.** `premium.html` also remains recoverable with
+  `git show HEAD:premium.html`, so this archive is the second copy, not the only one.
+
+## How to restore it
+
+1. Recreate `premium.html` from the source block below, verbatim.
+2. Fix the two hand-maintained cache-busters in it to whatever the current numbers are
+   — the archived copy is frozen at `styles.css?v=55` and `forms.js?v=2`.
+3. Re-add the nav link to `index.html`, `about.html`, `track-record.html` **and** the
+   restored `premium.html` itself, as the last item in `.nav-center`, immediately
+   before the `<button class="theme-toggle">`:
+   ```html
+   <a class="nav-cta" href="premium.html">Pricing</a>
+   ```
+   On `premium.html` that link points at its own page (that was the original
+   behaviour); the other three pages get `class="nav-cta"` exactly as shown.
+4. Update `CLAUDE.md`: put `premium.html` back on the `styles.css` cache-buster list
+   (three files → four) and back on the `forms.js` list (one page → two).
+5. Verify the waitlist actually submits before shipping it — `forms.js` returns
+   `{ok:true, skipped:true}` while `FORMSPREE_ID` is empty, which shows the success
+   state without sending anything.
+
+## Archived source — `premium.html`
+
+Frozen exactly as it was on 2026-07-30.
+
+```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,7 +75,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=49">
+<link rel="stylesheet" href="styles.css?v=55">
 </head>
 <body>
 
@@ -21,6 +86,7 @@
     </div>
     <nav class="nav-center">
       <a class="toplink" href="index.html">Product</a>
+      <a class="toplink" href="about.html">How it works</a>
       <a class="toplink" href="track-record.html">Track record</a>
       <a class="nav-cta" href="premium.html">Pricing</a>
           <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
@@ -105,3 +171,4 @@ document.querySelector('[data-theme-toggle]').addEventListener('click', ()=>{
 </script>
 </body>
 </html>
+```

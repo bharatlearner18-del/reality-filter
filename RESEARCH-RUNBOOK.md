@@ -46,3 +46,11 @@ exist to answer the person who asked, not to grow the track record. Only move
 a request-driven packet into `LEDGER_ORDER` if you separately decide it belongs
 in the curated set — that's an intentional editorial choice, not something
 this runbook does automatically.
+
+**Who decides: the user.** Nothing reaches `LEDGER_ORDER` on its own, on a
+schedule, or because a packet happens to be good. The user picks the calls they
+want to stand behind publicly and says so — a few a month at most. Everything
+else stays searchable-only, forever, and that is the normal case rather than a
+queue waiting to be published. The same rule binds the *copy*: no page may say
+or imply that every verdict lands on the record (an `about.html` explainer scene
+showing a mock ledger was cut on 2026-07-30 for exactly that reason).

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>How it works — Reality Filter</title>
+<meta name="description" content="What Reality Filter does, in 22 seconds: type the name of any AI tool and get one clear answer — worth trying now, watch later, too early, or mostly fog machine — backed by evidence we name and sources we quote. Watch it, or read it." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css?v=56">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="nav-left">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" width="22" height="22"><circle cx="24" cy="24" r="18" fill="#d97757" fill-opacity=".12"/><path d="M24 6 A18 18 0 0 0 24 42 Z" fill="#d97757"/><circle cx="24" cy="24" r="18" fill="none" stroke="#d97757" stroke-width="2.6"/><g stroke="#c08532" stroke-width="2.6" stroke-linecap="round"><line x1="29" y1="18" x2="37" y2="18"/><line x1="29" y1="24" x2="39" y2="24"/><line x1="29" y1="30" x2="35" y2="30"/></g></svg></span> Reality Filter</a>
+    </div>
+    <nav class="nav-center">
+      <a class="toplink" href="index.html">Product</a>
+      <a class="toplink active" href="about.html">How it works</a>
+      <a class="toplink" href="track-record.html">Track record</a>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+  <section class="hw-hero">
+    <div class="wrap">
+      <p class="section-eyebrow">// how it works</p>
+      <h1 class="hw-title">What Reality Filter does</h1>
+
+      <!-- Same story, two ways in: watch it play, or read it. -->
+      <div class="hw-modes" role="tablist" aria-label="Choose how to learn about Reality Filter">
+        <button class="hw-mode" id="tabWatch" role="tab" aria-selected="true" aria-controls="panelWatch" type="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"></polygon></svg>
+          Watch it (22s)
+        </button>
+        <!-- tabindex set in the markup, not just by selectTab(): without it both
+             tabs are Tab stops on first paint, before any interaction happens. -->
+        <button class="hw-mode" id="tabRead" role="tab" aria-selected="false" aria-controls="panelRead" type="button" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          Read it
+        </button>
+      </div>
+
+      <!-- ============ WATCH ============ -->
+      <div class="hw-panel" id="panelWatch" role="tabpanel" aria-labelledby="tabWatch">
+        <div class="hw-player" id="player">
+          <div class="hw-stage">
+
+            <div class="hw-scene is-on" data-dur="5200">
+              <p class="hw-step-lbl">1 — The problem</p>
+              <p class="hw-big">A new AI tool launches. Everyone says it changes everything.</p>
+              <div class="hw-claim">
+                <p>“10× faster. Beats every model on every benchmark. This changes everything.”</p>
+                <span>LAUNCH POST · 40,000 REPOSTS</span>
+              </div>
+              <p class="hw-sm">You can't tell if that's true without losing half an hour to benchmarks, threads and reviews.</p>
+            </div>
+
+            <div class="hw-scene" data-dur="4600">
+              <p class="hw-step-lbl">2 — What you do</p>
+              <p class="hw-big">Type the name. That's the whole input.</p>
+              <div class="hw-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span class="hw-typed" id="hwTyped"></span><span class="hw-caret" aria-hidden="true"></span>
+              </div>
+              <p class="hw-sm">No sign-up, no setup, nothing to install. Just the name of a tool, model or app.</p>
+            </div>
+
+            <div class="hw-scene" data-dur="6200">
+              <p class="hw-step-lbl">3 — What we check</p>
+              <p class="hw-big">We gather the evidence, and name every source.</p>
+              <div class="hw-rows">
+                <div class="hw-row"><span class="hw-dot" style="background:var(--tl-thinking)"></span>What the company officially claims <b>logged</b></div>
+                <div class="hw-row"><span class="hw-dot" style="background:var(--tl-grep)"></span>What's independently proven <b>found</b></div>
+                <div class="hw-row"><span class="hw-dot" style="background:var(--v-fog)"></span>What's claimed but unproven <b>flagged</b></div>
+                <div class="hw-row"><span class="hw-dot" style="background:var(--tl-read)"></span>What experts and real users report <b>quoted</b></div>
+                <div class="hw-row"><span class="hw-dot" style="background:var(--tl-edit)"></span>What it costs, and the limits <b>checked</b></div>
+              </div>
+              <p class="hw-sm">Real benchmark numbers and named reviewers — never “reports suggest”.</p>
+            </div>
+
+            <div class="hw-scene" data-dur="5800">
+              <p class="hw-step-lbl">4 — What you get back</p>
+              <p class="hw-big">One clear answer, and how much is still hype.</p>
+              <div class="hw-verdict">
+                <div class="hw-vtop">
+                  <span class="hw-vname">Claude Opus 5</span>
+                  <span class="hw-vstamp">WORTH TRYING — WITH CAVEATS</span>
+                </div>
+                <div class="hw-meter"><i></i></div>
+                <div class="hw-vfoot"><span>HYPE RISK</span><span>MEDIUM · 40%</span></div>
+              </div>
+              <p class="hw-sm">Four possible answers: worth trying now · watch later · too early · mostly fog machine. You can decide from this alone — the full evidence is one click away.</p>
+            </div>
+
+          </div>
+          <div class="hw-ctrl">
+            <button class="hw-play" id="hwPlay" type="button" aria-label="Pause">
+              <svg id="hwIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
+            </button>
+            <div class="hw-segs" id="hwSegs" aria-hidden="true">
+              <span class="hw-seg"><i></i></span><span class="hw-seg"><i></i></span><span class="hw-seg"><i></i></span><span class="hw-seg"><i></i></span>
+            </div>
+            <!-- deliberately not aria-live: it changes every ~5s during autoplay,
+                 which would interrupt a screen-reader user every few seconds. The
+                 pause button satisfies WCAG 2.2.2; the text stays readable on demand. -->
+            <span class="hw-time" id="hwTime">Step 1 of 4</span>
+          </div>
+        </div>
+        <!-- The lede sits BELOW the player, not above it. Above, it pushed the
+             player 115px (desktop) to 202px (phone) down the page, so the thing
+             the page exists to show opened half-cut off the bottom of the screen.
+             Reads fine here as the player's caption; Read mode carries the same
+             point in its opening prose. Do not move it back up. -->
+        <p class="hw-lede">Every week another AI tool launches claiming to change everything. Reality Filter tells you whether it actually does — <b>one clear answer</b>, backed by evidence we name and sources we quote, so you can decide in about a minute instead of an afternoon.</p>
+      </div>
+
+      <!-- ============ READ ============ -->
+      <div class="hw-panel hw-read" id="panelRead" role="tabpanel" aria-labelledby="tabRead" hidden>
+        <h2 class="hw-q">The problem it solves</h2>
+        <p>Every AI launch sounds identical. <b>“10× faster.” “Beats every benchmark.” “This changes everything.”</b> Some of it is true. A lot of it isn't. And the only way to find out has been to spend twenty or thirty minutes yourself, digging through benchmark tables, developer threads and reviews, before you can decide whether to switch to it, pay for it, or ignore it.</p>
+        <p>Reality Filter does that digging and hands you the conclusion.</p>
+
+        <h2 class="hw-q">What you actually do</h2>
+        <p>You type the name of an AI tool, model or app into the search box — <b>ChatGPT, Gemini, Claude, Cursor, or whatever you saw people posting about this morning</b>. That's the entire input. There's no sign-up, no account, and nothing to install.</p>
+
+        <h2 class="hw-q">What you get back</h2>
+        <p>One answer, out of four. Not a score, not a wall of research — a decision:</p>
+        <ul class="hw-verdicts">
+          <li><span class="hw-tag" style="color:var(--v-go)">WORTH TRYING NOW</span><p>It does what it says. Go ahead and use it.</p></li>
+          <li><span class="hw-tag" style="color:var(--v-watch)">WATCH LATER</span><p>It's real, but there are catches worth knowing before you commit.</p></li>
+          <li><span class="hw-tag" style="color:var(--v-early)">TOO EARLY</span><p>It might turn out fine. The evidence just isn't in yet.</p></li>
+          <li><span class="hw-tag" style="color:var(--v-fog)">MOSTLY FOG MACHINE</span><p>The claims run well ahead of anything anyone can show.</p></li>
+        </ul>
+        <p>Alongside it you get a <b>hype risk</b> reading — a plain sentence on how much of the story is still unproven — and a short note on what you should do next, written separately for people building with it and people buying it.</p>
+
+        <h2 class="hw-q">Where the answer comes from</h2>
+        <p>Every verdict is researched by hand from current sources, and it names them. Actual benchmark names and scores. Named reviewers and independent testers. What real users and companies report after living with the thing. You'll never read “reports suggest” — if we can't point at who said it, it doesn't go in.</p>
+        <p>We also publish the evidence <b>against</b> our own call when it exists. A verdict you can only agree with isn't worth much.</p>
+
+        <div class="hw-note">The full evidence sits behind one click, deliberately. The answer comes first so you can decide in about a minute — the proof is there underneath for when you want to check our work rather than take our word for it.</div>
+
+        <h2 class="hw-q">Why you can trust it</h2>
+        <p>We keep a <b>public, dated track record</b> — a small, hand-picked set of calls, a few added each month, each one published before anyone knew who'd turn out to be right. <b>Not every verdict goes on it</b>, deliberately: it's a record of the calls we choose to stand behind, not a log of everything we've ever looked up. The ones that do go on it stay there, and we don't quietly edit them — when the facts change we re-check the tool, update the verdict, and leave the original call standing next to the correction.</p>
+        <p>That has already happened: GPT-5.6 was filed as <b>“too early”</b>, then moved to <b>“worth trying”</b> when it became generally available — and the original call is still quoted inside the packet rather than deleted. We've also called a product doing $1.2B a year <b>“mostly fog machine”</b>. If this only ever agreed with press releases, it would be worthless to you.</p>
+
+        <h2 class="hw-q">What it costs</h2>
+        <p>Nothing. Reading any verdict is free and needs no account. If we haven't checked something yet, you can leave an email and a real person researches it by hand and sends you the answer, usually within a day.</p>
+
+        <a class="hw-cta" href="index.html">Check a tool now
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fwrap">
+    <div>
+      <div class="fbrand">Reality Filter</div>
+      <p>The straight read on what's real in AI — backed by a public record of the calls we've made, and how they held up.</p>
+    </div>
+    <a class="toplink" href="index.html">← Back to check a launch</a>
+  </div>
+  <div class="wrap"><p class="disc">Verdicts are researched judgment calls, not buying advice. Verify anything that matters.</p></div>
+</footer>
+
+<script>
+/* ---- read / watch tabs ---------------------------------------------------
+   Switching to Read pauses the player: an animation running inside a hidden
+   panel would keep burning its timers and desync the progress bar. */
+const tabs = [document.getElementById('tabWatch'), document.getElementById('tabRead')];
+const panels = [document.getElementById('panelWatch'), document.getElementById('panelRead')];
+function selectTab(i){
+  tabs.forEach((t,n)=>{
+    t.setAttribute('aria-selected', n===i ? 'true' : 'false');
+    /* roving tabindex (ARIA tabs pattern): only the selected tab is a Tab stop,
+       arrow keys move between them without an extra Tab press. */
+    t.tabIndex = n===i ? 0 : -1;
+  });
+  panels.forEach((p,n)=>{ p.hidden = n!==i; });
+  if(i===1) pause();
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener('click', ()=>selectTab(i));
+  t.addEventListener('keydown', e=>{
+    if(e.key!=='ArrowRight' && e.key!=='ArrowLeft') return;
+    e.preventDefault();
+    const n = (i + (e.key==='ArrowRight'?1:tabs.length-1)) % tabs.length;
+    tabs[n].focus(); selectTab(n);
+  });
+});
+
+/* ---- the explainer player ------------------------------------------------
+   Scene durations live on each .hw-scene as data-dur so the markup stays the
+   single source of truth. Pause freezes both the setTimeout (by tracking the
+   remaining ms) and the CSS fill animation (via animationPlayState), so
+   resuming never desyncs the bar from the scene. */
+const scenes  = [...document.querySelectorAll('.hw-scene')];
+const segs    = [...document.querySelectorAll('.hw-seg')];
+const playBtn = document.getElementById('hwPlay');
+const icon    = document.getElementById('hwIcon');
+const timeEl  = document.getElementById('hwTime');
+const typedEl = document.getElementById('hwTyped');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const ICON_PAUSE  = '<rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect>';
+const ICON_PLAY   = '<polygon points="8 5 19 12 8 19 8 5"></polygon>';
+const ICON_REPLAY = '<path d="M3 12a9 9 0 1 0 3-6.7L3 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><polyline points="3 3 3 8.5 8.5 8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>';
+
+let idx = 0, playing = false, timer = null, startedAt = 0, remaining = 0, ended = false, typeTimer = null;
+
+function setIcon(){
+  icon.innerHTML = ended ? ICON_REPLAY : (playing ? ICON_PAUSE : ICON_PLAY);
+  playBtn.setAttribute('aria-label', ended ? 'Replay' : (playing ? 'Pause' : 'Play'));
+}
+
+/* scene 2 types the query out, so the input reads as something a person did.
+   `resume` continues from whatever is already on screen: pausing mid-scene
+   clears typeTimer, and without this the text would stay frozen half-typed
+   for the rest of the scene even after the viewer pressed play again. */
+const TYPE_WORD = 'Claude Opus 5';
+function runTyping(on, resume){
+  clearTimeout(typeTimer);
+  if(!on){ return; }
+  if(reduced){ typedEl.textContent = TYPE_WORD; return; }
+  let i = resume ? typedEl.textContent.length : 0;
+  if(!resume) typedEl.textContent = '';
+  (function tick(){
+    if(i >= TYPE_WORD.length) return;
+    typedEl.textContent = TYPE_WORD.slice(0, ++i);
+    if(i < TYPE_WORD.length) typeTimer = setTimeout(tick, 105);
+  })();
+}
+
+function paintScene(i){
+  scenes.forEach((s,n)=>s.classList.toggle('is-on', n===i));
+  segs.forEach((sg,n)=>{
+    sg.classList.remove('run','done');
+    sg.querySelector('i').style.animationPlayState = '';
+    if(n < i) sg.classList.add('done');
+  });
+  const seg = segs[i];
+  seg.style.setProperty('--dur', scenes[i].dataset.dur + 'ms');
+  void seg.offsetWidth;                    // restart the fill animation
+  seg.classList.add('run');
+  timeEl.textContent = 'Step ' + (i+1) + ' of ' + scenes.length;
+  runTyping(i === 1);
+}
+
+function schedule(ms){
+  clearTimeout(timer);
+  startedAt = Date.now();
+  remaining = ms;
+  timer = setTimeout(advance, ms);
+}
+
+function advance(){
+  if(idx >= scenes.length - 1){ finish(); return; }
+  idx++;
+  paintScene(idx);
+  schedule(+scenes[idx].dataset.dur);
+}
+
+function finish(){
+  clearTimeout(timer);
+  segs.forEach(sg=>{ sg.classList.remove('run'); sg.classList.add('done'); });
+  playing = false; ended = true;
+  timeEl.textContent = 'Finished';
+  setIcon();
+}
+
+function play(){
+  if(ended){ idx = 0; ended = false; paintScene(0); playing = true; schedule(+scenes[0].dataset.dur); setIcon(); return; }
+  playing = true;
+  segs[idx].querySelector('i').style.animationPlayState = 'running';
+  setIcon();
+  /* paused so close to the boundary that the scene was already due: move on
+     rather than rescheduling a whole fresh duration for a spent scene. */
+  if(remaining <= 0){ advance(); return; }
+  schedule(remaining);
+  if(idx === 1) runTyping(true, true);
+}
+
+function pause(){
+  if(!playing) return;
+  clearTimeout(timer);
+  clearTimeout(typeTimer);
+  remaining -= (Date.now() - startedAt);
+  if(remaining < 0) remaining = 0;
+  segs[idx].querySelector('i').style.animationPlayState = 'paused';
+  playing = false;
+  setIcon();
+}
+
+/* A click is an explicit decision, so remember it: `userPaused` stops the
+   visibility observer below from overriding the viewer and restarting a video
+   they deliberately stopped. `startedOnce` lets a reduced-motion viewer who
+   pressed play still get auto-resume, without ever autoplaying at them. */
+let userPaused = false, startedOnce = false;
+playBtn.addEventListener('click', ()=>{
+  if(playing){ userPaused = true; pause(); }
+  else { userPaused = false; startedOnce = true; play(); }
+});
+
+paintScene(0);
+playing = false;
+remaining = +scenes[0].dataset.dur;
+setIcon();
+
+/* Hold on scene 1 until the player is actually on screen.
+   It used to start the instant the page loaded, so anyone who had to scroll to
+   reach it arrived at step 3 having missed the problem and the search box — the
+   two scenes that explain what the thing IS. Now the clock doesn't start until
+   you can see it, and it pauses again if you scroll away, so no step is ever
+   spent off-screen. 55% is deliberately above half: it fires when the player is
+   meaningfully in view, not when one pixel of its top edge appears. */
+const player = document.getElementById('player');
+if(typeof IntersectionObserver === 'function'){
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        if(!playing && !ended && !userPaused && (!reduced || startedOnce)) play();
+      }else if(playing){
+        pause();          /* not userPaused — it resumes when scrolled back */
+      }
+    });
+  }, {threshold: 0.55}).observe(player);
+}else if(!reduced){
+  /* no IntersectionObserver (very old browser): fall back to the old behaviour
+     rather than leaving a player that never starts */
+  play();
+}
+</script>
+<script>
+// topbar shadow once the page scrolls
+const tb = document.querySelector('.topbar');
+addEventListener('scroll', ()=>tb.classList.toggle('scrolled', scrollY>8), {passive:true});
+</script>
+<script>
+// theme toggle
+document.querySelector('[data-theme-toggle]').addEventListener('click', ()=>{
+  const dark = document.documentElement.classList.toggle('dark');
+  try{ localStorage.setItem('rf-theme', dark?'dark':'light'); }catch(e){}
+});
+</script>
+</body>
+</html>

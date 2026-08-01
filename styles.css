@@ -664,6 +664,15 @@ html.dark .theme-toggle .ic-sun{display:none}
   .packet-head{padding:22px 20px 18px}
   .packet-body{padding:8px 20px 20px}
 }
+/* The hero h1 is a full sentence ("Paste an AI launch. Get a verdict on what's
+   real and what's fog."), so on a narrow phone it wraps a line more than the old
+   two-line headline did and pushes the search bar — the page's only action —
+   further down. clamp()'s 32px floor never engages below ~695px wide, so the
+   font size has to be stepped down explicitly here. Measured with fonts loaded:
+   at 360px this drops the headline 4 lines -> 3, at 320px 5 -> 4. */
+@media(max-width:400px){
+  h1.display.mid{font-size:28px}
+}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }

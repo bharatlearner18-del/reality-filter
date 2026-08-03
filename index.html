@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reality Filter — is that AI launch real, or just hype?</title>
-<meta name="description" content="Type any AI launch and find out if it's real or just hype — backed by evidence, not marketing copy. Free." />
+<title>Reality Filter — is that AI tool real, or just hype?</title>
+<meta name="description" content="Every AI tool says it's amazing. Find out if it's real or just hype — one verdict with the proof behind it, every source named. Free." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=59">
+<link rel="stylesheet" href="styles.css?v=60">
 </head>
 <body>
 
@@ -349,6 +349,9 @@ document.querySelectorAll('.chip').forEach(c=>{
 (function(){
   const el = document.getElementById('preview');
   if(!el || typeof LEDGER_ORDER === 'undefined' || !LEDGER_ORDER.length) return;
+  /* arriving from the track record (?q=…) runs a real check immediately, which hides
+     this anyway — no point building a card nobody will ever see */
+  if(new URLSearchParams(location.search).get('q')) return;
   const p = PACKETS[LEDGER_ORDER[0]];
   if(!p) return;
   el.innerHTML =

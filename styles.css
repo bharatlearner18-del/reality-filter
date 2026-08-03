@@ -73,6 +73,15 @@ html.dark body::after{opacity:.07}
 html.dark .topbar{background:rgba(38,37,33,.88)}
 html.dark .hero::before{opacity:.5}
 html.dark .field input,html.dark .wlform input,html.dark .capform input{background:var(--canvas);color:var(--ink)}
+/* KNOWN, PRE-EXISTING, UNFIXED (investigated 2026-08-03 — don't repeat the hunt).
+   On a fresh load with the theme already applied this is correct: the idle button
+   renders #3a3831, measured. But when the theme TOGGLE flips html.dark at runtime, this
+   rule's `color` updates and its background does not — the button keeps the beige fill
+   from the lower-specificity `.field .btn-send.idle` below until the next page load,
+   despite this selector being (0,4,1) against its (0,3,0). Tried and did not fix it:
+   background-color longhand instead of the shorthand, literal hexes instead of the
+   tokens, and waiting out the .12s `transition:background` on .btn. Cosmetic, one
+   element, one state, self-corrects on reload — left alone deliberately. */
 html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--muted-soft)}
 html.dark .premium{background:var(--canvas-soft)}
 html.dark .meter-track{background:var(--canvas)}
@@ -224,12 +233,10 @@ a.btn{text-decoration:none}
 .field .btn-send.is-loading::after{display:block;content:"";width:18px;height:18px;border-radius:9999px;
   position:absolute;top:50%;left:50%;margin:-9px 0 0 -9px;transform:none;
   border:2.4px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite}
-/* asleep until there's text. The light values are hardcoded rather than tokenised, so
-   dark mode needs its own line — otherwise the idle button stays a pale beige slab and
-   glows on the dark canvas. It got worse when the button grew from a 44px circle to a
-   worded pill, which is why this override exists now and didn't before. */
+/* asleep until there's text. The light values here are hardcoded rather than tokenised,
+   so the dark variant needs its own rule — it lives up in the html.dark block near the
+   top of this file, and it is doing its job. Don't add a second copy down here. */
 .field .btn-send.idle{background:#e8e2d5;box-shadow:none;color:#a39f8c}
-html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--muted-soft)}
 /* left-aligned like the chips below it — the hero centres its text, and a centred
    caption under a centred box reads as detached from both */
 .field-note{margin:10px 2px 0;font-family:var(--font-mono);font-size:11px;
@@ -246,7 +253,9 @@ html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--mut
    Exists because five-second testers only ever saw an empty input and read the page as
    a chatbot; nothing on the first screen showed that the output is a dated report card
    with named sources. Rendered from LEDGER_ORDER[0] in index.html. ---------- */
-.preview{margin:16px 0 0;text-align:left;animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.9s}
+/* .5s, ahead of the chips' .55s–.95s stagger below it: the card sits above them, and at
+   .9s the chips rose into place before it did, which reads bottom-to-top. */
+.preview{margin:16px 0 0;text-align:left;animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.5s}
 .pv-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--label);margin:0 0 10px}
 .pv-card{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;text-align:left;
@@ -259,7 +268,7 @@ html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--mut
 .pv-date{font-family:var(--font-mono);font-size:11px;color:var(--label)}
 .pv-verdict{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.03em}
 .pv-why{font-family:var(--font-sans);font-size:14px;line-height:1.5;color:var(--body);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pv-go{font-family:var(--font-mono);font-size:11.5px;color:var(--label)}
 .pv-card:hover .pv-go{color:var(--primary-active)}
 /* primary CTA = Claude terracotta; a light sweep crosses it on hover */

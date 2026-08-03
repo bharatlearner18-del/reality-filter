@@ -246,8 +246,11 @@ a.btn{text-decoration:none}
    appear, and the hero's original padding and margins were restored. ---------- */
 /* same 860px measure as #result below it — they occupy the same slot, one before the
    search and one after, so they must line up exactly */
+/* 1s: last in, because it is now last down the page. The chips stagger .55s–.95s and
+   each takes .45s to rise, so anything earlier than this finishes before the chip rows
+   above it do, and the eye reads bottom-to-top. */
 .preview{max-width:860px;margin:48px auto 0;text-align:left;
-  animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.55s}
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:1s}
 .pv-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--label);margin:0 0 10px}
 .pv-card{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;text-align:left;

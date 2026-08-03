@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=58">
+<link rel="stylesheet" href="styles.css?v=59">
 </head>
 <body>
 
@@ -36,20 +36,32 @@
   <section class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <p class="eyebrow"><span>Hype vs Reality · for AI launches</span></p>
-        <h1 class="display mid">Type any AI launch. Find out if it's <span class="real-word">real</span> or just <span class="fog-word">hype</span>.</h1>
-        <p class="lede">Evidence, not marketing copy. Selected calls go on a public, dated record. Free.</p>
+        <p class="eyebrow"><span>Hype vs Reality · for new AI tools</span></p>
+        <h1 class="display mid">Every AI tool says it's amazing. Find out if it's <span class="real-word">real</span> or just <span class="fog-word">hype</span>.</h1>
+        <p class="lede">Type a name, get one verdict with the proof behind it. Selected calls go on a public, dated record. Free.</p>
       </div>
       <div class="hero-search">
         <div class="console" aria-label="Check a launch">
+          <!-- Deliberately a SEARCH BAR, not an LLM composer: one row, magnifier, worded
+               button. It was a tall rounded card with a round ↑ send button until
+               2026-08-03, when five-second tests came back "it just feels like a simple
+               Claude" — that shape is the universal 2026 signal for "type your prompt
+               here", and it landed before anyone read a word. Don't restore the composer. -->
           <form class="field" id="checkForm" autocomplete="off">
-            <input id="query" type="text" placeholder="Paste an AI launch, tool, or model…" aria-label="AI launch or tool" />
-            <div class="field-foot">
-              <span class="field-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Checks the public record · free</span>
-              <span class="field-kbd">Enter ↵</span>
-              <button class="btn btn-send" type="submit" aria-label="Check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
-            </div>
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input id="query" type="text" placeholder="Search any AI tool, model, or launch…" aria-label="AI launch or tool" />
+            <button class="btn btn-send" type="submit"><span class="bs-txt">Check it</span></button>
           </form>
+          <p class="field-note">Checks the public record · free · nothing to sign up for</p>
+          <!-- A real, already-filed verdict shown BEFORE anyone searches. Added 2026-08-03:
+               five-second testers only ever saw an empty input, so the page read as a
+               chatbot — nothing on the first screen showed that what comes back is a dated
+               report card with named sources. Built from LEDGER_ORDER[0] so it stays the
+               newest published call on its own. Don't replace it with a mock: a fake
+               verdict on the homepage would break the one thing we sell.
+               It sits ABOVE the chips on purpose — below them, the eleven chips pushed it
+               off the fold, which defeats the whole reason it exists. -->
+          <div class="preview" id="preview" hidden></div>
           <div class="chips">
             <span class="chips-lbl">Try one:</span>
             <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
@@ -261,6 +273,9 @@ if(qInput && !matchMedia('(prefers-reduced-motion: reduce)').matches){
 
 function showResult(q, instant){
   if(!q || !q.trim()) return;
+  /* the example verdict has done its job once a real one is on screen — two verdicts
+     at once reads as "did my search work?" */
+  const pv = document.getElementById('preview'); if(pv) pv.hidden = true;
   const safe = q.replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const r = document.getElementById('result');
   const scrollToResult = (smooth)=>window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - 24, behavior: smooth?'smooth':'auto'});
@@ -328,6 +343,28 @@ document.querySelectorAll('.chip').forEach(c=>{
     showResult(c.dataset.q);
   });
 });
+
+/* "What you get back" — renders the newest published call into #preview so the output
+   shape is on screen before anyone types. See the markup comment above #preview. */
+(function(){
+  const el = document.getElementById('preview');
+  if(!el || typeof LEDGER_ORDER === 'undefined' || !LEDGER_ORDER.length) return;
+  const p = PACKETS[LEDGER_ORDER[0]];
+  if(!p) return;
+  el.innerHTML =
+    `<p class="pv-lbl">What you get back</p>
+     <button class="pv-card" type="button" data-q="${p.name}">
+       <span class="pv-head"><span class="pv-name">${p.name}</span><span class="pv-date">${p.date}</span></span>
+       <span class="pv-verdict ${p.verdictClass}">${p.verdict}</span>
+       <span class="pv-why">${p.fogWhy}</span>
+       <span class="pv-go">Read the full check — every source named →</span>
+     </button>`;
+  el.hidden = false;
+  el.querySelector('.pv-card').addEventListener('click', function(){
+    document.getElementById('query').value = this.dataset.q;
+    showResult(this.dataset.q);
+  });
+})();
 
 /* nav CTA: on this page "Check a launch" means "put my cursor in the search bar" */
 document.getElementById('navCheck').addEventListener('click',e=>{

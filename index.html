@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=60">
+<link rel="stylesheet" href="styles.css?v=61">
 </head>
 <body>
 
@@ -53,15 +53,6 @@
             <button class="btn btn-send" type="submit"><span class="bs-txt">Check it</span></button>
           </form>
           <p class="field-note">Checks the public record · free · nothing to sign up for</p>
-          <!-- A real, already-filed verdict shown BEFORE anyone searches. Added 2026-08-03:
-               five-second testers only ever saw an empty input, so the page read as a
-               chatbot — nothing on the first screen showed that what comes back is a dated
-               report card with named sources. Built from LEDGER_ORDER[0] so it stays the
-               newest published call on its own. Don't replace it with a mock: a fake
-               verdict on the homepage would break the one thing we sell.
-               It sits ABOVE the chips on purpose — below them, the eleven chips pushed it
-               off the fold, which defeats the whole reason it exists. -->
-          <div class="preview" id="preview" hidden></div>
           <div class="chips">
             <span class="chips-lbl">Try one:</span>
             <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
@@ -82,6 +73,18 @@
         </div>
       </div>
 
+      <!-- A real, already-filed verdict, shown before anyone searches. Added 2026-08-03:
+           five-second testers only ever saw an empty input, so the page read as a chatbot
+           — nothing showed that what comes back is a dated report card with named sources.
+           Built from LEDGER_ORDER[0] so it stays the newest published call on its own.
+           Don't replace it with a mock: a fake verdict on the homepage would break the one
+           thing we sell.
+           It lives HERE, in the result zone, not up in the console. It sat under the search
+           bar for one iteration and the user's call was that the hero had become a stack of
+           eight things and felt cramped. This position is also the more honest one: the
+           example sits exactly where the reader's own verdict will appear, so it teaches
+           the layout instead of competing with the search bar. -->
+      <div class="preview" id="preview" hidden></div>
       <div id="result" aria-live="polite"><div class="result-inner" id="resultInner" hidden></div></div>
     </div>
   </section>
@@ -350,8 +353,11 @@ document.querySelectorAll('.chip').forEach(c=>{
   const el = document.getElementById('preview');
   if(!el || typeof LEDGER_ORDER === 'undefined' || !LEDGER_ORDER.length) return;
   /* arriving from the track record (?q=…) runs a real check immediately, which hides
-     this anyway — no point building a card nobody will ever see */
-  if(new URLSearchParams(location.search).get('q')) return;
+     this anyway — no point building a card nobody will ever see. The .trim() matters:
+     showResult() bails on a blank q, so a bare `?q=%20` would otherwise leave the page
+     with neither an example nor a result. */
+  const dq = new URLSearchParams(location.search).get('q');
+  if(dq && dq.trim()) return;
   const p = PACKETS[LEDGER_ORDER[0]];
   if(!p) return;
   el.innerHTML =

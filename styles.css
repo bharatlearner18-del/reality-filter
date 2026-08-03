@@ -73,15 +73,6 @@ html.dark body::after{opacity:.07}
 html.dark .topbar{background:rgba(38,37,33,.88)}
 html.dark .hero::before{opacity:.5}
 html.dark .field input,html.dark .wlform input,html.dark .capform input{background:var(--canvas);color:var(--ink)}
-/* KNOWN, PRE-EXISTING, UNFIXED (investigated 2026-08-03 — don't repeat the hunt).
-   On a fresh load with the theme already applied this is correct: the idle button
-   renders #3a3831, measured. But when the theme TOGGLE flips html.dark at runtime, this
-   rule's `color` updates and its background does not — the button keeps the beige fill
-   from the lower-specificity `.field .btn-send.idle` below until the next page load,
-   despite this selector being (0,4,1) against its (0,3,0). Tried and did not fix it:
-   background-color longhand instead of the shorthand, literal hexes instead of the
-   tokens, and waiting out the .12s `transition:background` on .btn. Cosmetic, one
-   element, one state, self-corrects on reload — left alone deliberately. */
 html.dark .field .btn-send.idle{background:var(--surface-strong);color:var(--muted-soft)}
 html.dark .premium{background:var(--canvas-soft)}
 html.dark .meter-track{background:var(--canvas)}
@@ -142,11 +133,7 @@ body{
 
 /* ---------- hero — centered + stacked: pitch above, the search tool directly below ----------
    The search bar is the page's single action, so nothing sits beside it competing for the eye. */
-/* Top padding was 84px until 2026-08-03. It came down to buy the "What you get back"
-   card its place on the first screen — that card only works if a five-second visitor
-   actually sees it, and 84px pushed it under the fold on a 1366x768 laptop.
-   Re-measure the fold before growing this back. */
-.hero{position:relative;overflow:hidden;padding:52px 0 120px}
+.hero{position:relative;overflow:hidden;padding:84px 0 120px}
 /* drifting fog: three soft pastel washes (the site's timeline palette) breathing behind the headline */
 .hero::before{content:"";position:absolute;inset:-25% -15%;pointer-events:none;
   background:
@@ -165,9 +152,9 @@ body{
 .hero .wrap{text-align:center}
 .hero-copy{max-width:760px;margin:0 auto}
 /* the console gets its own breathing room under the headline, capped narrower than the copy */
-.hero-search{width:100%;max-width:640px;margin:30px auto 0}
+.hero-search{width:100%;max-width:640px;margin:44px auto 0}
 .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--label);margin:0 0 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
+  color:var(--label);margin:0 0 22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
 .eyebrow .sep{width:22px;height:1px;background:var(--hairline-strong)}
 h1.display{font-weight:400;letter-spacing:-.012em;line-height:1.08;margin:0;
   font-size:clamp(40px,7.4vw,72px);color:var(--ink)}
@@ -177,7 +164,7 @@ h1 .fog-word{background:linear-gradient(100deg,var(--muted) 30%,#b8b199 50%,var(
   animation:shimmer 5.5s ease-in-out infinite}
 @keyframes shimmer{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
 h1 .real-word{color:var(--primary-active);white-space:nowrap}
-.lede{font-family:var(--font-sans);font-size:clamp(16px,1.9vw,19px);color:var(--body);max-width:46ch;margin:16px auto 0;line-height:1.5}
+.lede{font-family:var(--font-sans);font-size:clamp(16px,1.9vw,19px);color:var(--body);max-width:46ch;margin:22px auto 0;line-height:1.5}
 
 /* ---------- landing: hero CTA row (unused variants kept) ---------- */
 .cta-row{margin:30px 0 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
@@ -251,11 +238,16 @@ a.btn{text-decoration:none}
 
 /* ---------- "What you get back" — a REAL filed verdict, shown before any search.
    Exists because five-second testers only ever saw an empty input and read the page as
-   a chatbot; nothing on the first screen showed that the output is a dated report card
-   with named sources. Rendered from LEDGER_ORDER[0] in index.html. ---------- */
-/* .5s, ahead of the chips' .55s–.95s stagger below it: the card sits above them, and at
-   .9s the chips rose into place before it did, which reads bottom-to-top. */
-.preview{margin:16px 0 0;text-align:left;animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.5s}
+   a chatbot; nothing showed that the output is a dated report card with named sources.
+   Rendered from LEDGER_ORDER[0] in index.html.
+   It sits in the RESULT zone, not inside the console. It spent one iteration directly
+   under the search bar and the user's call was that the hero had become a stack of eight
+   things and felt cramped — so it moved down here, where the reader's own verdict will
+   appear, and the hero's original padding and margins were restored. ---------- */
+/* same 860px measure as #result below it — they occupy the same slot, one before the
+   search and one after, so they must line up exactly */
+.preview{max-width:860px;margin:48px auto 0;text-align:left;
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:.55s}
 .pv-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--label);margin:0 0 10px}
 .pv-card{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;text-align:left;
@@ -624,7 +616,7 @@ html.dark .theme-toggle .ic-sun{display:none}
 @media(min-width:1440px){
   :root{--maxw:1200px}
   body{font-size:17px}
-  .hero{padding:64px 0 72px}
+  .hero{padding:104px 0 72px}
   .hero-copy{max-width:860px}
   h1.display{font-size:clamp(56px,4.6vw,84px)}
   .lede{font-size:20px;max-width:52ch}
@@ -633,7 +625,8 @@ html.dark .theme-toggle .ic-sun{display:none}
   .field{padding:9px 9px 9px 18px}
   .field .btn-send{height:48px;padding:0 24px}
   .chip{font-size:14px;padding:7px 16px}
-  #result{max-width:960px}
+  /* .preview and #result occupy the same slot, so they widen together */
+  #result,.preview{max-width:960px}
   .packet-body{padding:8px 32px 28px}
   .packet-head{padding:28px 32px 22px}
   .row .v{font-size:17px}

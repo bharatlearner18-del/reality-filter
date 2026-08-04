@@ -224,10 +224,8 @@ a.btn{text-decoration:none}
    so the dark variant needs its own rule — it lives up in the html.dark block near the
    top of this file, and it is doing its job. Don't add a second copy down here. */
 .field .btn-send.idle{background:#e8e2d5;box-shadow:none;color:#a39f8c}
-/* left-aligned like the chips below it — the hero centres its text, and a centred
-   caption under a centred box reads as detached from both */
-.field-note{margin:10px 2px 0;font-family:var(--font-mono);font-size:11px;
-  color:var(--label);letter-spacing:.02em;text-align:left}
+/* .field-note is gone as of 2026-08-03 — it sat 10px under the search bar, repeated
+   "free" from the lede, and was one of the things making the console read as crammed. */
 /* result-area loading strip */
 .loading{display:flex;align-items:center;gap:12px;padding:22px 4px;animation:rise .3s ease both}
 .spinner{width:18px;height:18px;flex:0 0 auto;border-radius:9999px;
@@ -246,10 +244,15 @@ a.btn{text-decoration:none}
    appear, and the hero's original padding and margins were restored. ---------- */
 /* same 860px measure as #result below it — they occupy the same slot, one before the
    search and one after, so they must line up exactly */
-/* 1s: last in, because it is now last down the page. The chips stagger .55s–.95s and
-   each takes .45s to rise, so anything earlier than this finishes before the chip rows
-   above it do, and the eye reads bottom-to-top. */
-.preview{max-width:860px;margin:48px auto 0;text-align:left;
+/* The demonstration zone. Same measure as #result so the column lines up, and real
+   space around each part — this whole block used to be crammed into the console with
+   10–14px gaps while the hero above it breathed at 22/22/44px. That mismatch is what
+   read as "stuck". */
+.demo{max-width:860px;margin:0 auto;text-align:left}
+.demo .chips{margin:56px 2px 0}
+/* 1s: last in, because it is last down the page. The chips stagger .55s–.95s and each
+   takes .45s to rise, so anything earlier finishes before the row above it does. */
+.preview{margin:44px 0 0;
   animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:1s}
 .pv-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--label);margin:0 0 10px}
@@ -286,8 +289,13 @@ a.btn{text-decoration:none}
 .chips>*:nth-child(6){animation-delay:.95s}
 .chips .chips-lbl{font-family:var(--font-mono);font-size:11px;color:var(--label);
   letter-spacing:.04em;margin-right:2px}
-.chip{font-family:var(--font-sans);font-weight:500;font-size:13px;color:var(--body);background:var(--surface-card);
-  border:1px solid var(--field-border);border-radius:9999px;padding:6px 14px;cursor:pointer;transition:.12s}
+/* These have to read as CONTROLS, not as a list of what we cover. A five-second tester
+   reported "the row of model names reads as a list of what you have covered, not as
+   buttons I can press… they are currently doing the job of a footer." A hairline pill
+   flat on the canvas is a tag; a resting shadow lifts it into something pressable. */
+.chip{font-family:var(--font-sans);font-weight:500;font-size:14px;color:var(--body);background:var(--surface-card);
+  border:1px solid var(--field-border);border-radius:9999px;padding:8px 16px;cursor:pointer;transition:.12s;
+  box-shadow:0 1px 2px rgba(61,57,41,.05), 0 3px 8px rgba(61,57,41,.05)}
 .chip:hover{border-color:var(--primary);color:var(--ink);transform:translateY(-1px);box-shadow:0 5px 14px rgba(61,57,41,.1)}
 .reassure{margin:14px 2px 0;font-family:var(--font-mono);font-size:11px;color:var(--label)}
 
@@ -628,8 +636,8 @@ html.dark .theme-toggle .ic-sun{display:none}
   .field{padding:9px 9px 9px 18px}
   .field .btn-send{height:48px;padding:0 24px}
   .chip{font-size:14px;padding:7px 16px}
-  /* .preview and #result occupy the same slot, so they widen together */
-  #result,.preview{max-width:960px}
+  /* the demo zone and #result share a column, so they widen together */
+  #result,.demo{max-width:960px}
   .packet-body{padding:8px 32px 28px}
   .packet-head{padding:28px 32px 22px}
   .row .v{font-size:17px}

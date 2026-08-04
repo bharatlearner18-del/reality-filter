@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=62">
+<link rel="stylesheet" href="styles.css?v=63">
 </head>
 <body>
 
@@ -52,39 +52,35 @@
             <input id="query" type="text" placeholder="Search any AI tool, model, or launch…" aria-label="AI launch or tool" />
             <button class="btn btn-send" type="submit"><span class="bs-txt">Check it</span></button>
           </form>
-          <p class="field-note">Checks the public record · free · nothing to sign up for</p>
-          <div class="chips">
-            <span class="chips-lbl">Try one:</span>
-            <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
-            <button class="chip" data-q="Claude Fable 5">Claude Fable 5</button>
-            <button class="chip" data-q="Grok 4.5">Grok 4.5</button>
-            <button class="chip" data-q="Gemini 3.1 Pro">Gemini 3.1 Pro</button>
-            <button class="chip" data-q="Salesforce Agentforce">Salesforce Agentforce</button>
-          </div>
-          <div class="chips">
-            <span class="chips-lbl">Fresh off the wire:</span>
-            <button class="chip" data-q="Claude Opus 5">Claude Opus 5</button>
-            <button class="chip" data-q="Kimi K3">Kimi K3</button>
-            <button class="chip" data-q="Meta Muse Spark 1.1">Meta Muse Spark 1.1</button>
-            <button class="chip" data-q="DeepSeek V4">DeepSeek V4</button>
-            <button class="chip" data-q="Gemini 3.6 Flash">Gemini 3.6 Flash</button>
-            <button class="chip" data-q="Cursor 3.5">Cursor 3.5</button>
-          </div>
         </div>
       </div>
 
-      <!-- A real, already-filed verdict, shown before anyone searches. Added 2026-08-03:
-           five-second testers only ever saw an empty input, so the page read as a chatbot
-           — nothing showed that what comes back is a dated report card with named sources.
-           Built from LEDGER_ORDER[0] so it stays the newest published call on its own.
-           Don't replace it with a mock: a fake verdict on the homepage would break the one
-           thing we sell.
-           It lives HERE, in the result zone, not up in the console. It sat under the search
-           bar for one iteration and the user's call was that the hero had become a stack of
-           eight things and felt cramped. This position is also the more honest one: the
-           example sits exactly where the reader's own verdict will appear, so it teaches
-           the layout instead of competing with the search bar. -->
-      <div class="preview" id="preview" hidden></div>
+      <!-- DEMONSTRATION ZONE — what you can type, then what comes back.
+           Both of these used to sit inside .console, jammed 10–14px under the search bar
+           with a mono caption wedged between them: eleven chips across two labelled rows
+           and four wrapped lines, 255px of dense block. The user's read, twice, was that
+           the page felt "stuck", and the measurements agreed — the rhythm above the search
+           bar was 22/22/44px and below it collapsed to 10/14px. So the caption is gone
+           (the lede already says "Free"), the two chip rows are one row of six, and both
+           now live out here with real air around them.
+           Capped to the same measure as #result so the whole column lines up. -->
+      <div class="demo">
+        <div class="chips">
+          <span class="chips-lbl">Try one:</span>
+          <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
+          <button class="chip" data-q="Claude Opus 5">Claude Opus 5</button>
+          <button class="chip" data-q="Gemini 3.1 Pro">Gemini 3.1 Pro</button>
+          <button class="chip" data-q="Grok 4.5">Grok 4.5</button>
+          <button class="chip" data-q="DeepSeek V4">DeepSeek V4</button>
+          <button class="chip" data-q="Salesforce Agentforce">Salesforce Agentforce</button>
+        </div>
+        <!-- A real, already-filed verdict, shown before anyone searches: five-second
+             testers only ever saw an empty input, so the page read as a chatbot. Built
+             from LEDGER_ORDER[0] so it stays the newest published call on its own.
+             Don't replace it with a mock — a fake verdict here would break the one thing
+             we sell. -->
+        <div class="preview" id="preview" hidden></div>
+      </div>
       <div id="result" aria-live="polite"><div class="result-inner" id="resultInner" hidden></div></div>
     </div>
   </section>

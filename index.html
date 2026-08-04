@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>/* apply saved theme before paint */try{if(localStorage.getItem('rf-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='18' fill='%23d97757' fill-opacity='.12'/%3E%3Cpath d='M24 6 A18 18 0 0 0 24 42 Z' fill='%23d97757'/%3E%3Ccircle cx='24' cy='24' r='18' fill='none' stroke='%23d97757' stroke-width='3'/%3E%3Cg stroke='%23c08532' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='29' y1='18' x2='37' y2='18'/%3E%3Cline x1='29' y1='24' x2='39' y2='24'/%3E%3Cline x1='29' y1='30' x2='35' y2='30'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=64">
+<link rel="stylesheet" href="styles.css?v=65">
 </head>
 <body>
 
@@ -52,35 +52,32 @@
             <input id="query" type="text" placeholder="Search any AI tool, model, or launch…" aria-label="AI launch or tool" />
             <button class="btn btn-send" type="submit"><span class="bs-txt">Check it</span></button>
           </form>
+          <!-- The full tool list, in its original two labelled rows. It was briefly cut to
+               a single row of six while an example-verdict card sat below it; on 2026-08-03
+               the user's call was to drop that card and put this list back as it was, because
+               the list itself is the information — it shows which tools already have a
+               verdict on file. What did NOT come back is the old 10–14px cramming: the rows
+               now sit 34px under the search bar, which is what fixed the "stuck" feeling. -->
+          <div class="chips">
+            <span class="chips-lbl">Try one:</span>
+            <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
+            <button class="chip" data-q="Claude Fable 5">Claude Fable 5</button>
+            <button class="chip" data-q="Grok 4.5">Grok 4.5</button>
+            <button class="chip" data-q="Gemini 3.1 Pro">Gemini 3.1 Pro</button>
+            <button class="chip" data-q="Salesforce Agentforce">Salesforce Agentforce</button>
+          </div>
+          <div class="chips">
+            <span class="chips-lbl">Fresh off the wire:</span>
+            <button class="chip" data-q="Claude Opus 5">Claude Opus 5</button>
+            <button class="chip" data-q="Kimi K3">Kimi K3</button>
+            <button class="chip" data-q="Meta Muse Spark 1.1">Meta Muse Spark 1.1</button>
+            <button class="chip" data-q="DeepSeek V4">DeepSeek V4</button>
+            <button class="chip" data-q="Gemini 3.6 Flash">Gemini 3.6 Flash</button>
+            <button class="chip" data-q="Cursor 3.5">Cursor 3.5</button>
+          </div>
         </div>
       </div>
 
-      <!-- DEMONSTRATION ZONE — what you can type, then what comes back.
-           Both of these used to sit inside .console, jammed 10–14px under the search bar
-           with a mono caption wedged between them: eleven chips across two labelled rows
-           and four wrapped lines, 255px of dense block. The user's read, twice, was that
-           the page felt "stuck", and the measurements agreed — the rhythm above the search
-           bar was 22/22/44px and below it collapsed to 10/14px. So the caption is gone
-           (the lede already says "Free"), the two chip rows are one row of six, and both
-           now live out here with real air around them.
-           Capped to the same measure as #result so the whole column lines up. -->
-      <div class="demo">
-        <div class="chips">
-          <span class="chips-lbl">Try one:</span>
-          <button class="chip" data-q="GPT-5.6">GPT-5.6</button>
-          <button class="chip" data-q="Claude Opus 5">Claude Opus 5</button>
-          <button class="chip" data-q="Gemini 3.1 Pro">Gemini 3.1 Pro</button>
-          <button class="chip" data-q="Grok 4.5">Grok 4.5</button>
-          <button class="chip" data-q="DeepSeek V4">DeepSeek V4</button>
-          <button class="chip" data-q="Salesforce Agentforce">Salesforce Agentforce</button>
-        </div>
-        <!-- A real, already-filed verdict, shown before anyone searches: five-second
-             testers only ever saw an empty input, so the page read as a chatbot. Built
-             from LEDGER_ORDER[0] so it stays the newest published call on its own.
-             Don't replace it with a mock — a fake verdict here would break the one thing
-             we sell. -->
-        <div class="preview" id="preview" hidden></div>
-      </div>
       <div id="result" aria-live="polite"><div class="result-inner" id="resultInner" hidden></div></div>
     </div>
   </section>
@@ -272,9 +269,6 @@ if(qInput && !matchMedia('(prefers-reduced-motion: reduce)').matches){
 
 function showResult(q, instant){
   if(!q || !q.trim()) return;
-  /* the example verdict has done its job once a real one is on screen — two verdicts
-     at once reads as "did my search work?" */
-  const pv = document.getElementById('preview'); if(pv) pv.hidden = true;
   const safe = q.replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const r = document.getElementById('result');
   const scrollToResult = (smooth)=>window.scrollTo({top: r.getBoundingClientRect().top + window.scrollY - 24, behavior: smooth?'smooth':'auto'});
@@ -343,33 +337,10 @@ document.querySelectorAll('.chip').forEach(c=>{
   });
 });
 
-/* "What you get back" — renders the newest published call into #preview so the output
-   shape is on screen before anyone types. See the markup comment above #preview. */
-(function(){
-  const el = document.getElementById('preview');
-  if(!el || typeof LEDGER_ORDER === 'undefined' || !LEDGER_ORDER.length) return;
-  /* arriving from the track record (?q=…) runs a real check immediately, which hides
-     this anyway — no point building a card nobody will ever see. The .trim() matters:
-     showResult() bails on a blank q, so a bare `?q=%20` would otherwise leave the page
-     with neither an example nor a result. */
-  const dq = new URLSearchParams(location.search).get('q');
-  if(dq && dq.trim()) return;
-  const p = PACKETS[LEDGER_ORDER[0]];
-  if(!p) return;
-  el.innerHTML =
-    `<p class="pv-lbl">What you get back</p>
-     <button class="pv-card" type="button" data-q="${p.name}">
-       <span class="pv-head"><span class="pv-name">${p.name}</span><span class="pv-date">${p.date}</span></span>
-       <span class="pv-verdict ${p.verdictClass}">${p.verdict}</span>
-       <span class="pv-why">${p.fogWhy}</span>
-       <span class="pv-go">Read the full check — every source named →</span>
-     </button>`;
-  el.hidden = false;
-  el.querySelector('.pv-card').addEventListener('click', function(){
-    document.getElementById('query').value = this.dataset.q;
-    showResult(this.dataset.q);
-  });
-})();
+/* The "What you get back" example-verdict card that used to build here was removed
+   2026-08-03 at the user's request — it made the page feel crowded and the tool-list
+   chips above are what they wanted carrying that job instead. Its CSS (.preview/.pv-*)
+   is left in styles.css, unused, the same way the parked Premium set is. */
 
 /* nav CTA: on this page "Check a launch" means "put my cursor in the search bar" */
 document.getElementById('navCheck').addEventListener('click',e=>{

@@ -244,12 +244,12 @@ a.btn{text-decoration:none}
    appear, and the hero's original padding and margins were restored. ---------- */
 /* same 860px measure as #result below it — they occupy the same slot, one before the
    search and one after, so they must line up exactly */
-/* The demonstration zone. Same measure as #result so the column lines up, and real
-   space around each part — this whole block used to be crammed into the console with
-   10–14px gaps while the hero above it breathed at 22/22/44px. That mismatch is what
-   read as "stuck". */
-.demo{max-width:860px;margin:0 auto;text-align:left}
-.demo .chips{margin:56px 2px 0}
+/* The chip rows sit back inside .console, but NOT back at their old 14px. They were
+   crammed 10–14px under the search bar while the hero above breathed at 22/22/44px, and
+   that mismatch is what the user twice called "stuck". 34px under the bar, 14px between
+   the two rows so they still group as one list. Don't take these back down. */
+.console .chips{margin:34px 2px 0}
+.console .chips + .chips{margin-top:14px}
 /* 1.15s: last in, because it is last down the page. With six chips the row now runs to
    1.03s and each rise takes .45s, so the last chip lands at 1.48s; this lands at 1.60s.
    Anything earlier finishes before the row above it and the eye reads bottom-to-top. */
@@ -645,8 +645,7 @@ html.dark .theme-toggle .ic-sun{display:none}
   .field{padding:9px 9px 9px 18px}
   .field .btn-send{height:48px;padding:0 24px}
   .chip{font-size:14px;padding:7px 16px}
-  /* the demo zone and #result share a column, so they widen together */
-  #result,.demo{max-width:960px}
+  #result{max-width:960px}
   .packet-body{padding:8px 32px 28px}
   .packet-head{padding:28px 32px 22px}
   .row .v{font-size:17px}

@@ -250,10 +250,11 @@ a.btn{text-decoration:none}
    read as "stuck". */
 .demo{max-width:860px;margin:0 auto;text-align:left}
 .demo .chips{margin:56px 2px 0}
-/* 1s: last in, because it is last down the page. The chips stagger .55s–.95s and each
-   takes .45s to rise, so anything earlier finishes before the row above it does. */
+/* 1.15s: last in, because it is last down the page. With six chips the row now runs to
+   1.03s and each rise takes .45s, so the last chip lands at 1.48s; this lands at 1.60s.
+   Anything earlier finishes before the row above it and the eye reads bottom-to-top. */
 .preview{margin:44px 0 0;
-  animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:1s}
+  animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:1.15s}
 .pv-lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--label);margin:0 0 10px}
 .pv-card{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;text-align:left;
@@ -281,12 +282,20 @@ a.btn{text-decoration:none}
 .btn:active{transform:translateY(0)}
 .chips{margin:14px 2px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
 .chips .chips-lbl,.chips .chip{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
-.chips>*:nth-child(1){animation-delay:.55s}
-.chips>*:nth-child(2){animation-delay:.63s}
-.chips>*:nth-child(3){animation-delay:.71s}
-.chips>*:nth-child(4){animation-delay:.79s}
-.chips>*:nth-child(5){animation-delay:.87s}
-.chips>*:nth-child(6){animation-delay:.95s}
+/* Stagger by TYPE, not by position. The label is a <span> and the chips are <button>s,
+   so the label no longer eats a slot. The old `>*:nth-child(1..6)` exactly covered a
+   label plus five chips; the moment a row had six, the last chip fell through to the
+   default 0s and popped in ahead of the whole cascade. Runs to eight so adding a chip
+   doesn't quietly reintroduce that. */
+.chips .chips-lbl{animation-delay:.55s}
+.chips .chip:nth-of-type(1){animation-delay:.63s}
+.chips .chip:nth-of-type(2){animation-delay:.71s}
+.chips .chip:nth-of-type(3){animation-delay:.79s}
+.chips .chip:nth-of-type(4){animation-delay:.87s}
+.chips .chip:nth-of-type(5){animation-delay:.95s}
+.chips .chip:nth-of-type(6){animation-delay:1.03s}
+.chips .chip:nth-of-type(7){animation-delay:1.11s}
+.chips .chip:nth-of-type(8){animation-delay:1.19s}
 .chips .chips-lbl{font-family:var(--font-mono);font-size:11px;color:var(--label);
   letter-spacing:.04em;margin-right:2px}
 /* These have to read as CONTROLS, not as a list of what we cover. A five-second tester
